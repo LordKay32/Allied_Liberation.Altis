@@ -1,0 +1,93 @@
+#include "MissionDescription\master.hpp"
+
+OnLoadName = $STR_antistasi_mission_info_altis_mapname_short_text;
+OnLoadMission = $STR_antistasi_mission_info_altis_blurb_text;
+briefingName = $STR_antistasi_mission_info_altis_mapname_text;
+overviewText = $STR_antistasi_mission_info_altis_description_text;
+loadScreen = "Pictures\Mission\pic.jpg";
+overviewPicture = "Pictures\Mission\pic.jpg";
+
+class CfgDiscordRichPresence
+{
+    applicationID="819852407265034260";
+    defaultDetails="";
+    defaultState="";
+    defaultLargeImageKey="altis";
+    defaultLargeImageText="Antistasi Plus - Liberation of Altis";
+    defaultSmallImageKey="arma_3_logo";
+    defaultSmallImageText="Arma 3 Custom Scenario";
+    useTimeElapsed=1;
+};
+
+class CfgFunctions
+{
+    #include "MissionDescription\CfgFunctionsContents.hpp"
+};
+
+class CfgNotifications
+{
+    #include "MissionDescription\CfgNotificationsContents.hpp"
+};
+
+class CfgSounds
+{
+    #include "MissionDescription\CfgSoundsContents.hpp"
+};
+
+class CfgDebriefing
+{
+	#include "MissionDescription\CfgDebriefingContents.hpp"
+	class End1
+	{
+		title = "V I C T O R Y";
+		subtitle = "Altis is Ours!";
+		description = "The Werhmacht has been defeated on Altis, the first piece of European land to be liberated. With the ports and airfields under Allied control, they will no longer pose a threat to the invasion of Sicily. ";
+		picture = "n_inf";
+		pictureColor[] = {0.0,0.5,0.0,1};
+	};
+    class petrosDead
+    {
+        title = "Petros is Dead";
+        subtitle = "Petros is Dead";
+        description = "Congratulations!: Petros is Dead. Now with rebels without a leader, you may think about joining them, and free Altis";
+        picture = "b_unknown";
+        pictureColor[] = {0.5,0.0,0.0,1};
+    };
+    class destroyedSites
+    {
+        title = "Altis is Destroyed";
+        subtitle = "Altis got Destroyed by the Werhmacht";
+        description = "One third of the population of Altis has been murdered by the Werhmacht.<br/>The aim of the operation was to liberate Altis, not see it destroyed!";
+        picture = "b_unknown";
+        pictureColor[] = {0.5,0.0,0.0,1};
+    };
+};
+
+class CfgMusic
+{
+sounds[] = {01,02};
+class 01
+{
+name = "01";
+sound[] = {"Music\KP_Finale.ogg", db+5, 1.0};
+titles[] = {0,""};
+};
+class 02
+{
+name = "02";
+sound[] = {"Music\WW2Start.ogg", db+10, 1.0};
+titles[] = {0,""};
+};
+};
+
+class CfgPylonManager
+{
+//Blacklisted Magazines
+blacklistedMagazines[] = {};
+
+//Nothing is rearm everywhere
+rearmObjects[] = {"UNI_GMC_Ammo_OD"};
+
+//Distance needed from rearmObjects[]
+rearmRange = 25;
+};
