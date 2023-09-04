@@ -90,7 +90,7 @@ private _circleMrk = createMarkerLocal ["BRCircle", (getMarkerPos _nearX)];
 _circleMrk setMarkerShapeLocal "ELLIPSE";
 _circleMrk setMarkerSizeLocal [600, 600];
 _circleMrk setMarkerColorLocal "ColorGreen";
-_circleMrk setMarkerAlpha 0.5;
+_circleMrk setMarkerAlphaLocal 0.5;
 
 onMapSingleClick "positionTel = _pos";
 

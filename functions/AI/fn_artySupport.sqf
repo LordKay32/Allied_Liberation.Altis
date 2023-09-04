@@ -105,14 +105,14 @@ _mrkMin setMarkerShapeLocal "ELLIPSE";
 _mrkMin setMarkerTypeLocal "hd_destroy"; 
 _mrkMin setMarkerColorLocal "ColorRed";  
 _mrkMin setMarkerSizeLocal [_minRange, _minRange];
-_mrkMin setMarkerAlpha 0.5;
+_mrkMin setMarkerAlphaLocal 0.5;
 
 _mrkMax = createMarkerLocal [format ["mrkMax%1", random 100], _centrePos]; 
 _mrkMax setMarkerShapeLocal "ELLIPSE"; 
 _mrkMax setMarkerTypeLocal "hd_destroy"; 
 _mrkMax setMarkerColorLocal "ColorGreen";  
 _mrkMax setMarkerSizeLocal [_maxRange, _maxRange];
-_mrkMax setMarkerAlpha 0.5;
+_mrkMax setMarkerAlphaLocal 0.5;
 
 ["Artillery Support", "Select the position on map where to perform the Artillery strike."] call A3A_fnc_customHint;
 

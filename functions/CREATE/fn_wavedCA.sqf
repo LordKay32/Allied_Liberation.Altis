@@ -69,7 +69,7 @@ private _taskId = "rebelAttack" + str A3A_taskCount;
 	_posDestination = getMarkerPos _mrkDestination;
 	if ((aggressionLevelOccupants > 2) && (random 100 > 50)) then {
 		sleep ((_posOrigin distance _posDestination)/9);
-		_startAirport = [((airportsX +["NATO_carrier","CSAT_carrier"]) select {(spawner getVariable _x != 0) && (sidesX getVariable [_x,sideUnknown] == _sideX)}), _mrkDestination] call BIS_fnc_nearestPosition;
+		_startAirport = [((airportsX +["NATO_carrier","CSAT_carrier"]) select {(spawner getVariable _x != 0) && ((getMarkerPos _x) distance _posDestination > 4000) && (sidesX getVariable [_x,sideUnknown] == _sideX)}), _mrkDestination] call BIS_fnc_nearestPosition;
 		[_mrkDestination, _sideX, _startAirport] spawn A3A_fnc_bomberAttack;
 	} else {
 		sleep ((_posOrigin distance _posDestination)/11);
@@ -527,7 +527,7 @@ while {(_waves > 0)} do
 
 	_countX = 1;
 	_pos = _posOrigin;
-	private _airbase = if (_mrkOrigin in airportsX) then {_mrkOrigin} else {[((airportsX + ["NATO_carrier", "CSAT_carrier"]) select {(spawner getVariable _x != 0) && (sidesX getVariable [_x,sideUnknown] == _sideX)}), _mrkDestination] call BIS_fnc_nearestPosition;};
+	private _airbase = if (_mrkOrigin in airportsX) then {_mrkOrigin} else {[((airportsX + ["NATO_carrier", "CSAT_carrier"]) select {(spawner getVariable _x != 0) && ((getMarkerPos _x) distance _posDestination > 4000) && (sidesX getVariable [_x,sideUnknown] == _sideX)}), _mrkDestination] call BIS_fnc_nearestPosition;};
 	_ang = 0;
 	_size = [_mrkOrigin] call A3A_fnc_sizeMarker;
 	private _runwayTakeoff = [_airbase] call A3A_fnc_getRunwayTakeoffForAirportMarker;
@@ -621,7 +621,7 @@ while {(_waves > 0)} do
 				if (_typeVehX in vehNATOPlanes) then {
 					private _AAGuns = (nearestObjects [_posDestination, [staticAAteamPlayer], 500]) select {side _x == teamPlayer};
 					{
-						_vehCrew reveal [_x, 4];
+						_groupVeh reveal [_x, 4];
 					} forEach _AAGuns
 				};
 				//[_veh,"Air Attack"] spawn A3A_fnc_inmuneConvoy;

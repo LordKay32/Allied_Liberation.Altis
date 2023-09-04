@@ -93,6 +93,7 @@
 	"U_LIB_UK_P37",
 	"U_LIB_UK_P37_LanceCorporal",
 	"U_LIB_UK_P37_Sergeant",
+	"U_LIB_UK_DenisonSmock",
 	"fow_u_uk_bd40_commando_01_private",
 	"fow_u_uk_parasmock",
 	"U_LIB_US_Private",

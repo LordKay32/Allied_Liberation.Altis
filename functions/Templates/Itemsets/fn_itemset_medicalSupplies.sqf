@@ -48,7 +48,7 @@ if (_level == "MEDIC") exitWith {
 			private _firstAidKits = _factionData getVariable "firstAidKits";
 			[
 				[_mediKits#0, 1],
-				[_firstAidKits#0,10]
+				[_firstAidKits#0,4]
 			]
 			};
 		};
@@ -72,7 +72,7 @@ if (_level == "MEDIC") exitWith {
 		default {
 			private _firstAidKits = _factionData getVariable "firstAidKits";
 			[
-				[_firstAidKits#0,3]
+				[_firstAidKits#0,2]
 			]
 		};
 	};
@@ -89,7 +89,7 @@ switch (true) do {
 	default {
 		private _firstAidKits = _factionData getVariable "firstAidKits";
 		[
-			[_firstAidKits#0,3]
+			[_firstAidKits#0,2]
 		]
 	};
 };

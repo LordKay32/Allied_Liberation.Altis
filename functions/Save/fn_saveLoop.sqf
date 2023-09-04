@@ -85,16 +85,25 @@ private _destroyedPositions = destroyedBuildings apply { getPosATL _x };
 private ["_hrBackground","_resourcesBackground","_veh","_typeVehX","_weaponsX","_ammunition","_items","_backpcks","_containers","_arrayEst","_posVeh","_dierVeh","_prestigeOPFOR","_prestigeBLUFOR","_city","_dataX","_markersX","_garrison","_arrayMrkMF","_positionOutpost","_typeMine","_posMine","_detected","_typesX","_exists","_friendX"];
 
 //_hrBackground = (server getVariable "hr") + ({(alive _x) and (not isPlayer _x) and (_x getVariable ["spawner",false]) and ((group _x in (hcAllGroups theBoss) or (isPlayer (leader _x))) and (side group _x == teamPlayer))} count allUnits);
-_UKhrBackground = (server getVariable "UKhr") + ({(_x in UKUnits) and (alive _x) and (not isPlayer _x) and (_x getVariable ["spawner",false]) and ((group _x in (hcAllGroups theBoss) or (isPlayer (leader _x))) and (side group _x == teamPlayer))} count allUnits);
-_SAShrBackground = (server getVariable "SAShr") + ({(_x in SASUnits) and (alive _x) and (not isPlayer _x) and (_x getVariable ["spawner",false]) and ((group _x in (hcAllGroups theBoss) or (isPlayer (leader _x))) and (side group _x == teamPlayer))} count allUnits);
-_UShrBackground = (server getVariable "UShr") + ({(_x in USUnits) and (alive _x) and (not isPlayer _x) and (_x getVariable ["spawner",false]) and ((group _x in (hcAllGroups theBoss) or (isPlayer (leader _x))) and (side group _x == teamPlayer))} count allUnits);
-_parahrBackground = (server getVariable "parahr") + ({(_x in paraUnits) and (alive _x) and (not isPlayer _x) and (_x getVariable ["spawner",false]) and ((group _x in (hcAllGroups theBoss) or (isPlayer (leader _x))) and (side group _x == teamPlayer))} count allUnits);
-_SDKhrBackground = (server getVariable "SDKhr") + ({(_x in SDKUnits) and (alive _x) and (not isPlayer _x) and (_x getVariable ["spawner",false]) and ((group _x in (hcAllGroups theBoss) or (isPlayer (leader _x))) and (side group _x == teamPlayer))} count allUnits);
+_UKhrBackground = (server getVariable "UKhr") + ({(typeOf _x in UKTroops) and (alive _x) and (not isPlayer _x) and (_x getVariable ["spawner",false]) and ((group _x in (hcAllGroups theBoss) or (isPlayer (leader _x))) and (side group _x == teamPlayer))} count allUnits);
+_SAShrBackground = (server getVariable "SAShr") + ({(typeOf _x in SASTroops) and (alive _x) and (not isPlayer _x) and (_x getVariable ["spawner",false]) and ((group _x in (hcAllGroups theBoss) or (isPlayer (leader _x))) and (side group _x == teamPlayer))} count allUnits);
+_UShrBackground = (server getVariable "UShr") + ({(typeOf _x in USTroops) and (alive _x) and (not isPlayer _x) and (_x getVariable ["spawner",false]) and ((group _x in (hcAllGroups theBoss) or (isPlayer (leader _x))) and (side group _x == teamPlayer))} count allUnits);
+_parahrBackground = (server getVariable "parahr") + ({(typeOf _x in paraTroops) and (alive _x) and (not isPlayer _x) and (_x getVariable ["spawner",false]) and ((group _x in (hcAllGroups theBoss) or (isPlayer (leader _x))) and (side group _x == teamPlayer))} count allUnits);
+_SDKhrBackground = (server getVariable "SDKhr") + ({(typeOf _x in SDKTroops) and (alive _x) and (not isPlayer _x) and (_x getVariable ["spawner",false]) and ((group _x in (hcAllGroups theBoss) or (isPlayer (leader _x))) and (side group _x == teamPlayer))} count allUnits);
 _hrBackground = _UKhrBackground + _SAShrBackground + _UShrBackground + _parahrBackground + _SDKhrBackground;
 _resourcesBackground = server getVariable "resourcesFIA";
 _intelPoints = server getVariable "intelPoints";
 _vehInGarage = [];
 _vehInGarage = _vehInGarage + vehInGarage;
+
+//return gear to arsenal
+_remainingUnits = allUnits select {((alive _x) and (not isPlayer _x) and (_x getVariable ["spawner",false]) and ((group _x in (hcAllGroups theBoss) or (isPlayer (leader _x))) and (side group _x == teamPlayer)))};
+{
+	_loadout = getUnitLoadout _x;
+	_fullUnitGear = _loadout call A3A_fnc_reorgLoadoutUnit;
+	{ [_x select 0 call jn_fnc_arsenal_itemType, _x select 0, _x select 1] call jn_fnc_arsenal_addItem } forEach _fullUnitGear;
+} forEach _remainingUnits;
+
 {
 	_friendX = _x;
 	if ((_friendX getVariable ["spawner",false]) and (side group _friendX == teamPlayer))then {

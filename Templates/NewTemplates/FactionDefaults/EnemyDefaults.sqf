@@ -3,7 +3,7 @@
 //////////////////////////
 
 // All of bellow are optional overrides.
-["firstAidKits", ["FirstAidKit"]] call _fnc_saveToTemplate;  // However, item is tested for for help and reviving.
+["firstAidKits", ["fow_i_fak_ger"]] call _fnc_saveToTemplate;  // However, item is tested for for help and reviving.
 ["mediKits", ["Medikit"]] call _fnc_saveToTemplate;  // However, item is tested for for help and reviving.
 
 // The bellow are optional overrides
