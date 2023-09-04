@@ -566,7 +566,7 @@ private _templateVariables = [
 	"paraATman",
 	"UKTroops",
 	"SASTroops",
-	"SASTroops",
+	"USTroops",
 	"paraTroops",
 	"SDKTroops",
 	"alliedTroops",
