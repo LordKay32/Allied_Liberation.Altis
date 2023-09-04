@@ -580,7 +580,7 @@ private _templateVariables = [
 	"groupSASSniper",
 	"groupSDKLeaders",
 	"vehUKAACrew",
-	"vehUKAACrew",
+	"vehUSMGCrew",
 	"groupUSMortarCrew",
 	"groupUSMGCrew",
 	"groupUKMGCrew",

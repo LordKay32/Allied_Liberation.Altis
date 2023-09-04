@@ -151,7 +151,7 @@ sleep 10;
 deleteGroup _groupX;
 sleep 5;
 
-[[_marker],"SCRT_fnc_outpost_createSupportPostDistance"] call A3A_fnc_scheduler;
+[_marker],"SCRT_fnc_outpost_createSupportPostDistance"] remoteExec ["A3A_fnc_scheduler",2];
 
 sleep 10;
 
