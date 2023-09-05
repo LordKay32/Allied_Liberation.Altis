@@ -5,6 +5,7 @@ private _positionX = getMarkerPos _markerX;
 
 private _radiusX = 1;
 private _garrison = garrison getVariable [_markerX, []];
+private _statics = garrison getVariable [(_markerX + "_statics"), []];
 private _veh = objNull;
 private _road = objNull;
 private _staticDirection = 0;
