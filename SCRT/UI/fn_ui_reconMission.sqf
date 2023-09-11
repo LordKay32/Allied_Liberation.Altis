@@ -142,7 +142,7 @@ if ((getMarkerPos _nearX) distance _positionTel < 25) exitWith {
 	{
 	_wpNum = _wpNum +1;
 	_wpPos = waypointPosition [_groupX, _wpNum];
-	_x setWaypointStatements ["true", format ["[group this, '%1', %2, %3] execVM 'SCRT\Outpost\watchPostRecon.sqf'", _markerX, _wpPos, _wpNum]];
+	_x setWaypointStatements ["true", format ["[group this, '%1', %2, %3] spawn SCRT_fnc_watchPostRecon", _markerX, _wpPos, _wpNum]];
 	} forEach [_wp0,_wp1,_wp2,_wp3,_wp4,_wp5];
 };
 
@@ -182,4 +182,36 @@ deleteMarkerLocal _directionMrk;;
 	};
 sleep 1;
 private _wp1 = _groupX addWaypoint [_positionTel, 0];
-_wp1 setWaypointStatements ["true", format ["[group this, %1, %2, '%3'] execVM 'SCRT\Outpost\watchPostReconMission.sqf'", _positionTel, _positionDir, _nearX]];
+_wp1 setWaypointStatements ["true", format ["[group this, %1, %2, '%3'] spawn SCRT_fnc_watchPostReconMission", _positionTel, _positionDir, _nearX]];
+
+private _wpIndex = currentWaypoint _groupX;
+
+waitUntil {sleep 1; ({alive _x} count units _groupX == 0) || (combatMode _groupX != "GREEN") || (currentWaypoint _groupX == _wpIndex + 1)};
+
+if (combatMode _groupX != "GREEN") then {
+	[
+    "Recon Mission",
+    parseText "Recon team spotted, recon mission aborted."
+	] call A3A_fnc_customHint;
+	for "_i" from 0 to (count waypoints _groupX - 1) do
+	{
+		deleteWaypoint [_groupX, 0];
+	};
+	private _wpEscape = _groupX addWaypoint [(getMarkerPos _nearX), 0];
+	_wpEscape setWaypointSpeed "FULL";
+	if ({alive _x} count units _groupX > 0) then {
+		{
+		[_x] spawn {
+			params ["_unit"];
+			sleep 2;
+			while {true} do {	
+				[_unit,_unit] spawn A3A_fnc_chargeWithSmoke;
+				sleep 60;
+				if (!(alive _unit) || (combatMode (group _unit) == "GREEN")) exitWith {};
+			};
+		};
+		} forEach units _groupX;
+		waitUntil {sleep 1; west knowsAbout (leader _groupX) < 4}; 
+		_groupX setCombatMode "GREEN";
+	};
+};

@@ -47,8 +47,9 @@ if(_mode == "ADD") then {
 					private _groupE = group (gunner _arty);
 
 					artyMrkFlsh = false;
-
-					["artillery", _groupE] spawn A3A_fnc_artySupport;
+	
+					["artillery", _groupE] remoteExec ["A3A_fnc_artySupport",2];
+					//["artillery", _groupE] spawn A3A_fnc_artySupport;
 				};
 
 				case (_site in mobilemortarsFIA): {
@@ -65,7 +66,6 @@ if(_mode == "ADD") then {
 
 					["mortar", _groupE] spawn A3A_fnc_artySupport;
 				};
-
 			};	
 		},
     []

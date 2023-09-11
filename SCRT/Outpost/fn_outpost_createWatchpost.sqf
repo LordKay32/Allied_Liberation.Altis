@@ -32,7 +32,7 @@ private _squadloadout = [];
 {
 private _loadout = rebelLoadouts get _x;
 _squadloadout pushback _loadout;
-} forEach _formatX;
+} forEach groupsSASRecon;
 
 private _fullSquadGear = _squadloadout call A3A_fnc_reorgLoadoutSquad;
 

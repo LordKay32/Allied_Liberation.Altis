@@ -12,7 +12,7 @@ _comboBox lbAdd "Small sandbags";
 _comboBox lbSetData [0, "TRENCH"];
 _comboBox lbAdd "Large sandbag barriers";
 _comboBox lbSetData [1, "OBSTACLE"];
-_comboBox lbAdd "Sandbag bunkers";
+_comboBox lbAdd "Sandbag bunkers and trenches";
 _comboBox lbSetData [2, "SANDBAG_BUNKER"];
 _comboBox lbAdd "Large bunkers";
 _comboBox lbSetData [3, "CONCRETE_BUNKER"];

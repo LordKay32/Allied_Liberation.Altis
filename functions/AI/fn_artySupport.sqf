@@ -1,4 +1,4 @@
-private ["_minRange","_maxRange","_groups","_artyArray","_artyRoundsArr","_hasAmmunition","_areReady","_hasArtillery","_areAlive","_soldierX","_veh","_typeAmmunition","_typeArty","_positionTel","_artyArrayDef1","_artyRoundsArr1","_piece","_isInRange","_positionTel2","_rounds","_roundsMax","_markerX","_size","_forcedX","_textX","_mrkFinal","_mrkFinal2","_timeX","_eta","_countX","_pos","_ang"];
+private ["_minRange","_maxRange","_groups","_artyArray","_artyRoundsArr","_hasAmmunition","_areReady","_hasArtillery","_areAlive","_soldierX","_veh","_typeAmmunition","_typeArty","_positionTel","_artyArrayDef1","_artyRoundsArr1","_piece","_isInRange","_positionTel2","_rounds","_roundsMax","_markerX","_size","_forcedX","_textX","_mrkFinal","_mrkFinal2","_timeX","_eta","_countX","_pos"];
 
 private _artyType = _this select 0;
 private _grp = _this select 1;
@@ -241,6 +241,7 @@ if ((not(_markerX in forcedSpawn)) and (_positionTel distance (getMarkerPos _mar
 _textX = format ["Requesting fire support on Grid %1. %2 Rounds.", mapGridPosition _positionTel, round _rounds];
 [theBoss,"sideChat",_textX] remoteExec ["A3A_fnc_commsMP",[teamPlayer,civilian]];
 
+private _ang = 0;
 if (_typeArty == "BARRAGE") then
 	{
 	_mrkFinal2 = createMarkerLocal [format ["Arty%1", random 100], _positionTel2];
@@ -265,6 +266,9 @@ if (_typeArty == "BARRAGE") then
 
 _pos = [_positionTel,random 10,random 360] call BIS_fnc_relPos;
 
+[_artyArrayDef1,_rounds,_artyRoundsArr1,_typeAmmunition,_typeArty,_pos,_ang] remoteExec ["A3A_fnc_artyFire",2];
+
+/*
 for "_i" from 0 to (count _artyArrayDef1) - 1 do
 	{
 	if (_rounds > 0) then
@@ -338,3 +342,4 @@ if (_forcedX) then {
 		publicVariable "forcedSpawn";
 	};
 };
+*/

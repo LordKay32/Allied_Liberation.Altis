@@ -134,6 +134,7 @@ class A3A
 		class airbombFIA {};
 		class AIreactOnKill {};
         class artillery {};
+        class artyFire {};
         class artySupport {};
         class askHelp {};
         class assaultBuilding {};

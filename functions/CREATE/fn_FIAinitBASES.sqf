@@ -82,6 +82,7 @@ if (_typeX in SDKTroops) then {
 		params ["_unit", "_killer", "_instigator", "_useEffects"];
 		partizanKilled = partizanKilled + 1;
 		publicVariable "partizanKilled";
+		if (typeName _killer != "OBJECT") exitWith {};
 		if (isPlayer _killer) then {
 			partizanKilledFF = partizanKilledFF + 1;
 			publicVariable "partizanKilledFF";
@@ -92,6 +93,7 @@ if (_typeX in SDKTroops) then {
 		params ["_unit", "_killer", "_instigator", "_useEffects"];
 		teamPlayerKilled = teamPlayerKilled + 1;
 		publicVariable "teamPlayerKilled";
+		if (typeName _killer != "OBJECT") exitWith {};
 		if (isPlayer _killer) then {
 			teamPlayerKilledFF = teamPlayerKilledFF + 1;
 			publicVariable "teamPlayerKilledFF";
@@ -103,6 +105,7 @@ _EHkilledIdx = _unit addEventHandler ["killed", {
 	_victim = _this select 0;
 	_killer = _this select 1;
 	[_victim] remoteExec ["A3A_fnc_postmortem",2];
+	if (typeName _killer != "OBJECT") exitWith {};
 	if (isPlayer _killer) then
 		{
 		if (!isMultiPlayer) then

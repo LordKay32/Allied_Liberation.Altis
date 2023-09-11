@@ -68,34 +68,43 @@ _wp2 setWaypointSpeed "FULL";
 _targetPos = _targetPos getPos [75, (90 + _targDir)];
 sleep 2;
 };
- 
+
+private _distance = 0;
+private _interval =0;
+
+if (_markerX in airportsX) then {
+	_distance = 2400;
+	_interval = 1;
+} else {
+	_distance = 2300;
+	_interval = 0.6;
+};
+
 { 
 	_plane = _x;
-	[_plane, _positionX] spawn {
-		_plane = _this select 0;
-		_positionX = _this select 1;
-	 	waitUntil {sleep 1; _plane distance2D _positionX < 2150};  
+	[_plane, _positionX, _distance, _interval] spawn {
+		params ["_plane", "_positionX", "_distance", "_interval"];
+	 	waitUntil {sleep 1; _plane distance2D _positionX < _distance};  
 	  	sleep 0.6; 
 	  	for "_i" from 1 to 4 do {  
 	  		_bombPos = (getPos _plane) vectorAdd [0, 0, -6];
 			_bomb = "LIB_SC500_Bomb" createvehicle _bombPos;
             _bomb setDir (getDir _plane);
-            _bomb setVelocityModelSpace [0,125,0];
-			sleep 1.2;            
+            _bomb setVelocityModelSpace [0,100,0];
+			sleep _interval;            
 	  	};  
 	}; 
 } forEach _allStrikePlanes; 
- 
+
 { 
 	_plane = _x; 
-	[_plane, _positionX] spawn {
-		_plane = _this select 0;
-		_positionX = _this select 1;
-		waitUntil {sleep 1; _plane distance2D _positionX < 2150};
+	[_plane, _positionX, _distance, _interval] spawn {
+		params ["_plane", "_positionX", "_distance", "_interval"];
+		waitUntil {sleep 1; _plane distance2D _positionX < _distance};
 		sleep 1.2; 
  		for "_i" from 1 to 4 do {  
 			[_plane, "sab_fl_bomb_weapon"] call bis_fnc_fire;  
-			sleep 1.2;  
+			sleep _interval;  
 		}; 
 	}; 
 } forEach _allStrikePlanes;

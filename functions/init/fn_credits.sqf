@@ -103,7 +103,7 @@ titleFadeOut 2;
 
 sleep 3;
 
-titleText ["<t color='#ffffff' size='2.4'>With her airfields and harbours, Altis represents a strategic threat to any invasion of Italy.", "PLAIN", 1, true, true];
+titleText ["<t color='#ffffff' size='2.4'>With her airfields and harbours, Altis represents a strategic threat, and must be taken before an invasion of Italy.", "PLAIN", 1, true, true];
 
 sleep 7;
 
@@ -111,7 +111,7 @@ titleFadeOut 2;
 
 sleep 3;
 
-titleText ["<t color='#ffffff' size='2.4'>The Germans have turned the island into a fortress. It will not be easy to crack.", "PLAIN", 1, true, true];
+titleText ["<t color='#ffffff' size='2.4'>In addition the Germans have extensively fortified the island.", "PLAIN", 1, true, true];
 
 sleep 7;
 
@@ -119,4 +119,4 @@ titleFadeOut 2;
 
 sleep 3;
 
-titleText ["<t color='#ffffff' size='2.4'>The Allies prepare to mount an amphibious invasion of the island. The northeastern tip of the island is chosen, near an airfield and harbour vital for landing supplies.", "PLAIN", 1, true, true];
+titleText ["<t color='#ffffff' size='2.4'>At dawn, the Allies launch their assault...", "PLAIN", 1, true, true];

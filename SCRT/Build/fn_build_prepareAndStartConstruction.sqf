@@ -103,7 +103,7 @@ switch(_constructionType) do {
         construction_buildTime = 60;
     };
     case("SANDBAG_BUNKER"): {
-        construction_buildingsAvailable = ["Land_BagBunker_Small_F"];
+        construction_buildingsAvailable = ["Land_BagBunker_Small_F", "fow_p_defenceposition_05"];
         construction_cost = 250;
         construction_buildTime = 90;
     };

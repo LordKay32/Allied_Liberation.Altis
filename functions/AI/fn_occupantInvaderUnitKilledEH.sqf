@@ -18,6 +18,7 @@ if (side (group _killer) == teamPlayer) then
 {
 	occupantKilled = occupantKilled + 1;
 	publicVariable "occupantKilled";
+	if (typeName _killer != "OBJECT") exitWith {};
     if (isPlayer _killer) then
     {
     	occupantKilledByPlayers = occupantKilledByPlayers + 1;

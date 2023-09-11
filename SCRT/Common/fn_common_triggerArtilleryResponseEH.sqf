@@ -53,7 +53,7 @@ if (random 100 < _chance) then {
 			};
 			
             if (_base in _airports) then {
-                [_artillery, _reveal, ["AIRSTRIKE", "CAS", "QRF"], _sideX, 0.4] remoteExec ["A3A_fnc_sendSupport", 2];
+                [_artillery, _reveal, ["AIRSTRIKE", "QRF"], _sideX, 0.4] remoteExec ["A3A_fnc_sendSupport", 2];
             }; 
             
             if (_base in _milbases) then {

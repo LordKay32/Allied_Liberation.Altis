@@ -190,6 +190,8 @@ class SCRT
         class outpost_createHmgDistance {};
         class outpost_createSupportPost {};
         class outpost_createSupportPostDistance {};
+        class watchPostRecon {};
+        class watchPostReconMission {};
     };
 
     class Unit 

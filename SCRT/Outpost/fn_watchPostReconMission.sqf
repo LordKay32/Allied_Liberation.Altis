@@ -26,14 +26,21 @@ _timer = 0;
     parseText "Recon Mission Started."
 ] call A3A_fnc_customHint;
 
+_groupNum = random 1000;
+_groupMarker = createMarker [format["Entity_%1", _groupNum], _reconPos];
+_groupMarker setMarkerType "plp_icon_binoculars";
+_groupMarker setMarkerColor colorTeamplayer;
+_groupMarker setMarkerDir (_vector + 180);
+_groupMarker setMarkerText "Recon Team";
+
 _exit = false;
 
 while {_timer <= 60} do {
-	_entities = allGroups select {(side _x isEqualTo west) && ((leader _x) distance _positionX < 400)};
+	_entities = (_positionX nearEntities 400) select {side _x isEqualTo Occupants};
 	_num = 0;
 	_markerList = [];
 	{
-	_pos = getPos (leader _x);
+	_pos = getPos _x;
 	_num = _num + 1;
 	_marker = createMarker [format["Entity_%1", _num], _pos];
 	_marker setMarkerType "mil_unknown_noShadow";
@@ -51,11 +58,28 @@ while {_timer <= 60} do {
 	} forEach _markerList;
 };
 if (_exit == true) exitWith {
+	deleteMarker _groupMarker;
 	{
 	_x setMarkerAlpha 0.5;
 	} forEach _markerList;
 	if ({alive _x} count units _group > 0) then {
-		private _wp1 = _group addWaypoint [(getMarkerPos _markerX), 0];
+	[
+    "Recon Mission",
+    parseText "Recon team spotted, recon mission aborted."
+	] call A3A_fnc_customHint;
+	private _wp1 = _group addWaypoint [(getMarkerPos _markerX), 0];
+	_wp1 setWaypointSpeed "FULL";
+		{
+		[_x] spawn {
+			params ["_unit"];
+			sleep 2;
+			while {true} do {	
+				[_unit,_unit] spawn A3A_fnc_chargeWithSmoke;
+				sleep 60;
+				if (!(alive _unit) || (combatMode (group _unit) == "GREEN")) exitWith {};
+			};
+		};
+		} forEach units _group;
 		waitUntil {sleep 1; west knowsAbout (leader _group) < 4}; 
 		_group setCombatMode "GREEN";
 	};
@@ -67,7 +91,6 @@ if (_exit == true) exitWith {
 while {true} do {
 	_entities = allGroups select {(side _x isEqualTo west) && ((leader _x) distance _positionX < 400)};
 	
-	
 	_num = 0;
 	_markerList = [];
 	{
@@ -76,7 +99,6 @@ while {true} do {
 	_marker = createMarker [format["Entity_%1", _num], _pos];
 	
 	if (vehicle (leader _x) == (leader _x)) then {_marker setMarkerType "b_inf"};
-	if (typeOf (vehicle (leader _x)) in ["fow_w_mg42_deployed_high_ger_heer", "fow_w_mg42_deployed_middle_ger_heer"]) then {_marker setMarkerType "b_inf"};
 	if (typeOf (vehicle (leader _x)) in vehNormal) then {_marker setMarkerType "b_motor_inf"};
 	if (typeOf (vehicle (leader _x)) in (vehAmmoTrucks + vehSupplyTrucks)) then {_marker setMarkerType "b_support"};
 	if (typeOf (vehicle (leader _x)) in vehAPCs) then {_marker setMarkerType "b_mech_inf"};
@@ -84,16 +106,25 @@ while {true} do {
 	if (typeOf (vehicle (leader _x)) in vehAA) then {_marker setMarkerType "b_antiair"};
 	if (typeOf (vehicle (leader _x)) in vehFixedWing) then {_marker setMarkerType "b_plane"};
 	if (typeOf (vehicle (leader _x)) in vehBoats) then {_marker setMarkerType "b_naval"};
+	{
+		if (vehicle _x == _x) then {
+		_infMarker = createMarker [format["Inf_%1", (random 1000)], getPos _x];
+		_infMarker setMarkerType "mil_dot";
+		_infMarker setMarkerColor colorOccupants;
+		_markerList pushBack _infMarker;
+		};
+	} forEach ((units _x) - [leader _x]);
 	_markerList pushBack _marker;
 	} forEach _entities;
 
-	_statics = (nearestObjects [_positionX, ["StaticWeapon"], 400]) select {side _x isEqualTo west};
+	_statics = (nearestObjects [_positionX, ["StaticWeapon"], 600]) select {side _x isEqualTo west};
 	{
 	_pos = getPos _x;
 	_num = _num + 1;
 	_marker = createMarker [format["Entity_%1", _num], _pos];
 	
 	if (typeOf (vehicle _x) in NATOMG) then {_marker setMarkerType "b_Ordnance"; _marker setMarkerText "MG"};
+	if (typeOf (vehicle _x) in ["fow_w_mg42_deployed_high_ger_heer", "fow_w_mg42_deployed_middle_ger_heer"]) then {_marker setMarkerType "mil_dot"; _marker setMarkerColor colorOccupants};
 	if (typeOf (vehicle _x) in [staticATOccupants]) then {_marker setMarkerType "b_Ordnance"; _marker setMarkerText "AT"};
 	if (typeOf (vehicle _x) in staticAAOccupants) then {_marker setMarkerType "b_antiair"};
 	if (typeOf (vehicle _x) in NATOMortar) then {_marker setMarkerType "b_mortar"};
@@ -102,14 +133,15 @@ while {true} do {
 	_markerList pushBack _marker;
 	} forEach _statics;
 	
-	sleep 1;
+	sleep 10;
 	if ({alive _x} count units _group == 0) exitWith {_exit = true};
 	if (combatMode _group != "GREEN") exitWith {_exit = true};
 	{
 	deleteMarker _x;
 	} forEach _markerList;
 };
-if (_exit == true) exitWith {	
+if (_exit == true) exitWith {
+	deleteMarker _groupMarker;
 	{
 	[_x] spawn {
 		private _marker = _this select 0;
@@ -122,11 +154,16 @@ if (_exit == true) exitWith {
 	} forEach _markerList;
 	
 	if ({alive _x} count units _group > 0) then {
-		private _wp1 = _group addWaypoint [(getMarkerPos _markerX), 0];
+	[
+    "Recon Mission",
+    parseText "Recon team spotted, recon mission aborted."
+	] call A3A_fnc_customHint;
+	private _wp1 = _group addWaypoint [(getMarkerPos _markerX), 0];
+	_wp1 setWaypointSpeed "FULL";
 		{
 		[_x] spawn {
-			private _unit = _this select 0;
-			sleep 5;
+			params ["_unit"];
+			sleep 2;
 			while {true} do {	
 				[_unit,_unit] spawn A3A_fnc_chargeWithSmoke;
 				sleep 60;

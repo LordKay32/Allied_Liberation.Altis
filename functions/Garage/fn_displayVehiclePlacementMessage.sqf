@@ -6,7 +6,15 @@
 params ["_vehType", ["_title", ""]];
 
 if (_title == "") then {
+	if (_vehType in ["fow_p_defenceposition_03", "fow_p_defenceposition_05", "Land_BagBunker_Large_F"]) then {
+		switch (true) do {
+	    	case(_vehType == "fow_p_defenceposition_05"): {
+	    		_title = "Trench";
+	    	};
+		};
+	} else {
    _title = (getText (configFile >> "CfgVehicles" >> _vehType >> "displayName"));
+	};
 };
 
 private _turboKeyName = if (count (actionKeysNames ["turbo", 1]) > 0) then {actionKeysNames ["turbo", 1];} else {"""No key bound""";};

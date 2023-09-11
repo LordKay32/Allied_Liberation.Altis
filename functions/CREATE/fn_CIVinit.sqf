@@ -52,6 +52,7 @@ _EHkilledIdx = _unit addEventHandler
 		}
 		else
 		{
+			if (typeName _killer != "OBJECT") exitWith {};
 			if (side group _killer == teamPlayer) then
 				{
 					civilianKilledByteamPlayer = civilianKilledByteamPlayer + 1;
