@@ -81,6 +81,8 @@ if (sidesX getVariable [_markerDestination, sideUnknown] != teamPlayer) then { _
 private _vehicleCount = (random 1) + (2*_playerScale) + (_aggression/50);
 _vehicleCount = (((round (_vehicleCount)) max 2) min 4) + ([0, 2] select _super);
 
+if (_markerOrigin in outposts) then {_vehicleCount = _vehicleCount - 2};
+
 [
     3,
     format ["Due to %1 aggression and %2 player scale, sending %3 vehicles", _aggression, _playerScale, _vehicleCount],

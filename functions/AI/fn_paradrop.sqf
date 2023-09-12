@@ -56,6 +56,7 @@ if(_vehicle isKindOf "Helicopter") then
     _vehicle flyInHeight 500;
 };
 
+/*
 private _normalAngle = (_originPosition getDir _targetPosition);
 private _attackAngle = (random 120) - 60;
 private _entryPos = [];
@@ -66,6 +67,26 @@ while {true} do
     _attackAngle = (random 120) - 60;
 };
 private _exitPos = _targetPosition getPos [_entryDistance, _normalAngle + _attackAngle];
+*/
+
+private _normalAngle = (_originPosition getDir _targetPosition);
+private _centre = _targetPosition getPos [200, (_normalAngle - 180)];
+
+private _entryPos = [];
+private _exitPos = [];
+
+private _exitNumber = 0;
+while {true} do {
+	if (_exitNumber == 24) exitWith {
+		_entryPos = _targetPosition getPos [200, (_normalAngle - 180)];
+		_exitPos = _targetPosition getPos [200, _normalAngle];
+	};
+	_entryPos = [_centre, 400, 500, 0, 0, 0, 0] call BIS_fnc_findSafePos;
+	private _attackAngle = (_originPosition getDir _entryPos);
+	_exitPos = _entryPos getPos [_entryDistance, _attackAngle]; 
+	if (!surfaceIsWater _exitPos) exitWith {};
+	_exitNumber = _exitNumber + 1;
+};
 
 {
     _x set [2, 500];
@@ -84,9 +105,9 @@ _wp2 setWaypointType "MOVE";
 _wp2 setWaypointSpeed "FULL";
 _wp2 setWaypointStatements ["true", "if !(local this) exitWith {}; deleteVehicle (vehicle this); {deleteVehicle _x} forEach thisList"];
 
-waitUntil {sleep 1; (_vehicle distance2d _entryPos < 100) || (!alive _vehicle) || (!canMove _vehicle)};
+waitUntil {sleep 1; (_vehicle distance2d _entryPos < 200) || (!alive _vehicle) || (!canMove _vehicle)};
 
-if(_vehicle distance2d _entryPos < 100) then
+if(_vehicle distance2d _entryPos < 200) then
 {
 private _allUnits = [];
 {
@@ -96,8 +117,12 @@ _allUnits append units _x;
     [3, 'Drop pos reached', 'paradrop'] call A3A_fnc_log;
     _vehicle setCollisionLight true;
     {
-    	[_vehicle,_x] spawn LIB_fnc_deployStaticLine; 
+		_x allowDamage false;
+		_x disableCollisionWith _vehicle;
+		[_vehicle,_x] spawn LIB_fnc_deployStaticLine;
 		sleep 0.3;
+		_x allowDamage true;
+		_x enableCollisionWith _vehicle;
 		[_x] spawn {		
     		_unit = _this select 0;
     		waitUntil {sleep 1; (getPos _unit) select 2 < 50};

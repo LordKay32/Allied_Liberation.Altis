@@ -24,9 +24,9 @@ private _availableAirports = (airportsX + ["CSAT_carrier", "NATO_carrier"]) sele
     {(getMarkerPos _x) distance2D _posDestination < distanceForAirAttack}}
 };
 
-private _outposts = if (_threatEvalLand <= 15) then
+private _milbases = if (_threatEvalLand <= 15) then
 {
-    milbases select
+    (milbases + outposts) select
     {
         (sidesX getVariable [_x,sideUnknown] == _side) &&
         {([_x,true] call A3A_fnc_airportCanAttack) &&
@@ -39,7 +39,7 @@ else
     []
 };
 
-_availableAirports = _availableAirports + _outposts;
+_availableAirports = _availableAirports + _milbases;
 private _nearestMarker = [(resourcesX + factories + airportsX + milbases + outposts + seaports),_posDestination] call BIS_fnc_nearestPosition;
 private _markerOrigin = "";
 _availableAirports = _availableAirports select
@@ -63,7 +63,12 @@ private _finalOriginMarkers = [];
 
 if !(_availableAirports isEqualTo []) then
 {
-    _markerOrigin = [_availableAirports, _posDestination] call BIS_fnc_nearestPosition;
+	private _largeBases = _availableAirports select {(_x distance _availableAirports < distanceForLandAttack) && (_x in (airportsX + milbases))};
+	if !(_largeBases isEqualTo []) then {
+		_markerOrigin = [_largeBases, _posDestination] call BIS_fnc_nearestPosition;
+	} else {
+    	_markerOrigin = [_availableAirports, _posDestination] call BIS_fnc_nearestPosition;
+	};
 };
 
 _markerOrigin;
