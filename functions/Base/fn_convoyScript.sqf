@@ -92,31 +92,35 @@ while {true} do
          [2, "Vehicle or driver died during travel, abandoning", _fileName, true] call A3A_fnc_log;
     };
     if (_vehIndex == -1) exitWith {};				// external abort
-    private _distance = 400 + (50 * _vehIndex);
-    if (_vehicle distance _posDestination < _distance) exitWith {
+    if (_vehicle distance _posDestination < 1000) exitWith {
         [3, "Vehicle arrived at destination", _fileName, true] call A3A_fnc_log;
         (units  _driverGroup) joinSilent _crewGroup;
          _crewGroup setBehaviourStrong "AWARE";
-    	deleteGroup _driverGroup;
-		if (typeOf _vehicle in vehNATOTrucks) then {
-			{
-			[_x] allowGetIn false;
-			[_x] orderGetIn false;
-			} forEach crew _vehicle;
-		} else {
-			if (typeOf _vehicle == "LIB_SdKfz_7_AA") exitWith {};
-			private _cargoUnits = [];
-			private _cargoArray = fullCrew [_vehicle, "cargo"];
-			{
-			private _unit = _x select 0;
-			_cargoUnits pushBackUnique _unit;
-			} forEach _cargoArray;
-			{
-			[_x] allowGetIn false;
-			[_x] orderGetIn false;
-			} forEach _cargoUnits;
-		};
-    };
+    	deleteGroup _driverGroup;	
+    	[_vehicle,_posDestination,_vehIndex] spawn {
+    		params ["_vehicle","_posDestination","_vehIndex"];
+    		private _distance = 400 + (50 * _vehIndex);
+    		waitUntil {sleep 1; _vehicle distance _posDestination < _distance || [(driver _vehicle), 400] call BIS_fnc_enemyDetected};
+			if (typeOf _vehicle in vehNATOTrucks) then {
+				{
+				[_x] allowGetIn false;
+				[_x] orderGetIn false;
+				} forEach crew _vehicle;
+			} else {
+				if (typeOf _vehicle == "LIB_SdKfz_7_AA") exitWith {};
+				private _cargoUnits = [];
+				private _cargoArray = fullCrew [_vehicle, "cargo"];
+				{
+				private _unit = _x select 0;
+				_cargoUnits pushBackUnique _unit;
+				} forEach _cargoArray;
+				{
+				[_x] allowGetIn false;
+				[_x] orderGetIn false;
+				} forEach _cargoUnits;
+			};
+	    };
+	};
 	
 	// Reright flipped vehicles
 	(_vehicle call BIS_fnc_getPitchBank) params ["_vx","_vy"];
@@ -195,4 +199,3 @@ _attackWP setWaypointType "SAD";
 _x commandMove _posDestination;
 } forEach (units _crewGroup);
  _vehicle limitSpeed -1;
-

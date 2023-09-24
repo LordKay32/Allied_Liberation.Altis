@@ -326,7 +326,20 @@ sleep 1;
   				objNull setVehicleCargo _x;  
   				sleep 1;  
   				} forEach _cargoVeh;  
- 			};  
+ 			};
+		 	sleep random [20,30,40];
+			private _timer = 0;
+			while {_timer < 20}	do {
+				sleep 1;
+				_timer = _timer + 1;
+				_boat setVelocityModelSpace [0,-6, 0];
+			};
+		group (driver _boat) addWaypoint //waypoint needed
+		sleep 120;
+		{
+		deleteVehicle _x;
+		} forEach crew _boat;
+		deleteVehicle _boat;		
 		};
 	};
 };	

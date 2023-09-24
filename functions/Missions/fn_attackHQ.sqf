@@ -10,7 +10,7 @@ private _soldiers = [];
 
 if ({(_x distance _positionX < 500) and (typeOf _x == staticAAteamPlayer)} count staticsToSave > 4) exitWith {};
 
-private _airportsX = airportsX select {(sidesX getVariable [_x,sideUnknown] != teamPlayer) and (spawner getVariable _x == 2)};
+private _airportsX = airportsX select {(sidesX getVariable [_x,sideUnknown] != teamPlayer) and (spawner getVariable _x == 2) and ((getMarkerPos _x) distance _positionX > 4000)};
 if (count _airportsX == 0) exitWith {};
 private _airportX = [_airportsX,_positionX] call BIS_fnc_nearestPosition;
 private _posOrigin = getMarkerPos _airportX;

@@ -118,11 +118,9 @@ _allUnits append units _x;
     _vehicle setCollisionLight true;
     {
 		_x allowDamage false;
-		_x disableCollisionWith _vehicle;
 		[_vehicle,_x] spawn LIB_fnc_deployStaticLine;
 		sleep 0.3;
 		_x allowDamage true;
-		_x enableCollisionWith _vehicle;
 		[_x] spawn {		
     		_unit = _this select 0;
     		waitUntil {sleep 1; (getPos _unit) select 2 < 50};

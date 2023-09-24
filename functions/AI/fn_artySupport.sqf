@@ -266,9 +266,8 @@ if (_typeArty == "BARRAGE") then
 
 _pos = [_positionTel,random 10,random 360] call BIS_fnc_relPos;
 
-[_artyArrayDef1,_rounds,_artyRoundsArr1,_typeAmmunition,_typeArty,_pos,_ang] remoteExec ["A3A_fnc_artyFire",2];
+private _mortarOwner = groupOwner _grp; 
 
-/*
 for "_i" from 0 to (count _artyArrayDef1) - 1 do
 	{
 	if (_rounds > 0) then
@@ -281,13 +280,13 @@ for "_i" from 0 to (count _artyArrayDef1) - 1 do
 			{
 			if (_typeArty != "BARRAGE") then
 				{
-				_piece commandArtilleryFire [_pos,_typeAmmunition,_rounds];
+				[_piece,_pos,_typeAmmunition,_rounds] remoteExec ["A3A_fnc_artyFire",_mortarOwner];
 				}
 			else
 				{
 				for "_r" from 1 to _rounds do
 					{
-					_piece commandArtilleryFire [_pos,_typeAmmunition,1];
+					[_piece,_pos,_typeAmmunition,1] remoteExec ["A3A_fnc_artyFire",_mortarOwner];
 					sleep 2;
 					_pos = [_pos,10,_ang + 5 - (random 10)] call BIS_fnc_relPos;
 					};
@@ -298,13 +297,13 @@ for "_i" from 0 to (count _artyArrayDef1) - 1 do
 			{
 			if (_typeArty != "BARRAGE") then
 				{
-				_piece commandArtilleryFire [[_pos,random 10,random 360] call BIS_fnc_relPos,_typeAmmunition,_countX];
+				[_piece,[_pos,random 10,random 360] call BIS_fnc_relPos,_typeAmmunition,_rounds] remoteExec ["A3A_fnc_artyFire",_mortarOwner];
 				}
 			else
 				{
 				for "_r" from 1 to _countX do
 					{
-					_piece commandArtilleryFire [_pos,_typeAmmunition,1];
+					[_piece,_pos,_typeAmmunition,1] remoteExec ["A3A_fnc_artyFire",_mortarOwner];
 					sleep 2;
 					_pos = [_pos,10,_ang + 5 - (random 10)] call BIS_fnc_relPos;
 					};
@@ -342,4 +341,3 @@ if (_forcedX) then {
 		publicVariable "forcedSpawn";
 	};
 };
-*/
