@@ -1167,7 +1167,7 @@ class aiManagement: SimpleMenuBigger
 			x = 0.257187 * safezoneW + safezoneX;
 			y = 0.682 * safezoneH + safezoneY;
 			tooltip = $STR_antistasi_dialogs_arty_support_tooltip;
-			action = "closeDialog 0; [] spawn A3A_fnc_setArtilleryMode;";
+			action = "closeDialog 0; if (player == theBoss) then {[] spawn A3A_fnc_setArtilleryMode} else {[""Artillery Support"", ""Only Player Commander has access to this function""] call A3A_fnc_customHint;};";
 
 		};
 		

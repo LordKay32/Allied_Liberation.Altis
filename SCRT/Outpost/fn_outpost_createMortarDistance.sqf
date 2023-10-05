@@ -15,6 +15,7 @@ if (isNil "_garrison") then {
 private _groupX = [_positionX, teamPlayer, _garrison,true,false] call A3A_fnc_spawnGroup;
 private _groupXUnits = units _groupX;
 _groupXUnits apply { [_x,_markerX] spawn A3A_fnc_FIAinitBases; if ((_x getVariable "unitType") in squadLeaders) then {_x linkItem "ItemRadio"} };
+artyGroups pushBack _groupX;
 
 {
     private _relativePosition = [_positionX, 4, _x] call BIS_Fnc_relPos;
@@ -107,6 +108,8 @@ if ({alive _x} count units _groupX == 0) then {
 };
 
 waitUntil {sleep 1; (!(_markerX in mortarpostsFIA))};
+
+artyGroups = artyGroups - [_groupX];
 
 if (!isNull _veh) then { 
     deleteVehicle _veh;

@@ -129,6 +129,9 @@ DECLARE_SERVER_VAR(A3A_coldWarMode, false);
 //IntroMission
 DECLARE_SERVER_VAR(introFinished, true);
 
+//ArtyGroups
+DECLARE_SERVER_VAR(artyGroups, []);
+
 //Currently destroyed buildings.
 //DECLARE_SERVER_VAR(destroyedBuildings, []);
 //Initial HR
