@@ -92,6 +92,7 @@ private _wp4 = _groupX addWaypoint [[_positionX, 50, (0)] call BIS_Fnc_relPos, 0
 _wp4 setWaypointType "CYCLE";
 
 [_veh, teamPlayer] call A3A_fnc_AIVEHinit;
+_groupX setGroupOwner (groupOwner group theBoss);
 
 waitUntil {
 	sleep 1; 

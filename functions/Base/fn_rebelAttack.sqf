@@ -16,6 +16,7 @@ params [["_side", sideEnemy]];
 private _originalSide = _side;
 
 private _fileName = "rebelAttack";
+if ({sidesX getVariable [_x,sideUnknown] == teamPlayer} count airportsX == 0) exitWith {[2, "Allies do not yet have an airfield, attack aborted", _fileName, true] call A3A_fnc_log};
 [2, format ["Starting large attack script for side %1", _side], _fileName, true] call A3A_fnc_log;
 
 if ((_side == Occupants && areOccupantsDefeated) || {(_side == Invaders && areInvadersDefeated)}) exitWith {

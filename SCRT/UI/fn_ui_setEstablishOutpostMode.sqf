@@ -169,9 +169,7 @@ if (count _emptyList > 0) exitWith {
 		_strings = _strings - [""];
 		
 	["Establish Outpost", format ["The following gear has run too low for you to recruit the squad for this outpost: <t color='#ffff00'>%1", _strings], "FAIL"] call SCRT_fnc_ui_showDynamicTextMessage;
-	};
-
-{ [_x select 0 call jn_fnc_arsenal_itemType, _x select 0, _x select 1]call jn_fnc_arsenal_removeItem } forEach _fullSquadGear;
+};
 
 ["disbandGarrison", "onMapSingleClick"] call BIS_fnc_removeStackedEventHandler;
 ["establishOutpost", "onMapSingleClick"] call BIS_fnc_removeStackedEventHandler;

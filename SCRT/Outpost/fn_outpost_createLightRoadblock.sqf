@@ -48,11 +48,6 @@ _squadloadout pushback _loadout;
 
 private _fullSquadGear = _squadloadout call A3A_fnc_reorgLoadoutSquad;
 
-{
-_number = [jna_dataList select (_x select 0 call jn_fnc_arsenal_itemType), _x select 0]call jn_fnc_arsenal_itemCount; 
-if ((_number <= (_x select 1)) && !(_number == -1)) then { _emptyList pushBack (_x select 0) }
-} forEach _fullSquadGear;
-
 { [_x select 0 call jn_fnc_arsenal_itemType, _x select 0, _x select 1]call jn_fnc_arsenal_removeItem } forEach _fullSquadGear;
 
 {
