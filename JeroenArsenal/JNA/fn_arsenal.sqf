@@ -1467,16 +1467,16 @@ switch _mode do {
 
 				//change color;
 				_colorMult = switch (_item call BIS_fnc_itemType select 1) do{
-					case "AssaultRifle": {1500};
-					case "Handgun": {400};
-					case "MachineGun": {4000};
-					case "Shotgun": {300};
-					case "Rifle": {1500};
-					case "SubmachineGun": {800};
-					case "SniperRifle": {200};
-					Default {20};//launchers
+					case "AssaultRifle": {100000};
+					case "Handgun": {80000};
+					case "MachineGun": {200000};
+					case "Shotgun": {20000};
+					case "Rifle": {100000};
+					case "SubmachineGun": {75000};
+					case "SniperRifle": {20000};
+					Default {1000};//launchers
 				};
-				_colorMult = _ammoTotal / _colorMult;
+				_colorMult = (_ammoTotal * 15) / _colorMult;
 				if(_colorMult > 1 || _ammoTotal == -1)then{_colorMult = 1};
 				_red = -0.6*_colorMult+0.8;
 				_green = 0.6*_colorMult+0.2;
@@ -1487,17 +1487,17 @@ switch _mode do {
 					case (_amount == 0): {
 						"Looks like I am the only one using this today"
 					};
-					case (_amount > 50): {
+					case (_amount > 100): {
 						"More than enough for a whole army"
 					};
-					case (_amount > 10): {
+					case (_amount > 25): {
 						"Many of these left"
 					};
-					case (_amount > 3): {
+					case (_amount > 5): {
 						"Some of these left"
 					};
 					case (_amount > 1): {
-						"If I want one I need to take it before some one else does"
+						"A few of these left"
 					};
 					case (_amount == 1): {
 						"The last one in the box"
@@ -1513,9 +1513,12 @@ switch _mode do {
 						", but there is no ammo for it"
 					};
 					case (_colorMult > 0.9): {
+						", and there is plenty of ammo for it"
+					};
+					case (_colorMult > 0.5): {
 						", and there is enough ammo for it"
 					};
-					case (_colorMult > 0.2): {
+					case (_colorMult > 0.1): {
 						", and there is still some ammo for it"
 					};
 					case (_colorMult > 0): {

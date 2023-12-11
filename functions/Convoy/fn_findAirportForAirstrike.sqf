@@ -36,7 +36,7 @@ _possibleAirports = _possibleAirports select
     (spawner getVariable _x == 2) &&                    //Not already spawned in
     {(dateToNumber date > server getVariable _x) &&     //Not currently on cooldown
     {!(_x in forcedSpawn) &&                            //Not force spawned in (not sure how long this will be in the script tho)
-    {(getMarkerPos _x distance _destinationPos > distanceSPWN)}}} //Not closer than spawn distance
+    {(getMarkerPos _x distance _destinationPos > 4000)}}} //Not closer than 4k
 };
 
 if(_side == Occupants) then

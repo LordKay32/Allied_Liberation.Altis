@@ -15,9 +15,9 @@ private _richPresenceFunc = missionNamespace getVariable "DiscordRichPresence_fn
 private _isEnglish = ((localize "STR_antistasi_dialogs_generic_button_yes_text") == "Yes");
 isDiscordRichPresenceActive = if (isNil "_richPresenceFunc" || {!_isEnglish}) then {false} else {true};
 [2,format ["Discord Rich Presence: %1", str isDiscordRichPresenceActive],_fileName] call A3A_fnc_log;
-testVar = true;
+
 call A3A_fnc_installSchrodingersBuildingFix;
-testVar1 = true;
+
 if (!isServer) then {
 	// get server to send us the current destroyedBuildings list, hide them locally
 	"destroyedBuildings" addPublicVariableEventHandler {
@@ -29,7 +29,7 @@ if (!isServer) then {
 		[clientOwner, "destroyedBuildings"] remoteExecCall ["publicVariableClient", 2];
 	};
 };
-testVar2 = true;
+clientTest1 = true;
 // Headless clients install some support functions, register with the server and bail out
 if (!hasInterface) exitWith {
 	call A3A_fnc_initFuncs;
@@ -39,13 +39,13 @@ if (!hasInterface) exitWith {
 	[2,format ["Headless client Antistasi Plus version: %1",localize "STR_antistasi_plus_credits_generic_version_text"],_fileName] call A3A_fnc_log;
 	[clientOwner] remoteExec ["A3A_fnc_addHC",2];
 };
-testVar3 = true;
+clientTest2 = true;
 
 waitUntil {!isNull player};
 waitUntil {player == player};
 //Disable player saving until they're fully ready, and have chosen whether to load their save.
 player setVariable ["canSave", false, true];
-testVar4 = true;
+
 if (!isServer) then {
 	waitUntil {!isNil "initParamsDone"};
 	call A3A_fnc_initFuncs;
@@ -58,7 +58,7 @@ else {
 	waitUntil {sleep 0.5;(!isNil "serverInitDone")};
 };
 [] execVM "briefing.sqf";
-testVar5 = true;
+
 _isJip = _this select 1;
 if (side player == teamPlayer) then {
     player setVariable ["eligible",true,true];
@@ -624,7 +624,7 @@ if (magRepack) then {
 if (saveZeusBuildings) then {
 	[2,"Initializing Curator Persistent Save.",_fileName, true] call A3A_fnc_log;
 	private _curator = allCurators select 0;
-	_curator addEventHandler ["CuratorObjectPlaced", {
+	/*_curator addEventHandler ["CuratorObjectPlaced", {
 		params ["_curator", "_entity"];
 		if !(_entity isKindOf "Building") exitWith {};
 		[_entity] remoteExecCall ["SCRT_fnc_build_saveConstruction", 2];
@@ -638,7 +638,7 @@ if (saveZeusBuildings) then {
 		params ["_curator", "_entity"];
 		if !(_entity isKindOf "Building") exitWith {};
 		[_entity] remoteExecCall ["SCRT_fnc_build_removeConstruction", 2];
-	}];
+	}];*/
 };
 
 [2,"initClient completed",_fileName] call A3A_fnc_log;

@@ -40,17 +40,30 @@ if (sidesX getVariable [_markerX,sideUnknown] == teamPlayer) then {
 			_textX = format ["%2 Military Base%1",_textX,nameTeamPlayer];
 			[_mrkD,format ["%1 Military Base", nameTeamPlayer]] remoteExec ["setMarkerTextLocal",[Occupants,Invaders],true];
 		};
+		case(_markerX in citiesX): {
+			if (_markerX in destroyedSites) then {
+				_mrkD setMarkerType "plp_mark_civ_ruins";
+				_mrkD setMarkerText format ["%2 Ruins%1",_textX,_markerX];
+			} else {
+				_mrkD setMarkerText "";
+			};
+		};
 		default {};
 	};
 	[_mrkD,_textX] remoteExec ["setMarkerTextLocal",[teamPlayer,civilian],true];
 }
 else {
 	if (_markerX in citiesX) exitWith {
-		_mrkD setMarkerText "";
-		if (gameMode != 4) then {
-		    _mrkD setMarkerColor ([colorOccupants, "ColorBlack"] select (_markerX in destroyedSites));
+		if (_markerX in destroyedSites) then {
+			_mrkD setMarkerType "plp_mark_civ_ruins";
+			_mrkD setMarkerText format ["%1 Ruins",_markerX];
 		} else {
-		    _mrkD setMarkerColor ([colorInvaders, "ColorBlack"] select (_markerX in destroyedSites));
+			_mrkD setMarkerText "";
+		};
+		if (gameMode != 4) then {
+		    _mrkD setMarkerColor colorOccupants;
+		} else {
+		    _mrkD setMarkerColor colorInvaders;
 		};
 	};
 	if (sidesX getVariable [_markerX,sideUnknown] == Occupants) then {
@@ -96,10 +109,10 @@ else {
 
 	switch(true) do {
 		case(_markerX in resourcesX): {
-			_mrkD setMarkerText "Resources";
+			_mrkD setMarkerText "Industry";
 		};
 		case(_markerX in factories): {
-			_mrkD setMarkerText "Factory";
+			_mrkD setMarkerText "Industry";
 		};
 		case(_markerX in seaports): {
 			if (_markerX in ["seaport","seaport_1","seaport_2","seaport_3","seaport_5"]) then {

@@ -72,7 +72,7 @@ if (_winner == teamPlayer) then
 	_super = if (_markerX in airportsX or {_markerX in milbases}) then {true} else {false};
 	
 	if ((airportsX + milbases + outposts + seaports + factories + resourcesX + citiesX) findIf {sidesX getVariable [_x, sideUnknown] != teamPlayer} == -1) exitWith {
-	["end1",true,true,true,true] remoteExec ["BIS_fnc_endMission",0];
+	[] remoteExec ["A3A_fnc_endGame",0]
 	};
 	
 	[_markerX, _looser, _super] spawn

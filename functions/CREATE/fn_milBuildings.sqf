@@ -29,15 +29,19 @@ if (_markerX in _heavyMarkers) then {
     private _vehicleTypes = if (_sideX == Occupants) then { vehNATOAPC } else { vehCSATAPC };
     if (_aggression > 3) then {
         if (_sideX == Occupants) then {
-            _vehicleTypes append vehNATOTanks;
+            _vehicleTypes append (vehNATOTanks -["LIB_PzKpfwVI_E_tarn51d"]);
         } else {
             _vehicleTypes append vehCSATTanks;
         };
     };
 
     private _spawnVehParameter = [_markerX, "Vehicle"] call A3A_fnc_findSpawnPosition;
-    private _count = 1 + round (random 3); //Change these numbers as you want, first number is minimum, max is first plus second number
-    while {_spawnVehParameter isEqualType [] && {_count > 0}} do {
+    private _count = if (_markerX in milbases) then {
+    	1 + round (random 1); //Change these numbers as you want, first number is minimum, max is first plus second number
+	} else {
+		round (random 1);
+	};
+	while {_spawnVehParameter isEqualType [] && {_count > 0}} do {
         _typeVehX = selectRandom _vehicleTypes;
         _veh = createVehicle [_typeVehX, (_spawnVehParameter select 0), [],0, "CAN_COLLIDE"];
         _veh setDir (_spawnVehParameter select 1);
@@ -753,6 +757,42 @@ for "_i" from 0 to (count _buildings) - 1 do
     	            [_type, _pos, _kneel, _dir] call _fnc_spawnStaticUnit;
     	        };
 			};
+            case (_typeB == "Land_LightHouse_F"): {
+                private _pos = _building buildingPos 1;
+                private _alreadySpawned = nearestObjects [_pos, ["man"], 2];
+				if (count _alreadySpawned > 0) exitWith {};
+				private _type = if (_sideX == Occupants) then {policeGrunt} else {policeGrunt};
+                private _dir = (getDir _building) + 200;
+                private _kneel = true;
+                [_type, _pos, _kneel, _dir] call _fnc_spawnStaticUnit;
+                
+                private _pos = _building buildingPos 4;
+                private _alreadySpawned = nearestObjects [_pos, ["man"], 2];
+				if (count _alreadySpawned > 0) exitWith {};
+				private _pool = if (_sideX == Occupants) then {NATOGrunt} else {CSATGrunt};
+                private _type = _pool call SCRT_fnc_unit_selectInfantryTier;
+                private _dir = (getDir _building) + 200;
+                private _kneel = false;
+                [_type, _pos, _kneel, _dir] call _fnc_spawnStaticUnit;
+                
+                private _pos = _building buildingPos 8;
+                private _alreadySpawned = nearestObjects [_pos, ["man"], 2];
+				if (count _alreadySpawned > 0) exitWith {};
+				private _pool = if (_sideX == Occupants) then {NATOSniper} else {CSATGrunt};
+                private _type = _pool call SCRT_fnc_unit_selectInfantryTier;
+                private _dir = (getDir _building) + 250;
+                private _kneel = false;
+                [_type, _pos, _kneel, _dir] call _fnc_spawnStaticUnit;
+                
+               	private _pos = _building buildingPos 9;
+                private _alreadySpawned = nearestObjects [_pos, ["man"], 2];
+				if (count _alreadySpawned > 0) exitWith {};
+				private _pool = if (_sideX == Occupants) then {NATOMGMan} else {CSATGrunt};
+                private _type = _pool call SCRT_fnc_unit_selectInfantryTier;
+                private _dir = (getDir _building) + 230;
+                private _kneel = false;
+                [_type, _pos, _kneel, _dir] call _fnc_spawnStaticUnit;
+            };
         };
     };
 };

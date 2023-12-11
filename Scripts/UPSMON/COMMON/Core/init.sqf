@@ -31,7 +31,7 @@ UPSMON_createsign = compile preProcessFileLineNumbers "Scripts\UPSMON\COMMON\Cor
 UPSMON_TRACK = compile preProcessFileLineNumbers "Scripts\UPSMON\COMMON\Core\fnc\UPSMON_TRACK.sqf";
 
 UPSMON_checkbackpack = compile preProcessFileLineNumbers "Scripts\UPSMON\COMMON\Core\fnc\UPSMON_checkbackpack.sqf";
-UPSMON_getminesclass = compile preProcessFileLineNumbers "Scripts\UPSMON\COMMON\Core\fnc\UPSMON_getminesclass.sqf";
+//UPSMON_getminesclass = compile preProcessFileLineNumbers "Scripts\UPSMON\COMMON\Core\fnc\UPSMON_getminesclass.sqf";
 UPSMON_spawnmines = compile preProcessFileLineNumbers "Scripts\UPSMON\COMMON\Core\fnc\UPSMON_spawnmines.sqf";
 
 UPSMON_SN_EHHIT = compile preProcessFileLineNumbers "Scripts\UPSMON\COMMON\Core\fnc\UPSMON_SN_EHHIT.sqf";

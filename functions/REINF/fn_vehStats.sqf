@@ -87,12 +87,13 @@ if (_this select 0 == "transport") exitWith {
 			} forEach units _groupX};
 		} else {
 			{
-			_x assignAsCargo _veh; [_x] orderGetIn true;
+			[_x] allowGetIn true; _x assignAsCargo _veh; [_x] orderGetIn true; 
 			} forEach units _groupX;
 		};
 	} else {
 		{
 		unassignVehicle	_x;
+		[_x] allowGetIn false;
 		} forEach units _groupX;
 	};
 };	

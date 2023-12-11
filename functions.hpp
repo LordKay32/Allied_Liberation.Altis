@@ -34,7 +34,11 @@ class A3A
     };
 
     class Base
-    {
+    {   
+        class Common {};
+        class Hidden {};
+        class replace_fences {};
+    
         class addActionBreachVehicle {};
         class addAggression {};
         class addHC {};
@@ -159,6 +163,7 @@ class A3A
         class fastrope {};
         class findSafeRoadToUnload {};
         class fleeToSide {};
+        class groupMarkersSM {};
         class guardDog {};
         class hasRadio {};
         class help {};

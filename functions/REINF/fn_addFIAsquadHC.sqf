@@ -328,7 +328,7 @@ private _special = if (_isInfantry) then {
     "VehicleSquad"
 };
 
-private _nearX = [];
+private _nearX = "";
 _exit = false;
 
 switch (true) do {

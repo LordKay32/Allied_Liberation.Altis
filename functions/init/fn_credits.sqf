@@ -73,7 +73,7 @@ sleep 3;
 
 titleText ["<t color='#ffffff' size='2.4'>The Western Desert Campaign is over. Rommel and the Afrika Korps are defeated.", "PLAIN", 1, true, true]; 
 
-sleep 7;
+sleep 9;
 
 titleFadeOut 2;
 
@@ -81,7 +81,7 @@ sleep 3;
 
 titleText ["<t color='#ffffff' size='2.4'>Now the Allies turn their attention towards Sicily, and Italy beyond.", "PLAIN", 1, true, true]; 
 
-sleep 7;
+sleep 9;
 
 titleFadeOut 2;
 
@@ -89,31 +89,23 @@ sleep 3;
 
 titleText ["<t color='#ffffff' size='2.4'>In their way stands Altis, an occupied British colony east of Sicily.", "PLAIN", 1, true, true];
 
-sleep 7;
+sleep 9;
 
 titleFadeOut 2;
 
 sleep 3;
 
-titleText ["<t color='#ffffff' size='2.4'>Unlike her sister island Malta, Altis fell to the Germans during the invasion of Greece.", "PLAIN", 1, true, true];
+titleText ["<t color='#ffffff' size='2.4'>With her airfields, harbours and radar station, Altis represents a strategic threat, and must be taken before an invasion of Italy.", "PLAIN", 1, true, true];
 
-sleep 7;
-
-titleFadeOut 2;
-
-sleep 3;
-
-titleText ["<t color='#ffffff' size='2.4'>With her airfields and harbours, Altis represents a strategic threat, and must be taken before an invasion of Italy.", "PLAIN", 1, true, true];
-
-sleep 7;
+sleep 9;
 
 titleFadeOut 2;
 
 sleep 3;
 
-titleText ["<t color='#ffffff' size='2.4'>In addition the Germans have extensively fortified the island.", "PLAIN", 1, true, true];
+titleText ["<t color='#ffffff' size='2.4'>The Germans have reinforced and fortified the island.", "PLAIN", 1, true, true];
 
-sleep 7;
+sleep 9;
 
 titleFadeOut 2;
 

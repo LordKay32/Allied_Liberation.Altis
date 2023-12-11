@@ -68,7 +68,7 @@ markersX apply {
 	spawner setVariable [_x, 2, true];
 };	//apply faster then forEach and look better
 
-respawnTeamPlayer setMarkerAlpha 0;
+if !(introFinished) then {respawnTeamPlayer setMarkerAlpha 0};
 
 // setup hardcoded population counts for towns
 private _hardcodedPop = true;

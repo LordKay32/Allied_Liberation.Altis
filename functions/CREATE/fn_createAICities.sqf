@@ -22,9 +22,13 @@ _dataX = server getVariable _markerX;
 _prestigeOPFOR = _dataX select 2;
 _prestigeBLUFOR = _dataX select 3;
 _esAAF = true;
-if (_markerX in destroyedSites) then {
+_frontierX = [_markerX] call A3A_fnc_isFrontline;
+if ((_markerX in destroyedSites) && _sideX != teamPlayer) then {
 	_esAAF = false;
-	_params = [_positionX,Invaders,CSATSpecOp];
+	_params = [_positionX,Occupants,NATOSpecOp];
+	_squad = NATOSquad call SCRT_fnc_unit_selectInfantryTier;
+	_mid = ([_sideX, "MID"] call SCRT_fnc_unit_getGroupSet) select 0;
+	_num = 1;
 } else {
 	switch (_sideX) do {
 		case Occupants: {
@@ -32,7 +36,6 @@ if (_markerX in destroyedSites) then {
 			if (_markerX in townsX) then {_num = 1};
 			if (_markerX in villagesX) then {_num = 0};
 			if (aggressionLevelOccupants > 2) then {_num = _num + 1};
-			_frontierX = [_markerX] call A3A_fnc_isFrontline;
 			_squad = NATOSquad call SCRT_fnc_unit_selectInfantryTier;
 			_mid = ([_sideX, "MID"] call SCRT_fnc_unit_getGroupSet) select 0;
 			if (_frontierX) then {
@@ -48,7 +51,6 @@ if (_markerX in destroyedSites) then {
 			if (_markerX in townsX) then {_num = 1};
 			if (_markerX in villagesX) then {_num = 0};
 			if (agressionInvaders > 2) then {_num = _num + 1};
-			_frontierX = [_markerX] call A3A_fnc_isFrontline;
 			_squad = CSATSquad call SCRT_fnc_unit_selectInfantryTier;
 			_mid = ([_sideX, "MID"] call SCRT_fnc_unit_getGroupSet) select 0;
 			if (_frontierX) then {
@@ -165,15 +167,20 @@ if (_markerX in majorCitiesX) then {[_markerX] spawn A3A_fnc_partizanAttack};
 waitUntil {sleep 1;	(spawner getVariable _markerX == 2) or (([_positionX,_sideX,_size] call _fnc_sidePower)/(([_positionX,teamPlayer,_size] call _fnc_sidePower) + ([_positionX,_sideX,_size] call _fnc_sidePower))) < 0.2};
 
 if ((([_positionX,_sideX,_size] call _fnc_sidePower)/(([_positionX,teamPlayer,_size] call _fnc_sidePower) + ([_positionX,_sideX,_size] call _fnc_sidePower))) < 0.2) then {
-		["TaskSucceeded", ["", format ["%1 captured",[_markerX, false] call A3A_fnc_location,nameTeamPlayer]]] remoteExec ["BIS_fnc_showNotification",teamPlayer];
+		if (_markerX in destroyedSites) then {
+			["TaskSucceeded", ["", format ["%1 ruins captured",[_markerX, false] call A3A_fnc_location,nameTeamPlayer]]] remoteExec ["BIS_fnc_showNotification",teamPlayer];
+		} else {
+			["TaskSucceeded", ["", format ["%1 captured",[_markerX, false] call A3A_fnc_location,nameTeamPlayer]]] remoteExec ["BIS_fnc_showNotification",teamPlayer];
+			[-100,25, _markerX] remoteExec ["A3A_fnc_citySupportChange",2];
+		};
 		sidesX setVariable [_markerX,teamPlayer,true];
 		aggressionOccupants = aggressionOccupants - 5;
 		_mrkD = format ["Dum%1",_markerX];
 		_mrkD setMarkerColor colorTeamPlayer;
+		sleep 5;
 		garrison setVariable [_markerX,[],true];
 		sleep 5;
 		{_nul = [_markerX,_x] spawn A3A_fnc_deleteControls} forEach controlsX;
-		[-100,25, _markerX] remoteExec ["A3A_fnc_citySupportChange",2];
 		
 		private _remainers = _soldiers select {[_x] call A3A_fnc_canFight};
 		{
@@ -184,7 +191,7 @@ if ((([_positionX,_sideX,_size] call _fnc_sidePower)/(([_positionX,teamPlayer,_s
 		publicVariable "sectorsLiberated";
 		
 	if ((airportsX + milbases + outposts + seaports + factories + resourcesX + citiesX) findIf {sidesX getVariable [_x, sideUnknown] != teamPlayer} == -1) exitWith {
-	["end1",true,true,true,true] remoteExec ["BIS_fnc_endMission",0];
+	[] remoteExec ["A3A_fnc_endGame",0];
 	};
 		
 	_super = if (_markerX in majorCitiesX) then {true} else {false};

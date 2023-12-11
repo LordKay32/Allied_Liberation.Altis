@@ -40,6 +40,122 @@ _veh call A3A_fnc_vehicleTextureSync;
 
 private _typeX = typeOf _veh;
 
+//Allied services truck functions
+if (_typeX in vehFIA) then {
+	_veh addaction [ 
+        "Repair at Repair Truck", 
+        {
+    	params ["_target", "_caller", "_actionId", "_arguments"];
+   		_damage = damage _target;
+    	// if (isPlayer crew) then {play sound for player?};
+		while {_damage > 0} do {
+	    	_damage = _damage - 0.1;
+	    	if (_damage < 0) then {_damage = 0};
+    		[_target, _damage] remoteExec ["setDamage"];
+    		sleep 1;
+    	};}, 
+        [], 
+        6, 
+        false, 
+        true, 
+        "", 
+        "(damage _target > 0) && (vehicle _this == _target) && (count (_target nearEntities [vehSDKRepair, 25]) > 0);" 
+    ];
+    
+    _veh addaction [ 
+        "Refuel at Refuel Truck", 
+        {
+    	params ["_target", "_caller", "_actionId", "_arguments"];
+   		_fuel = fuel _target;
+    	// if (isPlayer crew) then {play sound for player?};
+		while {_fuel < 1} do {
+	    	_fuel = _fuel + 0.1;
+	    	if (_fuel > 1) then {_fuel = 1};
+    		[_x, _fuel] remoteExec ["setFuel"];
+    		sleep 1;
+    	};}, 
+        [], 
+        6, 
+        false, 
+        true, 
+        "", 
+        "(fuel _target < 1) && (vehicle _this == _target) && (count (_target nearEntities [vehSDKFuel, 25]) > 0);" 
+    ];
+    
+    _veh addaction [ 
+        "Rearm at Ammo Truck", 
+        {
+    	params ["_target", "_caller", "_actionId", "_arguments"];
+   		[_target, 1] remoteExec ["setVehicleAmmoDef"];
+    	// if (isPlayer crew) then {play sound for player?};
+		}, 
+        [], 
+        6, 
+        false, 
+        true, 
+        "", 
+        "(count allTurrets [_target, false] > 0) && (vehicle _this == _target) && (count (_target nearEntities [vehSDKAmmo, 25]) > 0);" 
+    ];
+};
+
+//German services trucks functions
+if (_typeX in (vehNATONormal + vehNATOAir + vehNATOAttack + vehNATOAA + NATOMG + staticAAOccupants + [NATOMortar,NATOHowitzer,staticATOccupants,"LIB_FlaK_36","LIB_FlaK_36_AA"])) then {
+	_veh addaction [ 
+        "Repair at Repair Truck", 
+        {
+    	params ["_target", "_caller", "_actionId", "_arguments"];
+   		_damage = damage _target;
+    	// if (isPlayer crew) then {play sound for player?};
+		while {_damage > 0} do {
+	    	_damage = _damage - 0.1;
+	    	if (_damage < 0) then {_damage = 0};
+    		[_target, _damage] remoteExec ["setDamage"];
+    		sleep 1;
+    	};}, 
+        [], 
+        6, 
+        false, 
+        true, 
+        "", 
+        "(damage _target > 0) && (vehicle _this == _target) && (count (_target nearEntities [vehNATORepairTruck, 25]) > 0);" 
+    ];
+    
+    _veh addaction [ 
+        "Refuel at Refuel Truck", 
+        {
+    	params ["_target", "_caller", "_actionId", "_arguments"];
+   		_fuel = fuel _target;
+    	// if (isPlayer crew) then {play sound for player?};
+		while {_fuel < 1} do {
+	    	_fuel = _fuel + 0.1;
+	    	if (_fuel > 1) then {_fuel = 1};
+    		[_x, _fuel] remoteExec ["setFuel"];
+    		sleep 1;
+    	};}, 
+        [], 
+        6, 
+        false, 
+        true, 
+        "", 
+        "(fuel _target < 1) && (vehicle _this == _target) && (count (_target nearEntities [vehNATOFuelTruck, 25]) > 0);" 
+    ];
+    
+    _veh addaction [ 
+        "Rearm at Ammo Truck", 
+        {
+    	params ["_target", "_caller", "_actionId", "_arguments"];
+   		[_target, 1] remoteExec ["setVehicleAmmoDef"];
+    	// if (isPlayer crew) then {play sound for player?};
+		}, 
+        [], 
+        6, 
+        false, 
+        true, 
+        "", 
+        "(count allTurrets [_target, false] > 0) && (vehicle _this == _target) && (count (_target nearEntities [vehNATOAmmoTruck, 25]) > 0);" 
+    ];
+};
+
 if (_side != teamPlayer) then {
 	//JB - unflip enemy Ai Vehs
 	_veh addEventHandler ["GetOut", {
@@ -93,7 +209,8 @@ if (_side == teamPlayer) then {
 };
 
 //JB - add arsenal and statics to Ammo Trucks
-if ((_side == teamPlayer) && (_typeX == vehSDKAmmo)) then {
+if (_typeX == vehSDKAmmo) then {
+	_veh setAmmoCargo 0;
 	_veh addaction [ 
         (format ["<img image='%1' size='1' color='#ffffff'/>", "\A3\ui_f\data\GUI\Rsc\RscDisplayArsenal\spaceArsenal_ca.paa"] + format["<t size='1'> %1</t>", (localize "STR_A3_Arsenal")]), 
         JN_fnc_arsenal_handleAction, 
@@ -107,7 +224,7 @@ if ((_side == teamPlayer) && (_typeX == vehSDKAmmo)) then {
 	//[_veh] call HR_GRG_fnc_initGarage;
     _veh addAction ["Deploy Static", {if ([player,300] call A3A_fnc_enemyNearCheck) then {["Deploy Static", "You cannot deploy statics while there are enemies near you."] call A3A_fnc_customHint;} else {["AMMOTRUCK"] call SCRT_fnc_ui_createBuyVehicleMenu}},nil,0,false,true,"","(vehicle player == player) and (isPlayer _this) and (_this == _this getVariable ['owner',objNull])",4];
 	_veh addaction [ 
-        "Rearm nearby vehicles", 
+        "Rearm nearby Allied vehicles", 
         {params ["_target", "_caller", "_actionId", "_arguments"];
         _list = ((getPos _target) nearEntities [vehFIA, 50]) select {count allTurrets [_x, false] > 0};
     	{
@@ -129,15 +246,16 @@ if ((_side == teamPlayer) && (_typeX == vehSDKAmmo)) then {
 };
 
 //JB add functions to refuel/repair trucks
-if ((_side == teamPlayer) && (_typeX == vehSDKFuel)) then {
+if (_typeX == vehSDKFuel) then {
+	_veh setFuelCargo 0;
 	_veh addaction [ 
-        "Refuel nearby vehicles", 
+        "Refuel nearby Allied vehicles", 
         {params ["_target", "_caller", "_actionId", "_arguments"];
-        _list = ((getPos _target) nearEntities [["Car", "Tank", "APC"], 50]) select {side _x == teamPlayer};
+        _list = ((getPos _target) nearEntities [["Car", "Tank", "APC"], 50]) select {(((side _x == teamPlayer) || (side _x == civilian)) && (typeOf _x in vehFIA))};
     	{
     	_fuel = fuel _x;
     	// if (isPlayer crew) then {play sound for player?};
-		while {_fuel < 0.99} do {
+		while {_fuel < 1} do {
 	    	_fuel = _fuel + 0.1;
 	    	if (_fuel > 1) then {_fuel = 1};
     		[_x, _fuel] remoteExec ["setFuel"];
@@ -152,15 +270,97 @@ if ((_side == teamPlayer) && (_typeX == vehSDKFuel)) then {
         "alive _target && {_target distance _this < 5}" 
     ];
 };
-if ((_side == teamPlayer) && (_typeX == vehSDKRepair)) then {
+if (_typeX == vehSDKRepair) then {
+	_veh setRepairCargo 0;
 	_veh addaction [ 
-        "Repair nearby vehicles", 
+        "Repair nearby Allied vehicles", 
         {
     	params ["_target", "_caller", "_actionId", "_arguments"];
-    	_list = ((getPos _target) nearEntities [["Car", "Turret", "Tank", "APC"], 50]) select {side _x != west};
+    	_list = ((getPos _target) nearEntities [vehFIA, 50]) select {(side _x == teamPlayer) || (side _x == civilian)};
     	{
-    	[_x, 0] remoteExec ["setDamage"];
+   		_damage = damage _x;
     	// if (isPlayer crew) then {play sound for player?};
+		while {_damage > 0} do {
+	    	_damage = _damage - 0.1;
+	    	if (_damage < 0) then {_damage = 0};
+    		[_x, _damage] remoteExec ["setDamage"];
+    		sleep 1;
+    	};
+    	} forEach _list}, 
+        [], 
+        6, 
+        true, 
+        true, 
+        "", 
+        "alive _target && {_target distance _this < 5}" 
+    ];
+};
+
+//and German vehicles
+if (_typeX == vehNATOAmmoTruck) then {
+	_veh setAmmoCargo 0;
+	_veh addaction [ 
+        "Rearm nearby Wehrmacht vehicles", 
+        {params ["_target", "_caller", "_actionId", "_arguments"];
+        _list = ((getPos _target) nearEntities [(vehNATONormal + vehNATOAir + vehNATOAttack + vehNATOAA + NATOMG + staticAAOccupants + [NATOMortar,NATOHowitzer,staticATOccupants,"LIB_FlaK_36","LIB_FlaK_36_AA"]), 50]) select {count allTurrets [_x, false] > 0 && (side _x == teamPlayer) || (side _x == civilian)};
+    	{
+    	[_x, 1] remoteExec ["setVehicleAmmoDef"];
+    	// if (isPlayer crew) then {play sound for player?};
+    	} forEach _list;}, 
+        [], 
+        6, 
+        true, 
+        true, 
+        "", 
+        "alive _target && {_target distance _this < 5}" 
+    ];
+	
+	_veh addEventHandler ["Killed", {
+	params ["_unit", "_killer"];
+	removeAllActions  _unit;
+	}];
+};
+
+if (_typeX == vehNATOFuelTruck) then {
+	_veh setFuelCargo 0;
+	_veh addaction [ 
+        "Refuel nearby Wehrmacht vehicles", 
+        {params ["_target", "_caller", "_actionId", "_arguments"];
+        _list = ((getPos _target) nearEntities [["Car", "Tank", "APC"], 50]) select {(((side _x == teamPlayer) || (side _x == civilian)) && (typeOf _x in [vehNATONormal + vehNATOAir + vehNATOAttack + vehNATOAA + NATOMG + staticAAOccupants + [NATOMortar,NATOHowitzer,staticATOccupants,"LIB_FlaK_36","LIB_FlaK_36_AA"]]))};
+    	{
+    	_fuel = fuel _x;
+    	// if (isPlayer crew) then {play sound for player?};
+		while {_fuel < 1} do {
+	    	_fuel = _fuel + 0.1;
+	    	if (_fuel > 1) then {_fuel = 1};
+    		[_x, _fuel] remoteExec ["setFuel"];
+    		sleep 1;
+    	};
+    	} forEach _list;}, 
+        [], 
+        6, 
+        true, 
+        true, 
+        "", 
+        "alive _target && {_target distance _this < 5}" 
+    ];
+};
+if (_typeX == vehNATORepairTruck) then {
+	_veh setRepairCargo 0;
+	_veh addaction [ 
+        "Repair nearby Wehrmacht vehicles", 
+        {
+    	params ["_target", "_caller", "_actionId", "_arguments"];
+    	_list = ((getPos _target) nearEntities [(vehNATONormal + vehNATOAir + vehNATOAttack + vehNATOAA + NATOMG + staticAAOccupants + [NATOMortar,NATOHowitzer,staticATOccupants,"LIB_FlaK_36","LIB_FlaK_36_AA"]), 50]) select {(side _x == teamPlayer) || (side _x == civilian)};
+    	{
+   		_damage = damage _x;
+    	// if (isPlayer crew) then {play sound for player?};
+		while {_damage > 0} do {
+	    	_damage = _damage - 0.1;
+	    	if (_damage < 0) then {_damage = 0};
+    		[_x, _damage] remoteExec ["setDamage"];
+    		sleep 1;
+    	};
     	} forEach _list}, 
         [], 
         6, 
@@ -220,7 +420,7 @@ if (_typeX in vehNormal || {_typeX in (vehAttack + vehBoats + vehAA)}) then {
 					_veh = _this select 0;
 					_role = _this select 1;
 					_unit = _this select 2;
-					if ((_veh in vehNATOTanks) and (side group _unit == teamPlayer)) exitWith 
+					if ((typeOf _veh in vehNATOTanks) and (side group _unit == teamPlayer)) exitWith 
 					{
 						moveOut _unit;
 						["General", "You are not trained to operate German tanks"] call A3A_fnc_customHint;
@@ -296,7 +496,7 @@ if (_typeX in vehNormal || {_typeX in (vehAttack + vehBoats + vehAA)}) then {
 		{
 			_veh = _this select 0;
 			_unit = _this select 2;
-			if ((_veh in (vehNATOPlanes + vehNATOPlanesAA + vehNATOTransportPlanes)) and (side group _unit == teamPlayer)) then 
+			if ((typeOf _veh in (vehNATOPlanes + vehNATOPlanesAA + vehNATOTransportPlanes)) and (side group _unit == teamPlayer)) then 
 			{
 				moveOut _unit;
 				["General", "You are not trained to operate German aircraft"] call A3A_fnc_customHint;
@@ -386,6 +586,7 @@ if (_side != teamPlayer) then
 	// When a rebel first enters a vehicle, fire capture function
 	_veh addEventHandler ["GetIn", {
 		params ["_veh", "_role", "_unit", "_turret"];
+		if (typeName _unit != "OBJECT") exitWith {};
 		if (side (group _unit) != teamPlayer) exitWith {};		// only rebels can flip vehicles atm
 		private _oldside = _veh getVariable ["ownerSide", teamPlayer];
 		if (_oldside != teamPlayer) then

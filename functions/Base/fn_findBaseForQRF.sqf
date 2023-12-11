@@ -63,7 +63,7 @@ private _finalOriginMarkers = [];
 
 if !(_availableAirports isEqualTo []) then
 {
-	private _largeBases = _availableAirports select {(_x distance _availableAirports < distanceForLandAttack) && (_x in (airportsX + milbases))};
+	private _largeBases = _availableAirports select {((getMarkerPos _x) distance _posDestination < distanceForLandAttack) && (_x in (airportsX + milbases))};
 	if !(_largeBases isEqualTo []) then {
 		_markerOrigin = [_largeBases, _posDestination] call BIS_fnc_nearestPosition;
 	} else {

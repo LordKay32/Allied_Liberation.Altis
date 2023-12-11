@@ -42,8 +42,8 @@ if (_capturing) then {
 			_unit setCombatBehaviour "CARELESS";
 			_group setSpeedMode "LIMITED";
 			if (vehicle _unit != _unit) then {unassignVehicle _unit; [_unit] orderGetin false;};
-			_unit doMove (getMarkerPos "respawn_guerrila");
-			waitUntil {sleep 0.5; moveToCompleted _unit};
+			_unit doMove (getPos flagX);
+			waitUntil {sleep 0.5; _unit distance flagX < 50};
 			_unit playmove "AmovPercMstpSnonWnonDnon_AmovPsitMstpSnonWnonDnon_ground"; 
         	_unit disableAI "ANIM"; 
         	_unit disableAI "MOVE"; 

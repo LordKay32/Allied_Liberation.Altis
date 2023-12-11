@@ -198,10 +198,9 @@ call compile preProcessFileLineNumbers "Scripts\UPSMON\MODULES\ORDERS\UPSMON_RET
 [] execvm "Scripts\UPSMON\UPSMON_MAINLOOPCiv.sqf";
 
 //get all mines types
-_UPSMON_Minesclassname = [] call UPSMON_getminesclass;
-UPSMON_Minestype1 = _UPSMON_Minesclassname select 0; // ATmines
-UPSMON_Minestype2 = _UPSMON_Minesclassname select 1; // APmines
-
+//_UPSMON_Minesclassname = [] call UPSMON_getminesclass;
+UPSMON_Minestype1 = ["ATMine","SLAMDirectionalMine","UnderwaterMine","UnderwaterMineAB"]; // ATmines
+UPSMON_Minestype2 = ["APERSMine","APERSBoundingMine","APERSTripMine","UnderwaterMinePDM","BombCluster_01_UXO1_F","Drone_explosive"]; // APmines
 
 _m = createMarker ["DummyUPSMONMarker",[0,0]];
 _m setmarkerColor "Colorblack";
@@ -209,8 +208,6 @@ _m setMarkerShape "ELLIPSE";
 _m setMarkerSize [100,100];
 _m setMarkerBrush "Solid";
 _m setmarkerAlpha 0;
-
-
 
 //Initialization done
 UPSMON_INIT=1;

@@ -127,7 +127,7 @@ DECLARE_SERVER_VAR(areInvadersDefeated, false);
 DECLARE_SERVER_VAR(A3A_coldWarMode, false);
 
 //IntroMission
-DECLARE_SERVER_VAR(introFinished, true);
+DECLARE_SERVER_VAR(introFinished, false);
 
 //ArtyGroups
 DECLARE_SERVER_VAR(artyGroups, []);
@@ -136,13 +136,13 @@ DECLARE_SERVER_VAR(artyGroups, []);
 //DECLARE_SERVER_VAR(destroyedBuildings, []);
 //Initial HR
 //server setVariable ["hr", 8, true];
-server setVariable ["UKhr", 40, true];
+server setVariable ["UKhr", 50, true];
 server setVariable ["SAShr", 10, true];
-server setVariable ["UShr", 40, true];
+server setVariable ["UShr", 50, true];
 server setVariable ["parahr", 20, true];
 server setVariable ["SDKhr", 0, true];
 //Initial faction money pool
-server setVariable ["resourcesFIA", 20000, true];
+server setVariable ["resourcesFIA", 10000, true];
 //Initial intel points
 server setVariable ["intelPoints", 0, true];
 // Time of last garbage clean. Note: serverTime may not reset to zero if server was not restarted. Therefore, it should capture the time at start of mission.
@@ -154,8 +154,8 @@ DECLARE_SERVER_VAR(A3A_lastGarbageCleanTime, serverTime);
 //We shouldn't need to sync these.
 [2,"Setting server only variables",_fileName] call A3A_fnc_log;
 
-prestigeOPFOR = [75, 50] select cadetMode;												//Initial % support for NATO on each city
-prestigeBLUFOR = 0;																	//Initial % FIA support on each city
+prestigeOPFOR = [25, 25] select cadetMode;												//Initial % support for NATO on each city
+prestigeBLUFOR = 25;																	//Initial % FIA support on each city
 // Indicates time in seconds before next counter attack.
 attackCountdownOccupants = 3600;
 attackCountdownInvaders = 3600;
@@ -184,6 +184,7 @@ artilleryList = [true, true, true, true, true, true, true, true, true, true];
 flakList = [true, true, true, true];
 mineMarkers = ["minefield_1","minefield_2","minefield_3","minefield_4","minefield_5","minefield_6","minefield_7","minefield_8","minefield_9","minefield_10","minefield_11","minefield_12","minefield_13","minefield_14","minefield_15"];
 
+rebelCity = "";
 //
 occupantKilled = 0;
 publicVariable "occupantKilled";
@@ -1220,15 +1221,15 @@ timer setVariable [vehNATOMRLS,0,true];
 timer setVariable [vehCSATMRLS,5,true];
 
 server setVariable [civCar,350,true];
-server setVariable [civTruck,700,true];
+server setVariable [civTruck,600,true];
 server setVariable [civBoat,200,true];
-server setVariable [vehSDKBike, 200, true];
-server setVariable [vehSDKLightUnarmed,200,true];
+server setVariable [vehSDKBike, 250, true];
+server setVariable [vehSDKLightUnarmed,250,true];
 server setVariable [vehSDKTruck,400,true];
 server setVariable [vehSDKTruckClosed,400,true];
-server setVariable [vehSDKLightArmed, 500, true];
-server setVariable [vehSDKRepair, 600, true];
-server setVariable [vehSDKFuel, 600, true];
+server setVariable [vehSDKLightArmed, 400, true];
+server setVariable [vehSDKRepair, 500, true];
+server setVariable [vehSDKFuel, 500, true];
 server setVariable [vehSDKAmmo, 600, true];
 server setVariable [vehSDKMedical, 600, true];
 server setVariable [vehSDKHeavyArmed,750,true];
@@ -1237,32 +1238,31 @@ server setVariable [vehSDKAPCUS, 1000,true];
 server setVariable [vehSDKAPCUK2,1000,true];
 server setVariable [vehSDKAT, 1500, true];
 server setVariable [vehSDKAA,2000,true];
-server setVariable [vehSDKTankChur,3000,true];
-server setVariable [vehSDKTankCroc, 3200, true];
-server setVariable [vehSDKTankHow, 3500, true];
-server setVariable [vehSDKTankUKM4, 3000, true];
-server setVariable [vehSDKTankUSM5, 2500, true];
-server setVariable [vehSDKTankUSM4, 3000, true];
-server setVariable [vehSDKPlaneUK1, 3600, true];
-server setVariable [vehSDKPlaneUK2,4000,true];
-server setVariable [vehSDKPlaneUK3,4800,true];
-server setVariable [vehSDKPlaneUS1, 3750, true];
-server setVariable [vehSDKPlaneUS2, 4500, true];
+server setVariable [vehSDKTankChur,2500,true];
+server setVariable [vehSDKTankCroc, 2750, true];
+server setVariable [vehSDKTankHow, 2800, true];
+server setVariable [vehSDKTankUKM4, 2400, true];
+server setVariable [vehSDKTankUSM5, 1600, true];
+server setVariable [vehSDKTankUSM4, 2400, true];
+server setVariable [vehSDKPlaneUK1, 3000, true];
+server setVariable [vehSDKPlaneUK2,3000,true];
+server setVariable [vehSDKPlaneUK3,4000,true];
+server setVariable [vehSDKPlaneUS1, 3200, true];
+server setVariable [vehSDKPlaneUS2, 3800, true];
 server setVariable [vehSDKPlaneUS3, 5000, true];
 server setVariable [vehUKPayloadPlane, 8000, true];
 server setVariable [vehUSPayloadPlane, 7500, true];
-server setVariable [vehSDKTransPlaneUK, 3200, true];
-server setVariable [vehSDKTransPlaneUS, 3200, true];
+server setVariable [vehSDKTransPlaneUK, 2500, true];
+server setVariable [vehSDKTransPlaneUS, 2500, true];
 server setVariable [vehInfSDKBoat, 1200, true];
-server setVariable [vehSDKBoat, 1800, true];
-server setVariable [vehSDKAttackBoat, 2500, true];
-
-server setVariable [UKMGStatic,400,true];
-server setVariable [USMGStatic, 400, true];
-server setVariable [staticATteamPlayer, 1250, true];
+server setVariable [vehSDKBoat, 1500, true];
+server setVariable [vehSDKAttackBoat, 1800, true];
+server setVariable [UKMGStatic,250,true];
+server setVariable [USMGStatic, 250, true];
+server setVariable [staticATteamPlayer, 1200, true];
 server setVariable [staticAAteamPlayer, 1600, true];
-server setVariable [SDKMortar, 1000, true];
-server setVariable [SDKArtillery, 2000, true];
+server setVariable [SDKMortar, 500, true];
+server setVariable [SDKArtillery, 1600, true];
 
 //black market costs
 {server setVariable [_x,2000,true]} forEach shop_UAV;

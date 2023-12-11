@@ -5,6 +5,7 @@ private _vehicles = [];
 private _groups = [];
 
 private _allPlayers = (call BIS_fnc_listPlayers) select {side _x == teamPlayer};
+if (count _allPlayers == 0) exitWith {};
 private _player = selectRandom _allPlayers;
 private _originPosition = position _player;
 

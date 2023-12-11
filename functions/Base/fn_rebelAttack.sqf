@@ -23,7 +23,7 @@ if ((_side == Occupants && areOccupantsDefeated) || {(_side == Invaders && areIn
     [2, format ["%1 faction was defeated earlier, aborting attack.", str _side], _fileName, true] call A3A_fnc_log;
 };
 
-private _possibleTargets = markersX - controlsX - watchpostsFIA - roadblocksFIA - aapostsFIA - atpostsFIA - mortarpostsFIA - lightroadblocksFIA - hmgpostsFIA - supportpostsFIA - ["Synd_HQ","NATO_carrier","CSAT_carrier"] - destroyedSites;
+private _possibleTargets = markersX - controlsX - watchpostsFIA - roadblocksFIA - aapostsFIA - atpostsFIA - mortarpostsFIA - lightroadblocksFIA - hmgpostsFIA - supportpostsFIA - ["Synd_HQ","NATO_carrier","CSAT_carrier"];
 private _possibleStartBases = (airportsX + milbases) select {([_x,false] call A3A_fnc_airportCanAttack)};
 private _targetSide = sideEnemy;
 //No AI vs AI, possible targets are only bases held by rebels

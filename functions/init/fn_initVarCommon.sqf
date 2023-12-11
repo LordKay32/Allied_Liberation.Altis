@@ -137,7 +137,8 @@ listMilBld = [
 "fow_p_defenceposition_04",
 "Land_Church_04_white_red_F",
 "Land_Church_04_white_F",
-"Land_Church_04_yellow_F"
+"Land_Church_04_yellow_F",
+"Land_LightHouse_F"
 ];
 
 /*Original List

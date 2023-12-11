@@ -309,7 +309,7 @@ if (!isNull _antenna) then
 		_groupX = createGroup _sideX;
 
 		_typeUnit = if (_sideX == Occupants) then {
-			if (!_isFIA) then {NATOMarksman call SCRT_fnc_unit_selectInfantryTier} else {FIAMarksman};
+			if (!_isFIA) then {NATOSniper call SCRT_fnc_unit_selectInfantryTier} else {FIAMarksman};
 		} else {
 			if (!_isFIA) then {CSATMarksman call SCRT_fnc_unit_selectInfantryTier} else {WAMMarksman};
 		};

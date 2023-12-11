@@ -15,17 +15,16 @@
  * %RETURNS%
  */
 
-
-params ["_PARAM1", "_PARAM2"];
-private ["_VAR1", "_VAR2"];
-
+private ["_markerX", "_groups", "_partizans", "_civilians", "_exit"];
 
 _markerX = _this select 0;
+if (sidesX getVariable [_markerX, sideUnknown] == teamPlayer) exitWith {};
+rebelCity = _markerX;
 
 _groups = [];
 _partizans = [];
-_vehiclesX = [];
 _civilians = [];
+_exit = false;
 
 _positionX = getMarkerPos (_markerX);
 
@@ -135,14 +134,14 @@ if (spawner getVariable _markerX != 2) then {
 				{
 				_civ addItemToUniform _SDKMagazine;
 				};
-	        _civ setSkill 0.3;
+	        _civ setSkill 0.33;
 	        _civilians pushBack _civ;
 	    };
     
 	    if (_i % 2 == 0) then {[leader _groupCivil, _markerX, "COMBAT","SPAWNED","NOVEH2"] execVM "scripts\UPSMON.sqf"} else {[_groupCivil, _positionX, 200, 3, 0, 0.5] call A3A_fnc_cityGarrison;};//TODO need delete UPSMON link
 	};
 
-	_pos1 = [_positionX, 450, 550, 3, 0, 0, 0] call BIS_fnc_findSafePos;
+	_pos1 = [_positionX, 400, 500, 3, 0, 0, 0] call BIS_fnc_findSafePos;
 	_pos2 = [_pos1, 75, 150, 3, 0, 0, 0] call BIS_fnc_findSafePos;
 
 	_groupPart1 = [_pos1,teamPlayer, groupsSDKSquad] call A3A_fnc_spawnGroup;
@@ -166,13 +165,24 @@ if (spawner getVariable _markerX != 2) then {
 		_x setDamage 1;
 		sleep ((random 3) + 2);
 	} forEach _vehs;
+
+	[_markerX] spawn {
+		params ["_markerX"];
+		sleep ((random 600) + 300);
+		[Occupants, 0, "QRF", getMarkerPos _markerX, 0, 0] spawn A3A_fnc_createSupport;
+	};
 } else {
 
     [_taskId, "invaderPunish", "FAILED"] call A3A_fnc_taskSetState;
     [_positionX, -50, 3000] call _fnc_adjustNearCities;
-
+	
+	{
+	deleteVehicle _x;
+	} forEach _barricades;
+	
     destroyedSites = destroyedSites + [_markerX];
     publicVariable "destroyedSites";
+    rebelCity = "";
     private _mineTypes = A3A_faction_occ getVariable "minefieldAPERS";
     for "_i" from 1 to 25 do {
         private _mineX = createMine [selectRandom _mineTypes,_positionX,[],_size/2];
@@ -180,19 +190,24 @@ if (spawner getVariable _markerX != 2) then {
     };
     [_markerX] call A3A_fnc_destroyCity;
     // Putting this stuff here is a bit gross, but currently there's no cityFlip function. Usually done by resourceCheck.
-    sidesX setVariable [_markerX, Occupants, true];
     garrison setVariable [_markerX, [], true];
     [_markerX] call A3A_fnc_mrkUpdate;
-
+    sleep 15;
+	[_taskId, "invaderPunish", 0] spawn A3A_fnc_taskDelete;
+    _exit = true;
 };
+
+if (_exit) exitWith {};
+
 waitUntil {sleep 1;	(sidesX getVariable [_markerX, sideUnknown] == teamPlayer) or ({alive _x} count _civilians < count _civilians / 4)};
 
 if (sidesX getVariable [_markerX, sideUnknown] == teamPlayer) then {
     [_taskId, "invaderPunish", "SUCCEEDED"] call A3A_fnc_taskSetState;
     [_positionX, 30, 3000] call _fnc_adjustNearCities;
+    rebelCity = "";
 
     {if (isPlayer _x) then {[100,_x] call A3A_fnc_playerScoreAdd}} forEach ([500,0,_positionX,teamPlayer] call A3A_fnc_distanceUnits);
-    [0,2000,0] remoteExec ["A3A_fnc_resourcesFIA",2];
+    [0,1000,0] remoteExec ["A3A_fnc_resourcesFIA",2];
 } else {
 
     [_taskId, "invaderPunish", "FAILED"] call A3A_fnc_taskSetState;
@@ -200,6 +215,7 @@ if (sidesX getVariable [_markerX, sideUnknown] == teamPlayer) then {
 
     destroyedSites = destroyedSites + [_markerX];
     publicVariable "destroyedSites";
+    rebelCity = "";
     private _mineTypes = A3A_faction_occ getVariable "minefieldAPERS";
     for "_i" from 1 to 25 do {
         private _mineX = createMine [selectRandom _mineTypes,_positionX,[],_size/2];
@@ -207,7 +223,6 @@ if (sidesX getVariable [_markerX, sideUnknown] == teamPlayer) then {
     };
     [_markerX] call A3A_fnc_destroyCity;
     // Putting this stuff here is a bit gross, but currently there's no cityFlip function. Usually done by resourceCheck.
-    sidesX setVariable [_markerX, Occupants, true];
     garrison setVariable [_markerX, [], true];
     [_markerX] call A3A_fnc_mrkUpdate;
 };
@@ -220,3 +235,7 @@ waitUntil {sleep 1;	(spawner getVariable _markerX == 2)};
 {
 [_x] spawn A3A_fnc_groupDespawner;
 } forEach _groups;
+
+{
+deleteVehicle _x;
+} forEach _barricades;

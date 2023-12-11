@@ -59,10 +59,12 @@ while {true} do {
     _pathState = [_route, 10, _pathState] call A3A_fnc_findPosOnRoute;
 };
 
-private _vehicle = createVehicle [_vehicleType, ASLtoAGL (_pathState#0) vectorAdd [0,0,0.5]];               // Give it a little air
+private _vector = if (_vehicleType in vehNATOTransportPlanes) then {200} else {0.5};
+
+private _vehicle = createVehicle [_vehicleType, ASLtoAGL (_pathState#0) vectorAdd [0,0,_vector]];               // Give it a little air
 private _vecUp = (_pathState#1) vectorCrossProduct [0,0,1] vectorCrossProduct (_pathState#1);       // correct pitch angle
 _vehicle setVectorDirAndUp [_pathState#1, _vecUp];
-if (_vehicleType in vehNATOTransportPlanes) then {_vehicle setVelocityModelSpace [0, 100, 0]};
+if (_vehicleType in vehNATOTransportPlanes) then {_vehicle setDir ((getMarkerPos _markerOrigin) getDir _posDestination); _vehicle setVelocityModelSpace [0, 100, 0]};
 
 if(isNull _vehicle) exitWith {objNull};
 

@@ -19,7 +19,7 @@ if (_typeX == UKMGStatic) then
 	_b0 = UKMGStaticWeap;
 	_b1 = UKMGStaticSupp;
 	_morty0 setVariable ["typeOfSoldier","StaticGunner"];
-	_ammoStatic = [["fow_250Rnd_vickers",250],["fow_250Rnd_vickers",250]];
+	_ammoStatic = [["fow_250Rnd_vickers",250],["fow_250Rnd_vickers",250],["fow_250Rnd_vickers",250],["fow_250Rnd_vickers",250]];
 };
 if (_typeX == SDKMortar) then
 	{
@@ -66,6 +66,7 @@ while {(alive _morty2) and (alive _morty3)} do
 		_morty3 assignAsCargo _mortarX;
 		[_morty3] orderGetIn true;
 		[_morty3] allowGetIn true;
+		artySupport synchronizeObjectsAdd [_mortarX];
 	} else {[_morty3] orderGetIn false;};
 	[_mortarX, side _groupX] call A3A_fnc_AIVEHinit;
 
@@ -74,10 +75,6 @@ while {(alive _morty2) and (alive _morty3)} do
 
 	if (({(alive _x)} count units _groupX == count units _groupX) and !(unitReady _morty0)) then
 		{
-		[_morty0] orderGetIn true;
-		[_morty1] orderGetIn true;
-		_morty2 addBackpackGlobal _b0;
-		_morty3 addBackpackGlobal _b1;
 		unassignVehicle _morty2;
 		moveOut _morty2;
 		if (_typeX == SDKMortar) then {
@@ -85,9 +82,13 @@ while {(alive _morty2) and (alive _morty3)} do
 			moveOut _morty3;
 			deleteMarker _marker;
 			mobilemortarsFIA = mobilemortarsFIA - [_marker]; publicVariable "mobilemortarsFIA";
-		} 
-		else {[_morty3] orderGetIn true};	
+		};
 		_ammoStatic = magazinesAmmo _mortarX;
 		deleteVehicle _mortarX;
+		_morty2 addBackpackGlobal _b0;
+		_morty3 addBackpackGlobal _b1;
+		{
+		[_x] orderGetIn true;
+		} forEach units _groupX;
 		};
 	};

@@ -14,11 +14,12 @@ while {true} do
 	aggressionOccupants = aggressionOccupants + 5 + (_NATOPoints);
 	//aggressionInvaders = aggressionInvaders + 10;
 
-	private _resAdd = 25;//0
+	private _resAdd = 500;//0
 	private _hrSDKAdd = 0;//0
 	private _hrAllAdd = 2;
 	private _planes = 0;
 	private _vehicles = 2;
+	private _civVehicles = 0;
 	private _weapons = 0;
 	private _magazines = 0;
 	private _items = 0;
@@ -61,8 +62,8 @@ while {true} do
 			};
 		};
 		
-		_resAddCity = _numCiv * (_supportReb / 100) / 20;
-		_hrAddCity = _numCiv * (_supportReb / 100000);
+		_resAddCity = _numCiv * (_supportReb / 100);
+		_hrAddCity = _numCiv * (_supportReb / 50000);
 
 		if (sidesX getVariable [_city,sideUnknown] == _governmentCitySide) then
 		{
@@ -73,15 +74,44 @@ while {true} do
 
 		_resAdd = _resAdd + _resAddCity;
 		_hrSDKAdd = _hrSDKAdd + _hrAddCity;
-
+		if (sidesX getVariable [_city,sideUnknown] == teamPlayer) then {
+			_civVehicles = _civVehicles + ((_numCiv / 300) * (_supportReb / 100));
+		};
 	} forEach citiesX;
 
 	if (_popKilled > (_popTotal / 3)) then {["destroyedSites",false,true] remoteExec ["BIS_fnc_endMission"]};
 
+	_civVehicles = round _civVehicles;	
+	
+	for "_i" from 0 to _civVehicles do {
+		private _civCarsCount = server getVariable (civCar + "_count");
+		private _civTrucksCount = server getVariable (civTruck + "_count");
+		if (_civCarsCount >= 4 && _civTrucksCount >= 4) exitWith {};
+		_randomNum = random 100;
+		
+		if (_randomNum < 50) then {
+			if (_civCarsCount < 4) then {
+				_newCivCarsCount = _civCarsCount + 1;
+				server setVariable [civCar + "_count", _newCivCarsCount, true]
+			} else {
+				_newCivTrucksCount = _civTrucksCount + 1;
+				server setVariable [civTruck + "_count", _newCivTrucksCount, true]
+			};
+		} else {
+			if (_civTrucksCount < 4) then {
+				_newCivTrucksCount = _civTrucksCount + 1;
+				server setVariable [civCar + "_count", _newCivTrucksCount, true]
+			} else {
+				_newCivCarsCount = _civCarsCount + 1;
+				server setVariable [civTruck + "_count", _newCivCarsCount, true]
+			};
+		};
+	};
+
 	{
 		if (sidesX getVariable [_x,sideUnknown] == teamPlayer) then
 		{
-			_resAdd = _resAdd + 1000;
+			_resAdd = _resAdd + 2000;
 			_hrAllAdd = _hrAllAdd + 8;
 			_planes = _planes + 1;
 			_weapons = _weapons + 50;
@@ -93,7 +123,7 @@ while {true} do
 	{
 		if (sidesX getVariable [_x,sideUnknown] == teamPlayer) then
 		{
-			_resAdd = _resAdd + 1000;
+			_resAdd = _resAdd + 2000;
 			_hrAllAdd = _hrAllAdd + 8;
 			_vehicles = _vehicles + 4;
 			_weapons = _weapons + 50;
@@ -105,7 +135,7 @@ while {true} do
 	{
 		if (sidesX getVariable [_x,sideUnknown] == teamPlayer) then
 		{
-			_resAdd = _resAdd + 500;
+			_resAdd = _resAdd + 1000;
 			_hrAllAdd = _hrAllAdd + 4;
 			_vehicles = _vehicles + 2;
 			_weapons = _weapons + 25;
@@ -195,8 +225,8 @@ while {true} do
 	if (_x in [vehInfSDKBoat, vehSDKHeavyArmed, vehSDKAPCUK1, vehSDKAPCUK2, vehSDKAPCUS, vehSDKTankUSM4, vehSDKTankUSM5, SDKMortar]) then {_vehMax = 4};
 	if (_x in [staticATteamPlayer, staticAAteamPlayer]) then {_vehMax = 6};
 	if (_x in [vehSDKLightArmed, vehSDKTruck, vehSDKTruckClosed]) then {_vehMax = 8};
-	if (_x in [UKMGStatic, USMGStatic]) then {_vehMax = 10};
-	if (_x == vehSDKLightUnarmed) then {_vehMax = 12};
+	if (_x in [UKMGStatic, USMGStatic]) then {_vehMax = 12};
+	if (_x == vehSDKLightUnarmed) then {_vehMax = 16};
 
 	_actual = server getVariable (_x + "_count");
 
@@ -232,9 +262,9 @@ while {true} do
 
 	_allWeights pushBack _weight;
 
-	} forEach _vehList;
+	} forEach _planesList;
 
-	_selectedVeh = _vehList selectRandomWeighted _allWeights;
+	_selectedVeh = _planesList selectRandomWeighted _allWeights;
 
 	_currentNum = server getVariable (_selectedVeh + "_count");
 	_newNum = if (_currentNum < _vehMax) then {_currentNum + 1} else {_currentNum};
@@ -366,7 +396,7 @@ while {true} do
 	//city rebellion mission
 	_potCities = townsX select {(sidesX getVariable [_x,sideUnknown] != teamPlayer) && ([_x] call A3A_fnc_isFrontline) && (spawner getVariable _x == 2)};
 
-	if (count _potCities > 0 && (random 100 < 20)) then {_rebelCity = selectRandom _potCities; [_rebelCity] spawn A3A_fnc_cityRebel};
+	if (count _potCities > 0 && (random 100 < 20) && rebelCity == "") then {_rebelCity = selectRandom _potCities; [_rebelCity] spawn A3A_fnc_cityRebel};
 
 	if (isDedicated) then
 		{

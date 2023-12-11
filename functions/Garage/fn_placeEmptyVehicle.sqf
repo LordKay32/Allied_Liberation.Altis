@@ -14,7 +14,31 @@ if (_garageVeh isKindOf "Air") then {
 
 _garageVeh setDir _dir;
 //Set position exactly
-_garageVeh setPosASL _pos;
+
+private _vectorAdd = [];
+switch (true) do
+{
+	case (_vehicleType in [vehSDKBike,vehSDKLightUnarmed,vehSDKLightArmed]): {_vectorAdd = [0,0,-0.3]};
+	case (_vehicleType in [vehSDKTruck,vehSDKTruckClosed,vehSDKAmmo]): {_vectorAdd = [0,0,-1.25]};
+	case (_vehicleType in [vehSDKRepair]): {_vectorAdd = [0,0,-0.65]};
+	case (_vehicleType in [vehSDKFuel]): {_vectorAdd = [0,0,-0.75]};
+	case (_vehicleType in [vehSDKMedical]): {_vectorAdd = [0,0,-1.6]};
+	case (_vehicleType in [vehSDKHeavyArmed]): {_vectorAdd = [0,0,-1.1]};
+	case (_vehicleType in [vehSDKAPCUS,vehSDKAPCUK2]): {_vectorAdd = [0,0,-0.9]};
+	case (_vehicleType in [vehSDKAT]): {_vectorAdd = [0,0,-1.15]};
+	case (_vehicleType in [vehSDKTankUSM4,vehSDKTankUKM4]): {_vectorAdd = [0,0,-0.1]};
+	case (_vehicleType in [staticAAteamPlayer]): {_vectorAdd = [0,0,0.3]};
+	case (_vehicleType in [vehSDKPlaneUK2]): {_vectorAdd = [0,0,-1.7]};
+	case (_vehicleType in [vehSDKPlaneUK3]): {_vectorAdd = [0,0,-2.2]};
+	case (_vehicleType in [vehSDKPlaneUS1,vehSDKPlaneUS2]): {_vectorAdd = [0,0,-1.9]};
+	case (_vehicleType in [vehSDKTransPlaneUS,vehSDKTransPlaneUK]): {_vectorAdd = [0,0,-3.4]};
+	case (_vehicleType in [vehUKPayloadPlane]): {_vectorAdd = [0,0,-3.3]};
+	case (_vehicleType in [vehUSPayloadPlane]): {_vectorAdd = [0,0,-2.9]};		
+	
+	default {_vectorAdd = [0,0,0]};
+};
+
+_garageVeh setPosASL (_pos vectorAdd _vectorAdd);
 
 clearMagazineCargoGlobal _garageVeh;
 clearWeaponCargoGlobal _garageVeh;

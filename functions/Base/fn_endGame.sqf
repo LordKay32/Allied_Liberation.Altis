@@ -15,7 +15,7 @@
  * %RETURNS%
  */
 
-sleep 5;
+sleep 10;
 
 AlliesWon = true;
 
@@ -58,7 +58,7 @@ titleFadeOut 3;
 
 sleep 4;
 
-titleText ["<t color='#ffffff' size='2.4'>The German Army on Altis has been defeated. The remaining soldiers on the island are surrendering to Allied forces.", "PLAIN", 1, true, true];
+titleText ["<t color='#ffffff' size='2.4'>The German Army on Altis has been defeated. The remaining German soldiers are surrendering to Allied forces.", "PLAIN", 1, true, true];
 
 sleep 8;
 
@@ -71,7 +71,7 @@ private _video2 = ["Music\EndVid.ogv"] spawn BIS_fnc_playVideo;
 
 titleText [format["<t color='#ffffff' size='2.4'>Wehrmacht soldiers killed: %1<br />Wehrmacht soldiers killed by players: %2<br /><br /><br />Wehrmacht vehicles destroyed: %3<br />Wehrmacht vehicles destroyed by players: %4",occupantKilled,occupantKilledByPlayers,occupantVehKilled,occupantVehKilledByPlayers], "PLAIN", 1, true, true]; 
 
-sleep 8;
+sleep 7.5;
 
 titleFadeOut 3;
 
@@ -82,7 +82,7 @@ private _video2 = ["Music\EndVid.ogv"] spawn BIS_fnc_playVideo;
 
 titleText [format["<t color='#ffffff' size='2.4'>Player deaths: %1<br /><br /><br /><br />Players killed by player friendly fire: %2",playerDeaths,playerDeathsFF], "PLAIN", 1, true, true]; 
 
-sleep 8;
+sleep 7.5;
 
 titleFadeOut 3;
 	
@@ -93,7 +93,7 @@ private _video2 = ["Music\EndVid.ogv"] spawn BIS_fnc_playVideo;
 
 titleText [format["<t color='#ffffff' size='2.4'>Allied soldiers deployed: %1<br />Allied soldiers stood down: %2<br /><br /><br />Allied soldiers killed: %3<br />Allied soldiers killed by player friendly fire: %4",teamPlayerDeployed,teamPlayerStoodDown,teamPlayerKilled,teamPlayerKilledFF], "PLAIN", 1, true, true]; 
 
-sleep 8;
+sleep 7.5;
 
 titleFadeOut 3;
 	
@@ -104,7 +104,7 @@ private _video2 = ["Music\EndVid.ogv"] spawn BIS_fnc_playVideo;
 
 titleText [format["<t color='#ffffff' size='2.4'>Partizans killed: %1<br /><br /><br /><br />Partizans killed by player friendly fire: %2",partizanKilled,partizanKilledFF], "PLAIN", 1, true, true]; 
 
-sleep 8;
+sleep 7.5;
 
 titleFadeOut 3;
 	
@@ -115,7 +115,7 @@ private _video2 = ["Music\EndVid.ogv"] spawn BIS_fnc_playVideo;
 
 titleText [format["<t color='#ffffff' size='2.4'>Allied vehicles deployed: %1<br /><br /><br />Wehrmacht vehicles captured: %2<br /><br /><br />Vehicles destroyed: %3",teamPlayerVehDeployed,vehiclesCaptured,teamPlayerVehKilled], "PLAIN", 1, true, true]; 
 
-sleep 8;
+sleep 7.5;
 
 titleFadeOut 3;
 	
@@ -126,7 +126,7 @@ private _video2 = ["Music\EndVid.ogv"] spawn BIS_fnc_playVideo;
 
 titleText [format["<t color='#ffffff' size='2.4'>Civilians killed by the Wehrmacht: %1<br /><br /><br /><br />Civilians killed by the Allies: %2",civilianKilledByOccupant,civilianKilledByteamPlayer], "PLAIN", 1, true, true]; 
 
-sleep 8;
+sleep 7.5;
 
 titleFadeOut 3;
 	
@@ -137,7 +137,7 @@ private _video2 = ["Music\EndVid.ogv"] spawn BIS_fnc_playVideo;
 
 titleText [format["<t color='#ffffff' size='2.4'>Sectors liberated: %1<br /><br />Sectors lost: %2<br /><br /><br />Prisoners captured: %3",sectorsLiberated,sectorsLost,prisonersCaptured], "PLAIN", 1, true, true]; 
 
-sleep 8;
+sleep 7.5;
 
 titleFadeOut 3;
 	
@@ -146,7 +146,7 @@ waitUntil { scriptDone _video2};
 
 private _video2 = ["Music\EndVid.ogv"] spawn BIS_fnc_playVideo;
 
-sleep 8;
+sleep 7.5;
 
 titleFadeOut 3;
 	

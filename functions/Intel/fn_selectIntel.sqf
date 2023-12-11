@@ -1,20 +1,16 @@
 //Define results for small intel
 #define TIME_LEFT       101
 #define DECRYPTION_KEY  102
-#define CONVOY          103
+#define GARRISON        103
+#define REVEAL_MAP		104
+
 
 //Define results for medium intel
-#define ACCESS_ARMOR    200
-#define ACCESS_AIR      201
-#define ACCESS_HELI     202
-#define CONVOYS         203
-#define COUNTER_ATTACK  204
-#define CONVOY_ROUTE    205
+#define CONVOYS         201
+#define CONVOY_ROUTE    202
 
 //Define results for large intel
-#define WEAPON          300
-#define TRAITOR         301
-#define MONEY           302
+#define MONEY           301
 
 //Define results for (mostly) any intel
 #define TASK          500

@@ -19,7 +19,7 @@
 params ["_PARAM1", "_PARAM2"];
 private ["_VAR1", "_VAR2"];
 
-	private _resAdd = 25;//0
+	private _resAdd = 500;//0
 	private _hrSDKAdd = 0;//0
 	private _hrAllAdd = 2;
 	private _planes = 0;
@@ -51,8 +51,8 @@ private ["_VAR1", "_VAR2"];
 
 		private _radioTowerSide = [_city] call A3A_fnc_getSideRadioTowerInfluence;
 		
-		_resAddCity = _numCiv * (_supportReb / 100) / 20;
-		_hrAddCity = _numCiv * (_supportReb / 100000);
+		_resAddCity = _numCiv * (_supportReb / 100);
+		_hrAddCity = _numCiv * (_supportReb / 50000);
 
 		if (sidesX getVariable [_city,sideUnknown] == _governmentCitySide) then
 		{
@@ -75,7 +75,7 @@ private ["_VAR1", "_VAR2"];
 	{
 		if (sidesX getVariable [_x,sideUnknown] == teamPlayer) then
 		{
-			_resAdd = _resAdd + 1000;
+			_resAdd = _resAdd + 2000;
 			_hrAllAdd = _hrAllAdd + 8;
 			_planes = _planes + 1;
 			_weapons = _weapons + 50;
@@ -87,7 +87,7 @@ private ["_VAR1", "_VAR2"];
 	{
 		if (sidesX getVariable [_x,sideUnknown] == teamPlayer) then
 		{
-			_resAdd = _resAdd + 1000;
+			_resAdd = _resAdd + 2000;
 			_hrAllAdd = _hrAllAdd + 8;
 			_vehicles = _vehicles + 4;
 			_weapons = _weapons + 50;
@@ -99,7 +99,7 @@ private ["_VAR1", "_VAR2"];
 	{
 		if (sidesX getVariable [_x,sideUnknown] == teamPlayer) then
 		{
-			_resAdd = _resAdd + 500;
+			_resAdd = _resAdd + 1000;
 			_hrAllAdd = _hrAllAdd + 4;
 			_vehicles = _vehicles + 2;
 			_weapons = _weapons + 25;

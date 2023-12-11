@@ -52,6 +52,7 @@ if (SDKArtillery in _statics) then {
 		garrison setVariable [(_markerX + "_statics"),_statics,true];
 	}];
 	_veh lock 3;
+	artySupport synchronizeObjectsAdd [_veh];
 	
 	sleep 1;
 

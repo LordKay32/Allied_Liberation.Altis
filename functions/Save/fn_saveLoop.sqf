@@ -77,6 +77,7 @@ private _destroyedPositions = destroyedBuildings apply { getPosATL _x };
 ["battleshipStarted", battleshipStarted] call A3A_fnc_setStatVariable;
 ["battleshipDone", battleshipDone] call A3A_fnc_setStatVariable;
 ["introFinished", introFinished] call A3A_fnc_setStatVariable;
+["rebelCity", rebelCity] call A3A_fnc_setStatVariable;
 
 //Save aggression values
 ["aggressionOccupants", [aggressionLevelOccupants, aggressionStackOccupants]] call A3A_fnc_setStatVariable;

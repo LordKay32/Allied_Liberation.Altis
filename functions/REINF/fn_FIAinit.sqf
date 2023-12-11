@@ -79,10 +79,13 @@ if (player == leader _unit) then {
 		[_victim] spawn A3A_fnc_postmortem;
 		_killer = _this select 1;
 		
-		if ((_unit getVariable "unitType") in [SDKMedic,SDKMG,SDKMil,SDKSL,SDKEng]) then {
-			arrayGREids pushBackUnique (name _victim);} else {
-			arrayENGids pushBackUnique (name _victim);
-		};
+		if ((_unit getVariable "unitType") in (SDKTroops - [SDKUnarmed])) then {
+			arrayGREids pushBackUnique (name _victim)};
+		if ((_unit getVariable "unitType") in (UKTroops - [UKUnarmed])) then {
+			arrayUKids pushBackUnique (name _victim)};
+		if ((_unit getVariable "unitType") in (USTroops - [USUnarmed])) then {
+			arrayUSids pushBackUnique (name _victim)};
+
 		if (typeName _killer != "OBJECT") exitWith {};
 		if (side _killer == Occupants) then {
 			_nul = [0.25,0,getPos _victim] remoteExec ["A3A_fnc_citySupportChange",2];

@@ -178,13 +178,37 @@ addMissionEventHandler ["EachFrame",
 		vehPlace_previewVeh setPosASL [0,0,0];
 	};
 
+	private _vectorAdd = [];
+	private _vehType = typeOf vehPlace_previewVeh;
+	switch (true) do
+	{
+		case (_vehType in [vehSDKBike,vehSDKLightUnarmed,vehSDKLightArmed]): {_vectorAdd = [0,0,0.3]};
+		case (_vehType in [vehSDKTruck,vehSDKTruckClosed,vehSDKAmmo]): {_vectorAdd = [0,0,1.25]};
+		case (_vehType in [vehSDKRepair]): {_vectorAdd = [0,0,0.65]};
+		case (_vehType in [vehSDKFuel]): {_vectorAdd = [0,0,0.75]};
+		case (_vehType in [vehSDKMedical]): {_vectorAdd = [0,0,1.6]};
+		case (_vehType in [vehSDKHeavyArmed]): {_vectorAdd = [0,0,1.1]};
+		case (_vehType in [vehSDKAPCUS,vehSDKAPCUK2]): {_vectorAdd = [0,0,0.9]};
+		case (_vehType in [vehSDKAT]): {_vectorAdd = [0,0,1.15]};
+		case (_vehType in [vehSDKTankUSM4,vehSDKTankUKM4]): {_vectorAdd = [0,0,0.1]};
+		case (_vehType in [staticAAteamPlayer]): {_vectorAdd = [0,0,-0.3]};
+		case (_vehType in [vehSDKPlaneUK2]): {_vectorAdd = [0,0,1.7]};
+		case (_vehType in [vehSDKPlaneUK3]): {_vectorAdd = [0,0,2.2]};
+		case (_vehType in [vehSDKPlaneUS1,vehSDKPlaneUS2]): {_vectorAdd = [0,0,1.9]};
+		case (_vehType in [vehSDKTransPlaneUS,vehSDKTransPlaneUK]): {_vectorAdd = [0,0,3.4]};
+		case (_vehType in [vehUKPayloadPlane]): {_vectorAdd = [0,0,3.3]};
+		case (_vehType in [vehUSPayloadPlane]): {_vectorAdd = [0,0,2.9]};		
+		
+		default {_vectorAdd = [0,0,0]};
+	};
+
 	// If vehicle is a boat, make sure it spawns at sea level?
 
 	_water = surfaceIsWater _placementPos;
 	if (vehPlace_previewVeh isKindOf "Ship") then
 	{
 		_placementPos set [2,0];
-		if (!water || _placementPos distance2d player > 200) exitWith {vehPlace_previewVeh setPosASL [0,0,0]};
+		if (!_water || _placementPos distance2d player > 200) exitWith {vehPlace_previewVeh setPosASL [0,0,0]};
 		vehPlace_updatedLookPosition = _pos;
 		vehPlace_previewVeh setPosASL _placementPos;
 		vehPlace_previewVeh setVectorUp [0,0,1];
@@ -192,7 +216,7 @@ addMissionEventHandler ["EachFrame",
 	else {
 		if (_water || _placementPos distance2d player > 100) exitWith {vehPlace_previewVeh setPosASL [0,0,0]};
 		vehPlace_updatedLookPosition = _pos;
-		vehPlace_previewVeh setPosATL _placementPos;
-		vehPlace_previewVeh setVectorUp (_chosenIntersection select 1);
+		vehPlace_previewVeh setPosATL (_placementPos vectorAdd _vectorAdd);
+		vehPlace_previewVeh setVectorUp surfaceNormal position vehPlace_previewVeh;
 	};
 }];

@@ -21,12 +21,19 @@ Example:
 
 private _type = typeOf player;
 private _text = "";
-if(roleDescription player == "Commander") then {
+if (roleDescription player == "Commander") then {
     player setUnitTrait ["camouflageCoef",1];
     player setUnitTrait ["audibleCoef",1];
     player setUnitTrait ["loadCoef",1];
-	player setSpeaker "Male04ENGB";
     _text = "Commander role.<br/><br/>The commander is a unit with the access to exclusive Commander Menu (CTRL+T). Additional high command squads can be recruited and given orders by the commander.";
+	player addEventHandler ["SlotItemChanged", {
+		params ["_unit", "_name", "_slot", "_assigned"];
+    	if (uniform _unit in ["U_LIB_UK_P37","U_LIB_UK_P37_LanceCorporal","U_LIB_UK_P37_Sergeant","U_LIB_UK_DenisonSmock","fow_u_uk_bd40_commando_01_private","fow_u_uk_parasmock"]) then {
+    		player setSpeaker "Male04ENGB";
+    	} else {
+			player setSpeaker "Male03ENG";
+		};
+	}];
 }
 else
 {
@@ -38,12 +45,19 @@ else
     	case "LIB_UK_Officer":  {
     		if ((roleDescription player == "UK Officer (Medic)") || (roleDescription player == "US Officer (Medic)")) then {
     			if (roleDescription player == "UK Officer (Medic)") then {player setSpeaker "Male02ENGB"};
-    			if (roleDescription player == "US Officer (Medic)") then {player setSpeaker "Male03ENG"};
+    			if (roleDescription player == "US Officer (Medic)") then {player setSpeaker "Male01ENG"};
     			_text = "Medic role.<br/><br/>Medics do not have any bonus or penalties, but have the ability to use certain medical items for full health restoration.";
+    			player setUnitTrait ["Medic",true];
     		}; 
     		if ((roleDescription player == "UK Officer (Engineer)") || (roleDescription player == "US Officer (Engineer)")) then  {
-    			if (roleDescription player == "UK Officer (Engineer)") then {player setSpeaker "Male01ENGB"};
-    			if (roleDescription player == "US Officer (Engineer)") then {player setSpeaker "Male11ENG"};
+    			if (roleDescription player == "UK Officer (Engineer)") then {
+    				player setSpeaker "Male01ENGB";
+    			};
+    			if (roleDescription player == "US Officer (Engineer)") then {
+    				player setSpeaker "Male11ENG";
+    			};
+    			player setUnitTrait ["Engineer",true];
+    			player setUnitTrait ["ExplosiveSpecialist",true];
     			player setUnitTrait ["audibleCoef",1.15];
     			player setUnitTrait ["camouflageCoef",1.15];
     			player setUnitTrait ["loadCoef",0.8];

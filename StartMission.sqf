@@ -85,8 +85,10 @@ if !(isNull _player5) then {
 	deleteVehicle (leader  _groupUS2);
 	_player5 joinAsSilent [(group _player5), 1];
 	units _groupUS2 joinSilent (group _player5);
+	private _clientID = owner _player5;
 	{
 	[_x] call A3A_fnc_FIAinit;
+	[_x] remoteExec ["A3A_fnc_groupMarkersSM",_clientID];
 	} forEach (units (group _player5) - [_player5]);
 	{
 	_x moveInAny _vehUS1;
@@ -129,7 +131,8 @@ if !(isNull _player1) then {
 	deleteVehicle commander _tankUS;
 	_player1 joinAsSilent [(group _player1), 1];
 	_tankUSCrew joinSilent (group _player1);
-	{[_x] call A3A_fnc_FIAinit} forEach (units (group _player1) - [_player1]);
+	private _clientID = owner _player1;
+	{[_x] call A3A_fnc_FIAinit; [_x] remoteExec ["A3A_fnc_groupMarkersSM",_clientID];} forEach (units (group _player1) - [_player1]);
 	_player1 assignAsCommander _tankUS;
 	_player1 moveInCommander _tankUS;
 	_player1 setSpeaker "Male03ENG";
@@ -163,8 +166,10 @@ if !(isNull _player4) then {
 	deleteVehicle (leader  _groupUS4);
 	_player4 joinAsSilent [(group _player4), 1];
 	units _groupUS4 joinSilent (group _player4);
+	private _clientID = owner _player4;
 	{
 	[_x] call A3A_fnc_FIAinit;
+	[_x] remoteExec ["A3A_fnc_groupMarkersSM",_clientID];
 	} forEach (units (group _player4) - [_player4]);
 	{
 	_x moveInAny _vehUS3;
@@ -219,7 +224,8 @@ if !(isNull _player3) then {
 	deleteVehicle commander _tankUK;
 	_player3 joinAsSilent [(group _player3), 1];
 	_tankUKCrew joinSilent (group _player3);
-	{[_x] call A3A_fnc_FIAinit} forEach (units (group _player3) - [_player3]);
+	private _clientID = owner _player3;
+	{[_x] call A3A_fnc_FIAinit;[_x] remoteExec ["A3A_fnc_groupMarkersSM",_clientID];} forEach (units (group _player3) - [_player3]);
 	_player3 assignAsCommander _tankUK;
 	_player3 moveInCommander _tankUK;
 	_player3 addWeapon "LIB_Binocular_UK";
@@ -254,8 +260,10 @@ if !(isNull _player2) then {
 	deleteVehicle (leader  _groupUK2);
 	_player2 joinAsSilent [(group _player2), 1];
 	units _groupUK2 joinSilent (group _player2);
+	private _clientID = owner _player2;
 	{
 	[_x] call A3A_fnc_FIAinit;
+	[_x] remoteExec ["A3A_fnc_groupMarkersSM",_clientID];
 	} forEach (units (group _player2) - [_player2]);
 	{
 	_x moveInAny _vehUK2;
@@ -297,6 +305,14 @@ if !(isNull _player2) then {
 
 sleep 1;
 
+[] spawn {
+	{
+	_x allowDamage false;
+	waitUntil {sleep 1; (isTouchingGround _x)};
+	_x allowDamage true;
+	} forEach allPlayers;
+};
+
 {
 [_x] spawn {
 	params ["_boat"];
@@ -329,16 +345,14 @@ sleep 1;
  			};
 		 	sleep random [20,30,40];
 			private _timer = 0;
-			while {_timer < 20}	do {
+			while {_timer < 180}	do {
 				sleep 1;
 				_timer = _timer + 1;
 				_boat setVelocityModelSpace [0,-6, 0];
 			};
-		group (driver _boat) addWaypoint //waypoint needed
-		sleep 120;
 		{
 		deleteVehicle _x;
-		} forEach crew _boat;
+		} forEach units group (driver _boat);
 		deleteVehicle _boat;		
 		};
 	};
@@ -348,6 +362,18 @@ sleep 1;
 waitUntil {sleep 1; (spawner getVariable "outpost_100" != 2)};
 
 sleep 20;
+
+[] spawn {
+	sleep 20;
+	 private _mortars = nearestObjects [(getMarkerPos "outpost_100"), ["LIB_GrWr34_g"], 500];
+	 [(_mortars select 0), artyTarget_1, "LIB_8Rnd_81mmHE_GRWR34", 100, 12, 5] spawn BIS_fnc_fireSupport;
+	 [(_mortars select 1), artyTarget_2, "LIB_8Rnd_81mmHE_GRWR34", 100, 12, 5] spawn BIS_fnc_fireSupport;
+	 
+	 sleep 100;
+	 {
+	  _x setVehicleAmmo 1;
+	 } forEach _mortars;
+};
 
 private _taskId1 = "startCaptureOutpost";
 [[teamPlayer,civilian],_taskId1,["Capture the outpost at the landing zones.","Capture Outpost","outpost_100"],(getMarkerPos "outpost_100"),false,0,true,"attack",true] call BIS_fnc_taskCreate;
@@ -383,3 +409,8 @@ BoxX setPos getMarkerPos "boxX";
 "respawn_guerrila" setMarkerPos getMarkerPos "flagX";
 "respawn_guerrila" setMarkerAlpha 1;
 "synd_HQ" setMarkerPos getMarkerPos "flagX";
+
+[] spawn {
+	waitUntil {sleep 600; ((sidesX getVariable ["airport_2", sideUnknown] == teamPlayer) && (sidesX getVariable ["seaport_4", sideUnknown] == teamPlayer) && !(bigAttackInProgress))};
+	["Molos"] spawn A3A_fnc_cityRebel;
+};

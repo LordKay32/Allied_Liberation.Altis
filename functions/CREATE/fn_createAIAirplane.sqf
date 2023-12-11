@@ -55,7 +55,7 @@ _size = [_markerX] call A3A_fnc_sizeMarker;
 
 _frontierX = [_markerX] call A3A_fnc_isFrontline;
 _busy = if (dateToNumber date > server getVariable _markerX) then {false} else {true};
-_nVeh = (round (_size/60) min 6);
+_nVeh = (round (_size/60) min 4);
 
 _sideX = sidesX getVariable [_markerX,sideUnknown];
 
@@ -130,9 +130,9 @@ for "_i" from 1 to _max do {
 	};
 };
 
-private _vehiclePool = if (_sideX == Occupants) then { vehNATOAttack } else { vehCSATAttack };
+private _vehiclePool = if (_sideX == Occupants) then { vehNATOAttack -  ["LIB_PzKpfwVI_E_tarn51d"] } else { vehCSATAttack };
 private _selectedVehicle = nil;
-_vehiclePool = _vehiclePool call BIS_fnc_arrayShuffle;
+_vehiclePool = [_vehiclePool] call CBA_fnc_shuffle;
 
 {
 	if([_x] call A3A_fnc_vehAvailable) exitWith {_selectedVehicle = _x};
@@ -153,7 +153,7 @@ if (!isNil "_selectedVehicle") then {
 	[_patrolVehicleGroup, _positionX, 450] call bis_fnc_taskPatrol;
 };
 
-
+/*
 if (_frontierX) then {
 	private _helicopterClass = if(_sideX == Occupants) then { selectRandom vehNATOAttackHelis; } else { selectRandom vehCSATAttackHelis; };
 	_heliData = [[_positionX select 0, _positionX select 1, 300], 0, _helicopterClass, _sideX] call A3A_fnc_spawnVehicle;
@@ -167,7 +167,7 @@ if (_frontierX) then {
 	_vehiclesX pushBack _heliVeh;
 	[_heliVehicleGroup, _positionX, 650] call bis_fnc_taskPatrol;
 
-/*	_roads = _positionX nearRoads _size;
+	_roads = _positionX nearRoads _size;
 	if (count _roads != 0) then {
 		_groupX = createGroup _sideX;
 		_groups pushBack _groupX;
@@ -198,8 +198,8 @@ if (_frontierX) then {
 		[_veh, _sideX] call A3A_fnc_AIVEHinit;
 		_unit moveInGunner _veh;
 		_soldiers pushBack _unit;
-	};*/
-};
+	};
+};*/
 
 
 _mrk = createMarkerLocal [format ["%1patrolarea", random 100], _positionX];
@@ -433,7 +433,7 @@ if (!_busy) then
 {
 	for "_i" from 1 to (round (random 2)) do
 	{
-		_arrayVehAAF = if (_sideX == Occupants) then {vehNATOAttack select {[_x] call A3A_fnc_vehAvailable}} else {vehCSATAttack select {[_x] call A3A_fnc_vehAvailable}};
+		_arrayVehAAF = if (_sideX == Occupants) then {(vehNATOAttack - ["LIB_PzKpfwVI_E_tarn51d"]) select {[_x] call A3A_fnc_vehAvailable}} else {vehCSATAttack select {[_x] call A3A_fnc_vehAvailable}};
 		private _typeVehX = selectRandom _arrayVehAAF;
 		_spawnParameter = [_markerX, "Vehicle"] call A3A_fnc_findSpawnPosition;
 		if (count _arrayVehAAF > 0 && {_spawnParameter isEqualType []}) then

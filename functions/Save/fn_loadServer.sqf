@@ -64,6 +64,7 @@ if (isServer) then {
 	["battleshipDone"] call A3A_fnc_getStatVariable;
 	["finalStatistics"] call A3A_fnc_getStatVariable;
 	["introFinished"] call A3A_fnc_getStatVariable;
+	["rebelCity"] call A3A_fnc_getStatVariable;
 
 	//===========================================================================
 	#include "\A3\Ui_f\hpp\defineResinclDesign.inc"
@@ -81,7 +82,23 @@ if (isServer) then {
 		haveNV = true; publicVariable "haveNV"
 	};
 
-	if (introFinished) then {respawnTeamPlayer setMarkerAlpha 1; "US_AssaultMrk" setMarkerAlpha 0; "UK_AssaultMrk" setMarkerAlpha 0};
+	if (introFinished) then {
+		publicVariable "introFinished";
+		"US_AssaultMrk" setMarkerAlpha 0; 
+		"UK_AssaultMrk" setMarkerAlpha 0;
+		[] spawn {
+			if ((sidesX getVariable ["Molos", sideUnknown] == teamPlayer) || !(rebelCity == "")) exitWith {};
+			waitUntil {sleep 600; ((sidesX getVariable ["airport_2", sideUnknown] == teamPlayer) && (sidesX getVariable ["seaport_4", sideUnknown] == teamPlayer) && !(bigAttackInProgress))};
+			["Molos"] spawn A3A_fnc_cityRebel;
+		};
+	};
+	
+	if !(rebelCity == "") then {
+		[] spawn {
+			sleep 120;
+			[rebelCity] spawn A3A_fnc_cityRebel;
+		};
+	};
 
 	//Check if we have radios unlocked and update haveRadio.
 	call A3A_fnc_checkRadiosUnlocked;

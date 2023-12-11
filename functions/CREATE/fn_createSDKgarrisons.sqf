@@ -241,11 +241,13 @@ for "_i" from 0 to (count _groups) - 1 do
 	_groupX = _groups select _i;
 	if (_i == 0) then
 	{
-		_nul = [leader _groupX, _markerX, "SAFE","SPAWNED","RANDOMUP","NOVEH2","NOFOLLOW"] execVM "scripts\UPSMON.sqf";//TODO need delete UPSMON link
+		//_nul = [leader _groupX, _markerX, "SAFE","SPAWNED","RANDOMUP","NOVEH2","NOFOLLOW"] execVM "scripts\UPSMON.sqf";//TODO need delete UPSMON link
+		[_groupX, _positionX, _size, 3, 0, false] call A3A_fnc_cityGarrison;
 	}
 	else
 	{
-		_nul = [leader _groupX, _markerX, "SAFE","SPAWNED","RANDOM","NOVEH2","NOFOLLOW"] execVM "scripts\UPSMON.sqf";//TODO need delete UPSMON link
+		//_nul = [leader _groupX, _markerX, "SAFE","SPAWNED","RANDOM","NOVEH2","NOFOLLOW"] execVM "scripts\UPSMON.sqf";//TODO need delete UPSMON link
+		[_groupX, _positionX, _size, 3, 1, false] call A3A_fnc_cityGarrison;
 	};
 };
 waitUntil {sleep 1; (spawner getVariable _markerX == 2)};
