@@ -219,10 +219,8 @@ while {true} do
 
 	for "_i" from 1 to _vehicles do {
 	{
-	if (_x in [vehSDKTankCroc, vehSDKTankHow]) then {_vehMax = 1};
-	if (_x in [vehSDKAttackBoat, vehSDKBoat, vehSDKTankChur, vehSDKTankUKM4, SDKArtillery]) then {_vehMax = 2};
-	if (_x in [vehSDKRepair, vehSDKFuel, vehSDKAmmo, vehSDKMedical, vehSDKAT]) then {_vehMax = 3};
-	if (_x in [vehInfSDKBoat, vehSDKHeavyArmed, vehSDKAPCUK1, vehSDKAPCUK2, vehSDKAPCUS, vehSDKTankUSM4, vehSDKTankUSM5, SDKMortar]) then {_vehMax = 4};
+	if (_x in [vehSDKAttackBoat, vehSDKBoat, vehSDKTankChur, vehSDKTankUKM4, SDKArtillery, vehSDKTankCroc, vehSDKTankHow]) then {_vehMax = 2};
+	if (_x in [vehInfSDKBoat, vehSDKHeavyArmed, vehSDKAPCUK1, vehSDKAPCUK2, vehSDKAPCUS, vehSDKTankUSM4, vehSDKTankUSM5, SDKMortar, vehSDKRepair, vehSDKFuel, vehSDKAmmo, vehSDKMedical, vehSDKAT]) then {_vehMax = 4};
 	if (_x in [staticATteamPlayer, staticAAteamPlayer]) then {_vehMax = 6};
 	if (_x in [vehSDKLightArmed, vehSDKTruck, vehSDKTruckClosed]) then {_vehMax = 8};
 	if (_x in [UKMGStatic, USMGStatic]) then {_vehMax = 12};
@@ -250,8 +248,7 @@ while {true} do
 	for "_i" from 1 to _planes do {
 	{
 	if (_x in [vehUKPayloadPlane, vehUSPayloadPlane]) then {_vehMax = 1};
-	if (_x in [vehSDKPlaneUK3,vehSDKPlaneUS2]) then {_vehMax = 2};
-	if (_x in [vehSDKTransPlaneUK,vehSDKTransPlaneUS]) then {_vehMax = 3};
+	if (_x in [vehSDKPlaneUK3,vehSDKPlaneUS2,vehSDKTransPlaneUK,vehSDKTransPlaneUS]) then {_vehMax = 2};
 	if (_x in [vehSDKPlaneUS1, vehSDKPlaneUK2]) then {_vehMax = 4};
 
 	_actual = server getVariable (_x + "_count");

@@ -92,7 +92,7 @@ if(_intelType == "Small") then
 				};
 			} else {  
         		_intelPts = server getVariable "intelPoints";
-				private _intel = (round (random [15, 20, 25]));
+				private _intel = (round (random [20, 25, 30]));
     	      	_text = format ["We have gained some intelligence information, %1 intel points addedd.", _intel];
     	      	server setVariable ["intelPoints", _intelPts + _intel, true];
     	      	[] spawn A3A_fnc_statistics;
@@ -148,7 +148,7 @@ if(_intelType == "Small") then
 				_text = format ["We have obtained some garrison information, the %1 has a garrison of %2 men.", _nameDest, _garrCount];
 			} else {
 				_intelPts = server getVariable "intelPoints";
-				private _intel = (round (random [15, 20, 25]));
+				private _intel = (round (random [20, 25, 30]));
     	      	_text = format ["We have gained some intelligence information, %1 intel points addedd.", _intel];
     	      	server setVariable ["intelPoints", _intelPts + _intel, true];
     	      	[] spawn A3A_fnc_statistics;
@@ -157,7 +157,7 @@ if(_intelType == "Small") then
         case (TASK):
         {  
         	_intelPts = server getVariable "intelPoints";
-			private _intel = (round (random [15, 20, 25]));
+			private _intel = (round (random [20, 25, 30]));
             _text = format ["We have gained some intelligence information, %1 intel points addedd.", _intel];
             server setVariable ["intelPoints", _intelPts + _intel, true];
             [] spawn A3A_fnc_statistics;
@@ -212,7 +212,7 @@ if(_intelType == "Medium") then
         {
 			if ((random 100 < 75) || (count A3A_activeTasks > 2)) then {
 	        	_intelPts = server getVariable "intelPoints";
-				private _intel = (round (random [30, 40, 50]));
+				private _intel = (round (random [40, 50, 60]));
 	            _text = format ["We have gained some intelligence information, %1 intel points added.", _intel];
 	            server setVariable ["intelPoints", _intelPts + _intel, true];
 	            [] spawn A3A_fnc_statistics;
@@ -239,7 +239,7 @@ if(_intelType == "Large") then
         {
 			if ((random 100 < 50) || (count A3A_activeTasks > 2)) then {
 	        	_intelPts = server getVariable "intelPoints";
-				private _intel = (round (random [60, 80, 100]));
+				private _intel = (round (random [80, 100, 120]));
 	            _text = format ["We have gained some significant intelligence information, %1 intel points added.", _intel];
 	            server setVariable ["intelPoints", _intelPts + _intel, true];
 				[] spawn A3A_fnc_statistics;

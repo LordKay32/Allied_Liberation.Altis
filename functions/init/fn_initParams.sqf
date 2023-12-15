@@ -25,7 +25,7 @@ private _filename = "fn_initParams";
 // params.hpp should be updated to match this table
 
 //too dense outposts
-private _distanceSpwn = if (toLower worldName == "rhspkl") then {800} else {1000};
+private _distanceSpwn = 800;
 
 A3A_paramTable = [
     ["gameMode", "gameMode", ["locked", "oldsave"], 1],

@@ -1,6 +1,7 @@
 private _fileName = "fn_initPetros";
 [2,"initPetros started",_fileName] call A3A_fnc_log;
 scriptName "fn_initPetros";
+petros setUnitRank "COLONEL";
 removeHeadgear petros;
 removeGoggles petros;
 petros setSkill 1;

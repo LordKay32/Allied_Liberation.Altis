@@ -17,7 +17,7 @@ if ([_playerId] call A3A_fnc_playerHasSave) then {
 _unit setVariable ["moneyX", _money, true];
 _unit setVariable ["score", 0, true];
 _unit setVariable ["rankX", "PRIVATE", true];
-_unit setUnitRank "PRIVATE";
+_unit setUnitRank "LIEUTENANT";
 
 [] remoteExec ["A3A_fnc_statistics", _unit];
 _unit setVariable ["canSave", true, true];

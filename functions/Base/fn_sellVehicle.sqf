@@ -61,11 +61,11 @@ private _costs = call {
     if (_veh isKindOf "StaticWeapon") exitWith {400};			// in case rebel static is same as enemy statics
     if (_typeX in vehPoliceCars) exitWith {250};
     if (_typeX in (arrayCivVeh + civBoats + [civBoat,civCar,civTruck])) exitWith {150};
-    if (_typeX in vehNormal || {_typeX in (vehBoats + vehAmmoTrucks + vehSupplyTrucks)}) exitWith {500};
+    if (_typeX in vehNormal || {_typeX in (vehBoats + vehAmmoTrucks + vehSupplyTrucks)}) exitWith {600};
     if (_typeX in [vehCSATPatrolHeli, vehNATOPatrolHeli, civHeli]) exitWith {3000};
-    if (_typeX in (vehAPCs + vehTransportAir + vehUAVs)) exitWith {2500};
-    if (_typeX in (vehAttackHelis + vehTanks + vehAA + vehMRLS)) exitWith {6500};
-    if (_typeX in (vehNATOPlanes + vehNATOPlanesAA + vehCSATPlanes + vehCSATPlanesAA)) exitWith {7500};
+    if (_typeX in (vehAPCs + vehTransportAir + vehUAVs)) exitWith {2000};
+    if (_typeX in (vehAttackHelis + vehTanks + vehAA + vehMRLS)) exitWith {4000};
+    if (_typeX in (vehNATOPlanes + vehNATOPlanesAA + vehCSATPlanes + vehCSATPlanesAA)) exitWith {6000};
     0;
 };
 
@@ -75,9 +75,13 @@ if (_costs == 0) exitWith {
 };
 
 _costs = round (_costs * (1-damage _veh));
+_allPlayers = call BIS_fnc_listPlayers;
+_countPlayers = count _allPlayers;
 
 [0,round (_costs/2),0] remoteExec ["A3A_fnc_resourcesFIA",2];
-[round (_costs/20),_player] call A3A_fnc_playerScoreAdd;
+{
+	[round ((_costs/2)/_countPlayers)] call A3A_fnc_resourcesPlayer;
+} forEach _allPlayers;
 
 if (_typeX in vehFIA) then {
 	private _count = server getVariable (_typeX + "_count");

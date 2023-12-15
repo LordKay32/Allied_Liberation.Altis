@@ -95,7 +95,7 @@ titleFadeOut 2;
 
 sleep 3;
 
-titleText ["<t color='#ffffff' size='2.4'>With her airfields, harbours and radar station, Altis represents a strategic threat, and must be taken before an invasion of Italy.", "PLAIN", 1, true, true];
+titleText ["<t color='#ffffff' size='2.4'>With her airfields, harbours and radar station, Altis represents a strategic threat, and must be taken before an invasion of Sicily.", "PLAIN", 1, true, true];
 
 sleep 9;
 

@@ -17,7 +17,7 @@ private _loadout = [_playerId, "loadoutPlayer"] call A3A_fnc_retrievePlayerStat;
 if (!isNil "_loadout") then { _unit setUnitLoadout _loadout };
 
 private _score = 0;
-private _rank = "PRIVATE";
+private _rank = "LIEUTENANT";
 
 if (_unit call A3A_fnc_isMember) then
 {

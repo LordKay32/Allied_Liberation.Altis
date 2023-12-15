@@ -11,6 +11,64 @@ _sideX = sidesX getVariable [_markerX,sideUnknown];
 [2, format ["Spawning Control Point %1", _markerX], _filename] call A3A_fnc_log;
 
 if ((_sideX == teamPlayer) or (_sideX == sideUnknown)) exitWith {};
+
+if (_markerX in ["control_100", "control_101", "control_102", "control_103", "control_104", "control_105", "control_106", "control_107", "control_108"]) exitWith {
+
+private _groups = [];
+private _vehiclesX = [];
+private _soldiers = [];
+	
+_size = [_markerX] call A3A_fnc_sizeMarker;
+_ret = [_markerX,_size,_sideX, false] call A3A_fnc_milBuildings;
+_groups append (_ret select 0);
+_vehiclesX append (_ret select 1);
+_soldiers append (_ret select 2);
+{[_x, _sideX] call A3A_fnc_AIVEHinit} forEach (_ret select 1);
+
+private _squads = [_sideX, "SQUAD"] call SCRT_fnc_unit_getGroupSet;
+_groupX = [getMarkerPos _markerX,_sideX, (selectRandom _squads), true] call A3A_fnc_spawnGroup;
+if !(isNull _groupX) then {
+		if (random 10 < 2.5) then {
+		_dog = [_groupX, "Fin_random_F",getMarkerPos _markerX,[],0,"FORM"] call A3A_fnc_createUnit;
+		[_dog,_groupX] spawn A3A_fnc_guardDog;
+		};
+		_nul = [leader _groupX, _markerX, "SAFE","SPAWNED","RANDOM","NOVEH2","NOFOLLOW"] execVM "scripts\UPSMON.sqf";//TODO need delete UPSMON link
+		// Forced non-spawner as they're very static.
+		{[_x,"",false] call A3A_fnc_NATOinit; _soldiers pushBack _x} forEach units _groupX;
+		_groups pushBack _groupX;
+};
+
+waitUntil {sleep 1;((spawner getVariable _markerX == 2)) or ({[_x] call A3A_fnc_canFight} count _soldiers == 0)};
+
+_conquered = false;
+_winner = Occupants;
+if (spawner getVariable _markerX != 2) then
+	{
+	sidesX setVariable [_markerX,teamPlayer,true];
+	};
+
+waitUntil {sleep 1;(spawner getVariable _markerX == 2)};
+
+
+{ if (alive _x) then { deleteVehicle _x } } forEach (_soldiers);
+
+{ deleteGroup _x } forEach _groups; 
+
+{
+	// delete all vehicles that haven't been captured
+	if (_x getVariable ["ownerSide", _sideX] == _sideX) then {
+		if (_x distance2d (_x getVariable "originalPos") < 100) then { deleteVehicle _x }
+		else { if !(_x isKindOf "StaticWeapon") then { [_x] spawn A3A_fnc_VEHdespawner } };
+	};
+} forEach _vehiclesX;
+
+{
+	// delete all vehicles that haven't been captured
+	if !(_x getVariable ["inDespawner", false]) then { deleteVehicle _x };
+} forEach _vehiclesX;
+
+};
+
 if ({if ((sidesX getVariable [_x,sideUnknown] != _sideX) and (_positionX inArea _x)) exitWith {1}} count markersX >1) exitWith {};
 _vehiclesX = [];
 _soldiers = [];
