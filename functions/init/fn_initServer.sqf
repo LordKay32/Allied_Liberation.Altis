@@ -140,10 +140,8 @@ else {
 	}
 	else {
 		[2,"New session selected",_fileName] call A3A_fnc_log;
-		if (isNil "commanderX" || {isNull commanderX}) then {commanderX = (call A3A_fnc_playableUnits) select 0};
+		if (isNil "commanderX" || {isNull commanderX}) then { if (allPlayers findIf {roleDescription _x == "Commander"} != -1) then {commanderX = (allPlayers select {roleDescription _x == "Commander"}) select 0} else {commanderX = (call A3A_fnc_playableUnits) select 0}};
 		theBoss = commanderX;
-		theBoss setRank "CORPORAL";
-		[theBoss,"CORPORAL"] remoteExec ["A3A_fnc_ranksMP"];
 		waitUntil {(getPlayerUID theBoss) != ""};
 		if (membershipEnabled) then {membersX pushBackUnique (getPlayerUID theBoss)};
 	};
@@ -280,4 +278,4 @@ savingServer = false;
 };
 [2,"initServer completed",_fileName] call A3A_fnc_log;
 
-if !(introFinished) then {[] execVM "StartMission.sqf"};
+if !(introFinished) then {[] execVM "StartMission.sqf"} else {deleteVehicle tankUS; deleteVehicle tankUK};

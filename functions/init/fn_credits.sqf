@@ -63,7 +63,7 @@ titleFadeOut 2;
 
 sleep 3;
 
-titleText ["<t color='#ffffff' size='5'>Altis", "PLAIN", 1, true, true];
+titleText ["<t color='#ffffff' size='5'>Altis<br/><br/>Mediterranean Theatre", "PLAIN", 1, true, true];
 
 sleep 4;
 
@@ -79,7 +79,7 @@ titleFadeOut 2;
 
 sleep 3;
 
-titleText ["<t color='#ffffff' size='2.4'>Now the Allies turn their attention towards Sicily, and Italy beyond.", "PLAIN", 1, true, true]; 
+titleText ["<t color='#ffffff' size='2.4'>Now the Allies turn their attention towards Italy.", "PLAIN", 1, true, true]; 
 
 sleep 9;
 
@@ -87,7 +87,7 @@ titleFadeOut 2;
 
 sleep 3;
 
-titleText ["<t color='#ffffff' size='2.4'>In their way stands Altis, an occupied British colony east of Sicily.", "PLAIN", 1, true, true];
+titleText ["<t color='#ffffff' size='2.4'>In their way stands Altis, an occupied British colony south-east of Sicily.", "PLAIN", 1, true, true];
 
 sleep 9;
 
@@ -95,7 +95,7 @@ titleFadeOut 2;
 
 sleep 3;
 
-titleText ["<t color='#ffffff' size='2.4'>With her airfields, harbours and radar station, Altis represents a strategic threat, and must be taken before an invasion of Sicily.", "PLAIN", 1, true, true];
+titleText ["<t color='#ffffff' size='2.4'>With her airfields, harbours and radar station, Altis represents a strategic threat, and must be captured.", "PLAIN", 1, true, true];
 
 sleep 9;
 

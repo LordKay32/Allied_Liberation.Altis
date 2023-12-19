@@ -187,6 +187,7 @@ class A3A
         class recallGroup {};
         class smokeCoverAuto {};
         class squadMedicActions {};
+        class startMissionLanding {};
         class staticAutoT {};
         class staticMGDrill {};
         class suppressingFire {};

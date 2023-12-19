@@ -35,7 +35,7 @@
 ["vehicleTankUKChur", "LIB_Churchill_Mk7"] call _fnc_saveToTemplate;
 ["vehicleTankUKCroc", "LIB_Churchill_Mk7_Crocodile"] call _fnc_saveToTemplate;
 ["vehicleTankUKHow", "LIB_Churchill_Mk7_Howitzer"] call _fnc_saveToTemplate;
-["vehicleTankUKM4", "LIB_UK_DR_M4A3_75"] call _fnc_saveToTemplate;
+["vehicleTankUKM4", "LIB_UK_Italy_M4A3_75"] call _fnc_saveToTemplate;
 
 ["vehicleTankUSM5", "LIB_M5A1_Stuart"] call _fnc_saveToTemplate;
 ["vehicleTankUSM4", "LIB_M4A3_75"] call _fnc_saveToTemplate;

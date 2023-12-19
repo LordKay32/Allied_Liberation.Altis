@@ -76,4 +76,20 @@ if (isDiscordRichPresenceActive) then {
 	};
 };
 
+player addEventHandler ["GetInMan", {
+	params ["_unit", "_role", "_vehicle", "_turret"];
+	if (typeOf _vehicle in [vehUSPayloadPlane, vehUKPayloadPlane, vehSDKPlaneUK1, vehSDKPlaneUK2, vehSDKPlaneUK3, vehSDKPlaneUS1, vehSDKPlaneUS2, vehSDKPlaneUS3, vehSDKTransPlaneUK, vehSDKTransPlaneUS]) then {
+		setViewDistance 8000;
+		setObjectViewDistance [4000,50];
+	};
+}];
+
+player addEventHandler ["GetOutMan", {
+	params ["_unit", "_role", "_vehicle", "_turret", "_isEject"];
+		if (typeOf _vehicle in [vehUSPayloadPlane, vehUKPayloadPlane, vehSDKPlaneUK1, vehSDKPlaneUK2, vehSDKPlaneUK3, vehSDKPlaneUS1, vehSDKPlaneUS2, vehSDKPlaneUS3, vehSDKTransPlaneUK, vehSDKTransPlaneUS]) then {
+		setViewDistance 2000;
+		setObjectViewDistance [2000,50];
+	};
+}];
+
 ["Unit Traits", format ["You have selected %1.",_text]] call A3A_fnc_customHint;

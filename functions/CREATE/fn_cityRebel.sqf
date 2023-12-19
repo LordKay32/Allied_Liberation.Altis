@@ -208,6 +208,8 @@ if (sidesX getVariable [_markerX, sideUnknown] == teamPlayer) then {
 
     {if (isPlayer _x) then {[100,_x] call A3A_fnc_playerScoreAdd}} forEach ([500,0,_positionX,teamPlayer] call A3A_fnc_distanceUnits);
     [0,1000,0] remoteExec ["A3A_fnc_resourcesFIA",2];
+    server setVariable ["SDKhr", 10 + (server getVariable "SDKhr"), true];
+    [] remoteExec ["A3A_fnc_statistics"];
 } else {
 
     [_taskId, "invaderPunish", "FAILED"] call A3A_fnc_taskSetState;
@@ -225,6 +227,11 @@ if (sidesX getVariable [_markerX, sideUnknown] == teamPlayer) then {
     // Putting this stuff here is a bit gross, but currently there's no cityFlip function. Usually done by resourceCheck.
     garrison setVariable [_markerX, [], true];
     [_markerX] call A3A_fnc_mrkUpdate;
+    private _SDKhr = server getVariable "SDKhr";
+    _SDKhr = _SDKhr - 8;
+    if (_SDKhr < 0) then {_SDKhr = 0};
+	server setVariable ["SDKhr", _SDKhr, true];
+    [] remoteExec ["A3A_fnc_statistics"];
 };
 
 sleep 15;

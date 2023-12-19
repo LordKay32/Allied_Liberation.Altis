@@ -82,7 +82,7 @@ if (side group player == teamPlayer) then
 		_newUnit setUnitLoadout [[],[],[],[_oldUniform, []],[],[],"","",[],
 		[(selectRandom unlockedmaps),"","ItemRadio",(selectRandom unlockedCompasses),(selectRandom unlockedwatches),""]];
 	} else {
-		call A3A_fnc_introLoadouts;
+		["RESPAWN"] call A3A_fnc_introLoadouts;
 	};
 
 	if (!isPlayer (leader group player)) then {(group player) selectLeader player};
