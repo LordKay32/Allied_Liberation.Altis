@@ -26,7 +26,7 @@ private _specialVarLoads = [
 	"bombRuns","wurzelGarrison","aggressionOccupants", "aggressionInvaders", "attackCountdownInvaders", "testingTimerIsActive",
 	"traderDiscount", "supportPoints", "isTraderQuestCompleted", "traderPosition", "areOccupantsDefeated", "areInvadersDefeated",
 	"rebelLoadouts", "randomizeRebelLoadoutUniforms", 
-	"version", "HR_Garage", "UKhr", "SAShr", "UShr", "parahr", "SDKhr", "baseMarkersX", "mrkAntennas"
+	"version", "HR_Garage", "UKhr", "SAShr", "UShr", "parahr", "SDKhr", "baseMarkersX", "mrkAntennas","rebelCity"
 ];
 
 private _varName = _this select 0;
@@ -572,6 +572,27 @@ if (_varName in _specialVarLoads) then {
 	if(_varname == 'rebelLoadouts') then {
         diag_log format ["Rebel Loadouts: %1", str _varvalue];
         rebelLoadouts = _varvalue;  publicVariable "rebelLoadouts";
+    };
+    
+    if(_varname == 'rebelCity') then {
+    	rebelCity = _varvalue;
+    	if (introFinished) then {
+			publicVariable "introFinished";
+			"US_AssaultMrk" setMarkerAlpha 0; 
+			"UK_AssaultMrk" setMarkerAlpha 0;
+			[] spawn {
+				if ((sidesX getVariable ["Molos", sideUnknown] == teamPlayer) || !(rebelCity == "NONE")) exitWith {};
+				waitUntil {sleep 600; ((sidesX getVariable ["airport_2", sideUnknown] == teamPlayer) && (sidesX getVariable ["seaport_4", sideUnknown] == teamPlayer) && !(bigAttackInProgress))};
+				["Molos"] spawn A3A_fnc_cityRebel;
+			};
+		};
+		
+		if !(rebelCity == "NONE") then {
+			[] spawn {
+				sleep 120;
+				[rebelCity] spawn A3A_fnc_cityRebel;
+			};
+		};
     };
     
     if(_varname == 'finalStatistics') then {

@@ -127,6 +127,7 @@ class A3A
         class unlockVehicle {};
         class unlockStatic {};
         class updateRebelStatics {};
+        class weatherChanges {};
         class zoneCheck {};
     };
 
@@ -194,6 +195,7 @@ class A3A
         class surrenderAction {};
         class typeOfSoldier {};
         class undercoverAI {};
+        class unitActions {};
         class unitGetToCover {};
         class useFlares {};
         class VANTinfo {};

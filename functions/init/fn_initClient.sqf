@@ -42,10 +42,12 @@ if (!hasInterface) exitWith {
 clientTest2 = true;
 
 waitUntil {!isNull player};
+clientTest3 = true;
 waitUntil {player == player};
+clientTest4 = true;
 //Disable player saving until they're fully ready, and have chosen whether to load their save.
 player setVariable ["canSave", false, true];
-
+clientTest5 = true;
 if (!isServer) then {
 	waitUntil {!isNil "initParamsDone"};
 	call A3A_fnc_initFuncs;
@@ -83,6 +85,8 @@ private ["_colourTeamPlayer", "_colorInvaders"];
 _colourTeamPlayer = teamPlayer call BIS_fnc_sideColor;
 _colorInvaders = Invaders call BIS_fnc_sideColor;
 _positionX = if (side player isEqualTo teamPlayer) then {getPos petros} else {getMarkerPos "respawn_west"};
+
+setViewDistance 3200;
 
 {
 	_x set [3, 0.33]

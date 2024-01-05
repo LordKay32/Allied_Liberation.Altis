@@ -115,6 +115,7 @@ if (_isControl) then {
 		_gc = createVehicle ["ClutterCutter_small_EP1", _positionX, [], 0, "CAN_COLLIDE"];
 		_gc setDir _markerDir - 180;
 		_gc setPos (getPos _x);
+		_vehiclesX pushBack _gc;
 		
 		_pos = _x getRelPos [1.5, 292];
 		_dir = getDir _x;

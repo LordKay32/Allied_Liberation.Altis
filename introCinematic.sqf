@@ -32,7 +32,7 @@ sleep 1;
 sleep 5; 
 _camera cameraEffect ["terminate", "back"]; 
 camDestroy _camera;
-setViewDistance 2000;
+setViewDistance 3200;
 setObjectViewDistance [2000,50];
 ["EndingIntro", true, 3] call BIS_fnc_blackIn;
 enableRadio true;

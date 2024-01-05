@@ -14,6 +14,7 @@ if (_capturing) then {
 	[_unit] joinSilent group _playerX;
 	_unit enableAI "ANIM";
 	_unit enableAI "MOVE";
+	_unit enableAI "PATH";
 	_unit stop false;
 	_unit switchMove "";
 	_unit setVariable ["captured", true, true];

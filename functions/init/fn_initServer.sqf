@@ -210,9 +210,10 @@ addMissionEventHandler ["EntityKilled", {
 	};
 }];
 
+[] spawn A3A_fnc_weatherChanges;
+
 serverInitDone = true; publicVariable "serverInitDone";
 [2,"Setting serverInitDone as true",_fileName] call A3A_fnc_log;
-
 
 [2, "Waiting for HQ placement", _fileName] call A3A_fnc_log;
 waitUntil {sleep 1;!(isNil "placementDone")};

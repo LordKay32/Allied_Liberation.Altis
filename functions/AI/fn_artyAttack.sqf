@@ -19,7 +19,7 @@
 params ["_targetPos"];
 private ["_artyMarkers", "_nearestArtyBase", "_artilleryPieces", "_magazines", "_rounds"];
 
-_artyMarkers = ["outpost_9", "outpost_20", "outpost_17", "outpost_12", "outpost_40"];
+_artyMarkers = ["outpost_9", "outpost_20", "outpost_17", "outpost_12", "outpost_40"] select {sidesX getVariable [_x, sideUnknown] == Occupants};
 
 _nearestArtyBase = ([_artyMarkers, _targetPos] call BIS_fnc_nearestPosition);
 

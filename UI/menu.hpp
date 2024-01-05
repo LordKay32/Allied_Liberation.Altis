@@ -947,11 +947,11 @@ class radioComm: SimpleMenuBigger
 		class l3Button: SimpleButton
 		{
 			idc = -1;
-			text = Show nearest base area;
+			text = $STR_antistasi_dialogs_sell_vehicle_title;
 			x = 0.257187 * safezoneW + safezoneX;
 			y = 0.486 * safezoneH + safezoneY;
-			tooltip = Show the area of the nearest base. Vehicles will only be saved if within the area of a base (not including towns or industrial sites);
-			action = "closeDialog 0; [] spawn A3A_fnc_showMarkerArea";
+			tooltip = If an Allied vehicle, it is returned to the available vehicles pool, refunding half the original CP cost. If a Wehrmacht vehicle, it is given to Allied command for study or scrap, in return for CP. Half CP goes to the players, the other half to the Allied CP pool.;
+			action = "closeDialog 0; [player,cursorObject] remoteExecCall [""A3A_fnc_sellVehicle"",2]";
 		};
 
 		class l4Button: SimpleButton
@@ -1000,8 +1000,8 @@ class radioComm: SimpleMenuBigger
 			text = Check vehicle in base;
 			x = 0.477 * safezoneW + safezoneX;
 			y = 0.486 * safezoneH + safezoneY;
-			tooltip = Checks whether a vehicle is within a base, and therefore will be saved during the save loop.;
-			action = "closeDialog 0;[] call A3A_fnc_unlockVehicle";
+			tooltip = Checks whether a vehicle is within a base, and therefore will be saved during the save loop. If it is not, the map will show the nearest base area.;
+			action = "closeDialog 0;[] spawn A3A_fnc_showMarkerArea";
 		};
 
 		class r4Button: SimpleButton
@@ -1204,11 +1204,11 @@ class aiManagement: SimpleMenuBigger
 		class r4Button: SimpleButton
 		{
 			idc = -1;
-			text = Squad Actions;
+			text = Unit Actions;
 			x = 0.477 * safezoneW + safezoneX;
 			y = 0.584 * safezoneH + safezoneY;
-			tooltip = Actions for HC squads;
-			action = "closeDialog 0; createDialog 'squadActions';";
+			tooltip = Actions for player group units;
+			action = "closeDialog 0; createDialog 'unitActions';";
 		};
 
 		class r5Button: SimpleButton
@@ -1361,6 +1361,50 @@ class squadActions: SimpleMenuBig
 	};
 };
 
+class unitActions: SimpleMenuSmall
+{
+	idd=-1;
+
+	class Controls
+	{
+		class title: SimpleTitle
+		{
+			idc = -1;
+			text = Unit Actions;
+		};
+
+		class closeButton: RscCloseButton
+		{
+			idc = -1;
+			x = 0.674 * safezoneW + safezoneX;
+			y = 0.223941 * safezoneH + safezoneY;
+			w = 0.02 * safezoneW;
+			h = 0.02 * safezoneH;
+			action = "closeDialog 0; createDialog 'aiManagement';";
+		};
+
+		class teleportButton: SimpleButton
+		{
+			idc = -1;
+			text = Teleport Unit to Player;
+			x = 0.257187 * safezoneW + safezoneX;
+			y = 0.262 * safezoneH + safezoneY;
+			tooltip = Teleports unit to player. The unit must be within 20m of the player. Useful for if units get stuck in buildings.;
+			action = "closeDialog 0; if (count groupselectedUnits player > 0) then {nul = [groupselectedUnits player, ""TELEPORT""] call A3A_fnc_unitActions} else {[""Unit Actions"", ""No units selected""] call A3A_fnc_customHint;}";
+		};
+		
+		class moveInVehicleButton: SimpleButton
+		{
+			idc = -1;
+			text = Move unit into player vehicle;
+			x = 0.477 * safezoneW + safezoneX;
+			y = 0.262 * safezoneH + safezoneY;
+			tooltip = Moves unit directly into next available vehicle slot. The unit must be within 20m of the vehicle. Useful if AI is stuck or refusing to get in vehicle.;
+			action = "closeDialog 0; if (count groupselectedUnits player > 0) then {nul = [groupselectedUnits player, ""VEHICLE""] call A3A_fnc_unitActions} else {[""Unit Actions"", ""No units selected""] call A3A_fnc_customHint;}";
+		};
+	};
+};
+
 class commanderComm: SimpleMenuBig
 {
 	idd = -1;
@@ -1456,11 +1500,11 @@ class commanderComm: SimpleMenuBig
 		class r4Button: SimpleButton
 		{
 			idc = -1;
-			text = $STR_antistasi_dialogs_sell_vehicle_title;
+			text = Squad Actions;
 			x = 0.477 * safezoneW + safezoneX;
 			y = 0.584 * safezoneH + safezoneY;
-			tooltip = If an Allied vehicle, it is returned to the available vehicles pool, refunding half the original CP cost. If a Wehrmacht vehicle, it is given to Allied command for study or scrap, in return for CP. Half CP goes to the player, the other half to the Allied CP pool.;
-			action = "closeDialog 0; [player,cursorObject] remoteExecCall [""A3A_fnc_sellVehicle"",2]";
+			tooltip = Actions for HC squads;
+			action = "closeDialog 0; createDialog 'squadActions';";
 		};
 	};
 };

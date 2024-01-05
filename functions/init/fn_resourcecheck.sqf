@@ -322,8 +322,9 @@ while {true} do
 	publicVariable "supportPoints";
 
 	_hrAdd = _hrSDKAdd + _hrAllAdd;
+	_vehiclesAdd = _vehicles + _planes;
 
-	private _textX = format ["<t size='0.6' color='#C1C0BB'>Logistics Update.<br/> <t size='0.5' color='#C1C0BB'><br/>Manpower: +%1<br/>Command Points: +%2%3", _hrAdd, _resAdd, currencySymbol];
+	private _textX = format ["<t size='0.6' color='#C1C0BB'>Logistics Update.<br/> <t size='0.5' color='#C1C0BB'><br/>Manpower: +%1<br/>Vehicles: +%4<br/>Weapons: +%5<br/>Ammo Rounds: +%6<br/>Command Points: +%2%3", _hrAdd, _resAdd, currencySymbol, _vehiclesAdd, _weapons, _magazines];
 	private _textArsenal = [] call A3A_fnc_arsenalManage;
 	if (_textArsenal != "") then {_textX = format ["%1<br/>Arsenal Updated<br/><br/>%2", _textX, _textArsenal]};
 	[petros, "taxRep", _textX] remoteExec ["A3A_fnc_commsMP", [teamPlayer, civilian]];
@@ -393,7 +394,7 @@ while {true} do
 	//city rebellion mission
 	_potCities = townsX select {(sidesX getVariable [_x,sideUnknown] != teamPlayer) && ([_x] call A3A_fnc_isFrontline) && (spawner getVariable _x == 2)};
 
-	if (count _potCities > 0 && (random 100 < 20) && rebelCity == "") then {_rebelCity = selectRandom _potCities; [_rebelCity] spawn A3A_fnc_cityRebel};
+	if (count _potCities > 0 && (random 100 < 20) && rebelCity == "NONE") then {_rebelCity = selectRandom _potCities; [_rebelCity] spawn A3A_fnc_cityRebel};
 
 	if (isDedicated) then
 		{

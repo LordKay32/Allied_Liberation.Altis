@@ -184,7 +184,7 @@ artilleryList = [true, true, true, true, true, true, true, true, true, true];
 flakList = [true, true, true, true];
 mineMarkers = ["minefield_1","minefield_2","minefield_3","minefield_4","minefield_5","minefield_6","minefield_7","minefield_8","minefield_9","minefield_10","minefield_11","minefield_12","minefield_13","minefield_14","minefield_15"];
 
-rebelCity = "";
+rebelCity = "NONE";
 //
 occupantKilled = 0;
 publicVariable "occupantKilled";
@@ -270,19 +270,19 @@ WW2Weapons = [
 WW2Magazines = [
 	//Ammo
 	["LIB_10Rnd_770x56", 12000],
-	["LIB_30Rnd_770x56", 4500],
+	["LIB_30Rnd_770x56", 6000],
 	["LIB_32Rnd_9x19_Sten", 12800],
-	["LIB_6Rnd_455", 1200],
+	["LIB_6Rnd_455", 2400],
 	["LIB_1Rnd_89m_PIAT", 40],
 	["LIB_8Rnd_762x63", 12000],
-	["LIB_20Rnd_762x63", 3000],
+	["LIB_20Rnd_762x63", 6000],
 	["LIB_15Rnd_762x33", 12000],
 	["LIB_30Rnd_45ACP", 12000],
 	["LIB_7Rnd_45ACP", 2800],
 	["LIB_1Rnd_60mm_M6", 80],
 	["LIB_5Rnd_762x63", 1500],
 	["LIB_30Rnd_M3_GreaseGun_45ACP", 6000],
-	["LIB_50Rnd_762x63", 6000],
+	["LIB_50Rnd_762x63", 10000],
 	["LIB_30Rnd_770x56_MKVIII", 1800],
 	["LIB_20Rnd_762x63_M1", 2400],
 	["LIB_MillsBomb", 200],
@@ -301,8 +301,8 @@ WW2Magazines = [
 	["LIB_1Rnd_G_MillsBomb", 150],
 	["LIB_1Rnd_G_Mk2", 200],
 	["LIB_1Rnd_G_M9A1", 100],
-	["LIB_6Rnd_9x19_Welrod", 300],
-	["LIB_1Rnd_flare_white", 500]
+	["LIB_6Rnd_9x19_Welrod", 600],
+	["LIB_1Rnd_flare_white", 800]
 ];
 
 WW2Items = [
@@ -1156,9 +1156,10 @@ DECLARE_SERVER_VAR(A3A_vehClassToCrew,_vehClassToCrew);
 
 //WW2 Allied vehicle starting numbers
 
-{server setVariable [_x + "_count", 0, true]} forEach [vehSDKMedical,vehSDKHeavyArmed,vehSDKAPCUK2,vehSDKAT,vehSDKTankCroc,vehSDKTankHow,vehSDKTankUKM4,vehSDKPlaneUK1,vehSDKPlaneUK3,vehSDKPlaneUS2,vehSDKPlaneUS3,vehSDKTransPlaneUK,staticATteamPlayer,SDKArtillery,vehSDKAttackBoat];
-{server setVariable [_x + "_count", 1, true]} forEach [civTruck,vehSDKRepair,vehSDKFuel,vehSDKAmmo,vehSDKAPCUK1,vehSDKAPCUS,vehSDKTankChur,vehSDKTankUSM5,vehSDKTankUSM4,vehSDKPlaneUK2,vehSDKPlaneUS1,vehUSPayloadPlane,vehUKPayloadPlane,vehSDKTransPlaneUS,staticAAteamPlayer,SDKMortar,vehSDKBoat];
-{server setVariable [_x + "_count", 2, true]} forEach [civCar,vehSDKLightArmed,vehSDKTruck,vehSDKTruckClosed,UKMGStatic,USMGStatic,vehInfSDKBoat];
+{server setVariable [_x + "_count", 0, true]} forEach [vehSDKMedical,vehSDKHeavyArmed,vehSDKAT,vehSDKTankCroc,vehSDKTankHow,vehSDKPlaneUK1,vehSDKPlaneUK3,vehSDKPlaneUS2,vehSDKPlaneUS3,vehSDKTransPlaneUK,staticATteamPlayer,SDKArtillery,vehSDKAttackBoat];
+{server setVariable [_x + "_count", 1, true]} forEach [civTruck,vehSDKRepair,vehSDKFuel,vehSDKAmmo,vehSDKAPCUK1,vehSDKAPCUK2,vehSDKTankChur,vehSDKTankUKM4,vehSDKPlaneUK2,vehSDKPlaneUS1,vehUSPayloadPlane,vehUKPayloadPlane,vehSDKTransPlaneUS,staticAAteamPlayer,SDKMortar,vehSDKBoat];
+{server setVariable [_x + "_count", 2, true]} forEach [civCar,vehSDKLightArmed,vehSDKTruck,vehSDKTruckClosed,vehSDKAPCUS,vehSDKTankUSM4,vehSDKTankUSM5,vehInfSDKBoat];
+{server setVariable [_x + "_count", 4, true]} forEach [UKMGStatic,USMGStatic];
 {server setVariable [_x + "_count", 6, true]} forEach [vehSDKBike,vehSDKLightUnarmed];
 
 ///////////////////////////

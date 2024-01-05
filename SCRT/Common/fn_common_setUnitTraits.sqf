@@ -87,7 +87,7 @@ player addEventHandler ["GetInMan", {
 player addEventHandler ["GetOutMan", {
 	params ["_unit", "_role", "_vehicle", "_turret", "_isEject"];
 		if (typeOf _vehicle in [vehUSPayloadPlane, vehUKPayloadPlane, vehSDKPlaneUK1, vehSDKPlaneUK2, vehSDKPlaneUK3, vehSDKPlaneUS1, vehSDKPlaneUS2, vehSDKPlaneUS3, vehSDKTransPlaneUK, vehSDKTransPlaneUS]) then {
-		setViewDistance 2000;
+		setViewDistance 3200;
 		setObjectViewDistance [2000,50];
 	};
 }];

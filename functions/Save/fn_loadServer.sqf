@@ -2,7 +2,6 @@ diag_log format ["%1: [Antistasi] | INFO | loadServer Starting.",servertime];
 if (isServer) then {
 	diag_log format ["%1: [Antistasi] | INFO | Starting Persistent Load.",servertime];
 	petros allowdamage false;
-
 	A3A_saveVersion = 0;
 	["version"] call A3A_fnc_getStatVariable;
 	["savedPlayers"] call A3A_fnc_getStatVariable;
@@ -82,24 +81,6 @@ if (isServer) then {
 		haveNV = true; publicVariable "haveNV"
 	};
 
-	if (introFinished) then {
-		publicVariable "introFinished";
-		"US_AssaultMrk" setMarkerAlpha 0; 
-		"UK_AssaultMrk" setMarkerAlpha 0;
-		[] spawn {
-			if ((sidesX getVariable ["Molos", sideUnknown] == teamPlayer) || !(rebelCity == "")) exitWith {};
-			waitUntil {sleep 600; ((sidesX getVariable ["airport_2", sideUnknown] == teamPlayer) && (sidesX getVariable ["seaport_4", sideUnknown] == teamPlayer) && !(bigAttackInProgress))};
-			["Molos"] spawn A3A_fnc_cityRebel;
-		};
-	};
-	
-	if !(rebelCity == "") then {
-		[] spawn {
-			sleep 120;
-			[rebelCity] spawn A3A_fnc_cityRebel;
-		};
-	};
-
 	//Check if we have radios unlocked and update haveRadio.
 	call A3A_fnc_checkRadiosUnlocked;
 
@@ -114,7 +95,6 @@ if (isServer) then {
 			sidesX setVariable [_x,_sideX,true];
 		};
 	} forEach controlsX;
-
 
 	{
 		if (sidesX getVariable [_x,sideUnknown] == sideUnknown) then {

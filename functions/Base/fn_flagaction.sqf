@@ -32,7 +32,7 @@ switch _typeX do
             [] spawn SCRT_fnc_misc_orbitingCamera;
 		    [] call SCRT_fnc_ui_populateHqMenu;
         },nil,0,false,true,"","(isPlayer _this) and (_this == theBoss) and (vehicle _this == _this) and (petros == leader group petros)", 4];
-        //petros addAction ["Move this asset", A3A_fnc_moveHQObject,nil,0,false,true,"","(_this == theBoss)"];
+        petros addAction ["Move this asset", A3A_fnc_moveHQObject,nil,0,false,true,"","(_this == theBoss)"];
     };
     case "truckX":
     {

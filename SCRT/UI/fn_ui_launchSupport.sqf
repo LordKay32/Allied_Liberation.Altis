@@ -25,7 +25,7 @@ if (supportType in ["LOOTHELI","SUPPLY", "SMOKE", "FLARE", "VEH_AIRDROP", "LOOTC
 	] spawn SCRT_fnc_ui_showMessage;
 };
 
-private _airports = { sidesX getVariable [_x, sideUnknown] == teamPlayer } count airportsX;
+/*private _airports = { sidesX getVariable [_x, sideUnknown] == teamPlayer } count airportsX;
 if (supportType in ["LOOTHELI","NAPALM", "HE", "CLUSTER", "CHEMICAL", "VEH_AIRDROP", "LOOTCRATE_AIRDROP", "STATIC_MG_AIRDROP", "SUPPLY", "RECON", "PARADROP"] && _airports < 1) exitWith {
     [
 		"FAIL",
@@ -33,7 +33,7 @@ if (supportType in ["LOOTHELI","NAPALM", "HE", "CLUSTER", "CHEMICAL", "VEH_AIRDR
 		parseText "You need a at least 1 captured airport to make this request.", 
 		30
 	] spawn SCRT_fnc_ui_showMessage;
-};
+};*/
 
 private _resourcesFIA = server getVariable "resourcesFIA";
 if (supportType == "STATIC_MG_AIRDROP" && {_resourcesFIA < 800}) exitWith {

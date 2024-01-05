@@ -21,14 +21,14 @@ private _aggrString = nil;
 switch (gameMode) do {
 	case 3: {
 		if (!areOccupantsDefeated) then {
-			_aggrString = format ["| %1 Org: %2 |", nameOccupants, [aggressionLevelOccupants] call A3A_fnc_getAggroLevelString];
+			_aggrString = format ["| %1 Initiative: %2 |", nameOccupants, [aggressionLevelOccupants] call A3A_fnc_getAggroLevelString];
 		} else {
 			_aggrString = "";
 		};
 	};
 	case 4: {
 		if (!areInvadersDefeated) then {
-			_aggrString = format ["| %1 Aggr: %2 |", nameInvaders, [aggressionLevelInvaders] call A3A_fnc_getAggroLevelString];
+			_aggrString = format ["| %1 Initiative: %2 |", nameInvaders, [aggressionLevelInvaders] call A3A_fnc_getAggroLevelString];
 		} else {
 			_aggrString = "";
 		};
@@ -36,13 +36,13 @@ switch (gameMode) do {
 	default {
 		switch (true) do {
 			case (!areOccupantsDefeated && {!areInvadersDefeated}): {
-				_aggrString = format ["| %1 Aggr: %2 | %3 Aggr: %4 |", nameOccupants, [aggressionLevelOccupants] call A3A_fnc_getAggroLevelString,  nameInvaders, [aggressionLevelInvaders] call A3A_fnc_getAggroLevelString];
+				_aggrString = format ["| %1 Initiative: %2 | %3 Initiative: %4 |", nameOccupants, [aggressionLevelOccupants] call A3A_fnc_getAggroLevelString,  nameInvaders, [aggressionLevelInvaders] call A3A_fnc_getAggroLevelString];
 			};
 			case (!areOccupantsDefeated && {areInvadersDefeated}): {
-				_aggrString = format ["| %1 Aggr: %2 |", nameOccupants, [aggressionLevelOccupants] call A3A_fnc_getAggroLevelString];
+				_aggrString = format ["| %1 Initiative: %2 |", nameOccupants, [aggressionLevelOccupants] call A3A_fnc_getAggroLevelString];
 			};
 			case (!areInvadersDefeated && {areOccupantsDefeated}): {
-				_aggrString = format ["| %1 Aggr: %2 |", nameInvaders, [aggressionLevelInvaders] call A3A_fnc_getAggroLevelString];
+				_aggrString = format ["| %1 Initiative: %2 |", nameInvaders, [aggressionLevelInvaders] call A3A_fnc_getAggroLevelString];
 			};
 			case (areOccupantsDefeated && {areOccupantsDefeated}): {
 				_aggrString = "";
