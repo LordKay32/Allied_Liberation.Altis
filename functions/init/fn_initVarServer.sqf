@@ -127,7 +127,7 @@ DECLARE_SERVER_VAR(areInvadersDefeated, false);
 DECLARE_SERVER_VAR(A3A_coldWarMode, false);
 
 //IntroMission
-DECLARE_SERVER_VAR(introFinished, true);
+DECLARE_SERVER_VAR(introFinished, false);
 
 //ArtyGroups
 DECLARE_SERVER_VAR(artyGroups, []);

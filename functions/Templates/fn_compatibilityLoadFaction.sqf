@@ -324,8 +324,8 @@ if (_side isEqualTo west) then {
 		["loadouts_occ_elite_SquadLeader", "loadouts_occ_elite_MachineGunner", "loadouts_occ_elite_Rifleman", "loadouts_occ_elite_Medic"]
 	];
 	groupsNATOAT = [
-		["loadouts_occ_military_SquadLeader", "loadouts_occ_military_LAT", "loadouts_occ_military_AT", "loadouts_occ_military_Medic"],
-		["loadouts_occ_elite_SquadLeader", "loadouts_occ_elite_LAT", "loadouts_occ_elite_AT", "loadouts_occ_elite_Medic"]
+		["loadouts_occ_military_SquadLeader", "loadouts_occ_military_Rifleman", "loadouts_occ_military_AT", "loadouts_occ_military_AT", "loadouts_occ_military_Rifleman", "loadouts_occ_military_AT", "loadouts_occ_military_AT", "loadouts_occ_military_Medic"],
+		["loadouts_occ_elite_SquadLeader", "loadouts_occ_elite_Rifleman", "loadouts_occ_elite_AT", "loadouts_occ_elite_AT", "loadouts_occ_elite_Rifleman", "loadouts_occ_elite_AT", "loadouts_occ_elite_AT", "loadouts_occ_elite_Medic"]
 	];
 	private _groupsNATOMediumSquad = [
 		["loadouts_occ_military_SquadLeader","loadouts_occ_military_MachineGunner","loadouts_occ_military_Rifleman","loadouts_occ_military_Radioman","loadouts_occ_military_Medic"],
