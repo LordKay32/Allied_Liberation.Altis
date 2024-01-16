@@ -50,7 +50,7 @@ _duration = 4;
 	_time = time + _delay;
 	waituntil {time > _time};
 } foreach _credits;
-
+/*
 if (introFinished == true) exitWith{};
 
 sleep 1;
