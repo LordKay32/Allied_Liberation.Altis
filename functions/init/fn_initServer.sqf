@@ -6,9 +6,9 @@ logLevel = "LogLevel" call BIS_fnc_getParamValue; publicVariable "logLevel"; //S
 [2,"Dedicated server detected",_fileName] call A3A_fnc_log;
 [2,"Server init started",_fileName] call A3A_fnc_log;
 
-call A3A_fnc_Common;
-call A3A_fnc_Hidden;
-call A3A_fnc_replace_fences;
+//call A3A_fnc_Common;
+//call A3A_fnc_Hidden;
+//call A3A_fnc_replace_fences;
 
 boxX allowDamage false;
 flagX allowDamage false;
