@@ -6,10 +6,6 @@ logLevel = "LogLevel" call BIS_fnc_getParamValue; publicVariable "logLevel"; //S
 [2,"Dedicated server detected",_fileName] call A3A_fnc_log;
 [2,"Server init started",_fileName] call A3A_fnc_log;
 
-//call A3A_fnc_Common;
-//call A3A_fnc_Hidden;
-//call A3A_fnc_replace_fences;
-
 boxX allowDamage false;
 flagX allowDamage false;
 vehicleBox allowDamage false;
@@ -75,13 +71,13 @@ publicVariable "campaignID";
 call A3A_fnc_initParams;
 
 setTimeMultiplier settingsTimeMultiplier;
-serverTest1 = true;
+
 //JNA, JNL and UPSMON. Shouldn't have any Antistasi dependencies except on parameters.
 call A3A_fnc_initFuncs;
-serverTest2 = true;
+
 //Initialise variables needed by the mission.
 _nul = call A3A_fnc_initVar;
-serverTest3 = true;
+
 call A3A_fnc_logistics_initNodes;
 
 savingServer = true;
