@@ -107,7 +107,8 @@ _introShot = if (introFinished) then {
 	] spawn BIS_fnc_establishingShot;
 };
 
-if !(introFinished) then {[] execVM "introCinematic.sqf"};
+//if !(introFinished) then {[] execVM "introCinematic.sqf"};
+["StartingIntro", true, 5] call BIS_fnc_blackIn;
 
 disableUserInput false;
 player setVariable ["spawner",true,true];

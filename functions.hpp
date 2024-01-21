@@ -35,9 +35,9 @@ class A3A
 
     class Base
     {   
-        class Common {};
-        class Hidden {};
-        class replace_fences {};
+        class Common {preInit = 1};
+        class Hidden {preInit = 1};
+        class replace_fences {preInit = 1};
     
         class addActionBreachVehicle {};
         class addAggression {};

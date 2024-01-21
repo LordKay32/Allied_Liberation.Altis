@@ -127,7 +127,7 @@ DECLARE_SERVER_VAR(areInvadersDefeated, false);
 DECLARE_SERVER_VAR(A3A_coldWarMode, false);
 
 //IntroMission
-DECLARE_SERVER_VAR(introFinished, true);
+DECLARE_SERVER_VAR(introFinished, false);
 
 //ArtyGroups
 DECLARE_SERVER_VAR(artyGroups, []);
@@ -1066,7 +1066,7 @@ if (A3A_has3CBFactions && {(threecbfOccupantFaction == 4 || A3A_hasGlobMob)}) th
 [2,"Initializing hardcoded categories",_fileName] call A3A_fnc_log;
 [] call A3A_fnc_categoryOverrides;
 [2,"Scanning config entries for items",_fileName] call A3A_fnc_log;
-[A3A_fnc_equipmentIsValidForCurrentModset] call A3A_fnc_configSort;
+//[A3A_fnc_equipmentIsValidForCurrentModset] call A3A_fnc_configSort;
 [2,"Categorizing vehicle classes",_fileName] call A3A_fnc_log;
 [] call A3A_fnc_vehicleSort;
 [2,"Categorizing equipment classes",_fileName] call A3A_fnc_log;

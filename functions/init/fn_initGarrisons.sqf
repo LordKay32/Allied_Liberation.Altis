@@ -54,8 +54,9 @@ _fnc_initMarker =
 
 		if !(_x in ["outpost_100","airport_2","seaport_4"]) then {_mrk setMarkerAlpha 0};
 		baseMarkersX pushback _mrk;
-
-		[_x] call A3A_fnc_createControls;
+[2,"57",_fileName] call A3A_fnc_log;
+		//[_x] call A3A_fnc_createControls;
+[2,"59",_fileName] call A3A_fnc_log;	
 	} forEach _target;
 };
 
