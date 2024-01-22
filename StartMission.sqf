@@ -12,7 +12,10 @@
  * _PARAM2 (TYPE): - DESCRIPTION.
  */
 
-waitUntil {sleep 1; count (allPlayers - entities "HeadlessClient_F") > 0};
+//if (isDedicated) then {"introCinematic.sqf" remoteExec ["execVM",-2]} else {"introCinematic.sqf" remoteExec ["execVM",0]};
+
+readyMessage = false;
+["StartingIntro", true, 5] call BIS_fnc_blackIn;
 
 "US_AssaultMrk" setMarkerAlpha 0;
 "UK_AssaultMrk" setMarkerAlpha 0;

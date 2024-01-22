@@ -68,7 +68,6 @@ if (side player == teamPlayer) then {
 musicON = false;
 disableUserInput true;
 cutText ["Waiting for Players and Server Init","BLACK",0];
-if (introFinished) then {["StartingIntro", false, 5] call BIS_fnc_blackIn};
 [2,"Waiting for server...",_fileName] call A3A_fnc_log;
 waitUntil {(!isNil "serverInitDone")};
 cutText ["Starting Mission","BLACK IN",2];
@@ -106,9 +105,6 @@ _introShot = if (introFinished) then {
 		]
 	] spawn BIS_fnc_establishingShot;
 };
-
-//if !(introFinished) then {[] execVM "introCinematic.sqf"};
-["StartingIntro", true, 5] call BIS_fnc_blackIn;
 
 disableUserInput false;
 player setVariable ["spawner",true,true];
@@ -448,7 +444,7 @@ if !(isPlayer leader group player) then {
 
 if (introFinished) then {
 	waitUntil { scriptDone _introshot };
-	cutText ["","BLACK IN", 3];
+	["StartingIntro", true, 5] call BIS_fnc_blackIn;
 };
 
 [] remoteExec ["A3A_fnc_assignBossIfNone", 2];

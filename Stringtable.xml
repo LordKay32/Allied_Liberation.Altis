@@ -350,8 +350,8 @@
         <Chinesesimp>亲自控制选定的班组成员或指挥部班组的班长, 并可在60秒内执行任何动作。如果玩家或受控单位受到任何伤害, 控制状态将被取消。</Chinesesimp>
       </Key>
       <Key ID="STR_antistasi_dialogs_move_veh_title">
-        <Original>Move Static Weapon Crate</Original>
-        <English>Move Static Weapon Crate</English>
+        <Original>Move Static Weapon</Original>
+        <English>Move Static Weapon</English>
         <French>Déplacer statique / caisse</French>
         <Russian>Переместить стат. орудие/ящик</Russian>
         <German>Statik / Kiste bewegen</German>

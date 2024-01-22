@@ -1,3 +1,15 @@
+if !(introFinished) exitWith {
+
+	readyMessage = true;
+
+	while {readyMessage} do {
+		sleep 1;
+		titleText ["<t color='#ffffff' size='5'>READY", "PLAIN", 0.1, true, true];
+		sleep 1;
+		titleFadeOut 0;
+	};
+};
+
 private _title = call SCRT_fnc_misc_getMissionTitle;
 
 _credits = [ 
@@ -50,65 +62,3 @@ _duration = 4;
 	_time = time + _delay;
 	waituntil {time > _time};
 } foreach _credits;
-/*
-if (introFinished == true) exitWith{};
-
-sleep 1;
-
-titleText ["<t color='#ffffff' size='5'>June 1st 1943", "PLAIN", 1, true, true];
-
-sleep 4;
-
-titleFadeOut 2;
-
-sleep 3;
-
-titleText ["<t color='#ffffff' size='5'>Altis<br/><br/>Mediterranean Theatre", "PLAIN", 1, true, true];
-
-sleep 4;
-
-titleFadeOut 2;
-
-sleep 3;
-
-titleText ["<t color='#ffffff' size='2.4'>The Western Desert Campaign is over. Rommel and the Afrika Korps are defeated.", "PLAIN", 1, true, true]; 
-
-sleep 9;
-
-titleFadeOut 2;
-
-sleep 3;
-
-titleText ["<t color='#ffffff' size='2.4'>Now the Allies turn their attention towards Italy.", "PLAIN", 1, true, true]; 
-
-sleep 9;
-
-titleFadeOut 2;
-
-sleep 3;
-
-titleText ["<t color='#ffffff' size='2.4'>In their way stands Altis, an occupied British colony south-east of Sicily.", "PLAIN", 1, true, true];
-
-sleep 9;
-
-titleFadeOut 2;
-
-sleep 3;
-
-titleText ["<t color='#ffffff' size='2.4'>With her airfields, harbours and radar station, Altis represents a strategic threat, and must be captured.", "PLAIN", 1, true, true];
-
-sleep 9;
-
-titleFadeOut 2;
-
-sleep 3;
-
-titleText ["<t color='#ffffff' size='2.4'>The Germans have reinforced and fortified the island.", "PLAIN", 1, true, true];
-
-sleep 9;
-
-titleFadeOut 2;
-
-sleep 3;
-
-titleText ["<t color='#ffffff' size='2.4'>At dawn, the Allies launch their assault...", "PLAIN", 1, true, true];

@@ -275,4 +275,5 @@ savingServer = false;
 };
 [2,"initServer completed",_fileName] call A3A_fnc_log;
 
-if !(introFinished) then {[] execVM "StartMission.sqf"} else {deleteVehicle tankUS; deleteVehicle tankUK};
+//if !(introFinished) then {[] execVM "StartMission.sqf"} else {deleteVehicle tankUS; deleteVehicle tankUK};
+if (introFinished) then {deleteVehicle tankUS; deleteVehicle tankUK};
