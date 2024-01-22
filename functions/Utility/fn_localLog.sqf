@@ -17,4 +17,8 @@
 
     License: MIT License
 */
-{diag_log text _x} forEach _this;
+if (typeName _this == "ARRAY") then {
+  {diag_log text _x} forEach _this;
+}else{
+  diag_log _this ;
+};

@@ -15,7 +15,9 @@
 //if (isDedicated) then {"introCinematic.sqf" remoteExec ["execVM",-2]} else {"introCinematic.sqf" remoteExec ["execVM",0]};
 
 readyMessage = false;
-["StartingIntro", true, 5] call BIS_fnc_blackIn;
+//["StartingIntro", true, 5] call BIS_fnc_blackIn;
+["StartingIntro", true, 5] remoteExec ["BIS_fnc_blackIn",-2];
+publicVariable "readyMessage" ;
 
 "US_AssaultMrk" setMarkerAlpha 0;
 "UK_AssaultMrk" setMarkerAlpha 0;
@@ -274,18 +276,27 @@ sleep 10;
 
 waitUntil {sleep 1; (spawner getVariable "outpost_100" != 2)};
 theBoss = commanderX;
+
+forcedSpawn pushBack "outpost_100";
+publicVariable "forcedSpawn";
+	
 sleep 20;
 
+
 [] spawn {
-	 private _mortars = nearestObjects [(getMarkerPos "outpost_100"), ["LIB_GrWr34_g"], 500];
-	 [(_mortars select 0), artyTarget_1, "LIB_8Rnd_81mmHE_GRWR34", 100, 12, 5] spawn BIS_fnc_fireSupport;
-	 [(_mortars select 1), artyTarget_2, "LIB_8Rnd_81mmHE_GRWR34", 100, 12, 5] spawn BIS_fnc_fireSupport;
-	 
-	 sleep 100;
-	 {
-	  _x setvehicleAmmo 1;
-	 } forEach _mortars;
+	private _mortars = nearestObjects [(getMarkerPos "outpost_100"), ["LIB_GrWr34_g"], 500];
+	if (count _mortars >= 1) then {
+		[(_mortars select 0), artyTarget_1, "LIB_8Rnd_81mmHE_GRWR34", 100, 12, 5] spawn BIS_fnc_fireSupport;
+	};
+	if (count _mortars >= 2) then {
+		[(_mortars select 1), artyTarget_2, "LIB_8Rnd_81mmHE_GRWR34", 100, 12, 5] spawn BIS_fnc_fireSupport;
+	};
+	sleep 100;
+	{
+		_x setvehicleAmmo 1;
+	} forEach _mortars;
 };
+
 
 private _taskId1 = "startCaptureOutpost";
 [[teamPlayer,civilian],_taskId1,["Capture the outpost at the landing zones.","Capture Outpost","outpost_100"],(getMarkerPos "outpost_100"),false,0,true,"attack",true] call BIS_fnc_taskCreate;
@@ -294,6 +305,9 @@ private _taskId2 = "clearLandingZones";
 [[teamPlayer,civilian],_taskId2,["Clear the landing zones of enemy troops.","Clear Landing Zones","introMissionMarker"],getMarkerPos "introMissionMarker",false,0,true,"attack",true] call BIS_fnc_taskCreate;
 
 waitUntil {sleep 10; (sidesX getVariable ["outpost_100", sideUnknown] == teamPlayer) || (((getMarkerPos "introMissionMarker") nearEntities 200) findIf {side _x == Occupants && [_x] call A3A_fnc_canFight} == -1)};
+
+forcedSpawn = forcedSpawn - ["outpost_100"];
+publicVariable "forcedSpawn";
 
 if (sidesX getVariable ["outpost_100", sideUnknown] == teamPlayer) then {
 	[_taskId1,"SUCCEEDED"] call BIS_fnc_taskSetState;
