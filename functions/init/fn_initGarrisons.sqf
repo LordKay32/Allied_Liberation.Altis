@@ -58,6 +58,7 @@ _fnc_initMarker =
 		//[_x] call A3A_fnc_createControls;
 [2,"59",_fileName] call A3A_fnc_log;	
 	} forEach _target;
+	publicVariable "baseMarkersX";
 };
 
 
