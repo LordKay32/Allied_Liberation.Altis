@@ -577,7 +577,6 @@ if (_varName in _specialVarLoads) then {
     if(_varname == 'rebelCity') then {
     	rebelCity = _varvalue;
     	if (introFinished) then {
-			publicVariable "introFinished";
 			"US_AssaultMrk" setMarkerAlpha 0; 
 			"UK_AssaultMrk" setMarkerAlpha 0;
 			[] spawn {

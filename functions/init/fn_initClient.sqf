@@ -578,6 +578,14 @@ if (introFinished) then {
 	_layer = ["statisticsX"] call bis_fnc_rscLayer;
 	_layer cutRsc ["H8erHUD","PLAIN",0,false];
 	[] spawn A3A_fnc_statistics;
+} else {
+	[] spawn {
+		waitUntil {sleep 10; introFinished};
+		disableSerialization;
+		_layer = ["statisticsX"] call bis_fnc_rscLayer;
+		_layer cutRsc ["H8erHUD","PLAIN",0,false];
+		[] spawn A3A_fnc_statistics;
+	};
 };
 
 //Check if we need to relocate HQ

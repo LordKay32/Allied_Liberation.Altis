@@ -37,6 +37,7 @@ private _group = grpNull;
 				params ["_unit", "_killer", "_instigator", "_useEffects"];
 				_index = _unit getVariable "index";
 				flakList set [_index, false];
+				publicVariable "flakList";
 			}];
 		
 			[_x, _positionX] spawn {

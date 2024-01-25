@@ -29,6 +29,7 @@ private _num = 0;
 	};
 	_num = _num + 1;
 } forEach _artyMarker;
+publicVariable "artilleryList";
 
 private _index = 0;
 private _artillery = objNull;
@@ -51,6 +52,7 @@ private _artillery = objNull;
 				params ["_unit", "_killer", "_instigator", "_useEffects"];
 				_index = _unit getVariable "index";
 				artilleryList set [_index, false];
+				publicVariable "artilleryList";
 			}];
 		
 			[_artillery, _positionX] spawn {

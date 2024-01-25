@@ -186,6 +186,7 @@ switch (_type) do
 				player addMagazine "LIB_1Rnd_89m_PIAT";
 				player addWeapon "LIB_PIAT";
 				player addItemToUniform "LIB_US_M18";
+				player linkItem "ItemRadio";
 				for "_i" from 1 to 2 do
 				{
 					player addItemToUniform "fow_i_fak_uk";
@@ -215,6 +216,7 @@ switch (_type) do
 				player addMagazine "LIB_1Rnd_89m_PIAT";
 				player addWeapon "LIB_PIAT";
 				player addItemToUniform "LIB_US_M18";
+				player linkItem "ItemRadio";
 				for "_i" from 1 to 2 do
 					{
 					player addItemToUniform "fow_i_fak_uk";
@@ -243,6 +245,7 @@ switch (_type) do
 				player addWeapon "LIB_Webley_mk6";
 				player addItemToUniform "LIB_US_M18";
 				player addItemToBackpack "ToolKit";
+				player linkItem "ItemRadio";
 				for "_i" from 1 to 2 do
 					{
 					player addItemToUniform "fow_i_fak_uk";
@@ -267,6 +270,7 @@ switch (_type) do
 				player addMagazine "LIB_1Rnd_60mm_M6";
 				player addWeapon "LIB_M1A1_Bazooka";
 				player addItemToUniform "LIB_US_M18";
+				player linkItem "ItemRadio";
 				for "_i" from 1 to 2 do
 					{
 					player addItemToUniform "fow_i_fak_us";
@@ -293,6 +297,7 @@ switch (_type) do
 				player addMagazine "LIB_7Rnd_45ACP";
 				player addWeapon "LIB_Colt_M1911";
 				player addItemToUniform "LIB_US_M18";
+				player linkItem "ItemRadio";
 				for "_i" from 1 to 2 do
 					{
 					player addItemToUniform "fow_i_fak_us";

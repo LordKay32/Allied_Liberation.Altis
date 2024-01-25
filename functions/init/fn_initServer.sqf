@@ -157,6 +157,7 @@ else {
 	
 	[] spawn A3A_fnc_minefields;
 	[] call A3A_fnc_updatePreference;
+	respawnTeamPlayer setMarkerAlpha 0;
 };
 
 [2,"Accepting players",_fileName] call A3A_fnc_log;

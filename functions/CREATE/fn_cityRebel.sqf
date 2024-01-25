@@ -20,6 +20,7 @@ private ["_markerX", "_groups", "_partizans", "_civilians", "_exit"];
 _markerX = _this select 0;
 if (sidesX getVariable [_markerX, sideUnknown] == teamPlayer) exitWith {};
 rebelCity = _markerX;
+publicVariable "rebelCity";
 
 _groups = [];
 _partizans = [];
@@ -183,6 +184,7 @@ if (spawner getVariable _markerX != 2) then {
     destroyedSites = destroyedSites + [_markerX];
     publicVariable "destroyedSites";
     rebelCity = "NONE";
+    publicVariable "rebelCity";
     private _mineTypes = A3A_faction_occ getVariable "minefieldAPERS";
     for "_i" from 1 to 25 do {
         private _mineX = createMine [selectRandom _mineTypes,_positionX,[],_size/2];
@@ -205,6 +207,7 @@ if (sidesX getVariable [_markerX, sideUnknown] == teamPlayer) then {
     [_taskId, "invaderPunish", "SUCCEEDED"] call A3A_fnc_taskSetState;
     [_positionX, 30, 3000] call _fnc_adjustNearCities;
     rebelCity = "NONE";
+    publicVariable "rebelCity";
 
     {if (isPlayer _x) then {[100,_x] call A3A_fnc_playerScoreAdd}} forEach ([500,0,_positionX,teamPlayer] call A3A_fnc_distanceUnits);
     [0,1000,0] remoteExec ["A3A_fnc_resourcesFIA",2];
@@ -218,6 +221,7 @@ if (sidesX getVariable [_markerX, sideUnknown] == teamPlayer) then {
     destroyedSites = destroyedSites + [_markerX];
     publicVariable "destroyedSites";
     rebelCity = "NONE";
+    publicVariable "rebelCity";
     private _mineTypes = A3A_faction_occ getVariable "minefieldAPERS";
     for "_i" from 1 to 25 do {
         private _mineX = createMine [selectRandom _mineTypes,_positionX,[],_size/2];

@@ -142,7 +142,7 @@
 	]] call _fnc_saveToTemplate;
 
 private _initialRebelEquipment = [
-	"ItemWatch","ItemCompass","LIB_Binocular_UK","LIB_Binocular_US","V_LIB_UK_P37_Officer","V_LIB_UK_P37_Rifleman","V_LIB_UK_P37_Holster","V_LIB_UK_P37_Heavy","V_LIB_UK_P37_Sten",
+	"ItemWatch","ItemCompass","ItemMap","LIB_Binocular_UK","LIB_Binocular_US","V_LIB_UK_P37_Officer","V_LIB_UK_P37_Rifleman","V_LIB_UK_P37_Holster","V_LIB_UK_P37_Heavy","V_LIB_UK_P37_Sten",
 	"fow_v_uk_para_base","fow_v_uk_officer","fow_v_uk_para_bren","V_LIB_UK_P37_Crew","V_LIB_US_Vest_45","V_LIB_US_Vest_Thompson_nco","V_LIB_US_Vest_Carbine_nco","V_LIB_US_Vest_Thompson","V_LIB_US_Vest_Carbine","V_LIB_US_Vest_Garand","V_LIB_US_Vest_Grenadier",
 	"V_LIB_US_Vest_Bar","V_LIB_US_Vest_M1919","V_LIB_US_Vest_Medic","V_LIB_US_Vest_Carbine_eng","V_LIB_US_AB_Vest_45","V_LIB_US_AB_Vest_Thompson_nco","V_LIB_US_AB_Vest_Carbine_nco",
 	"V_LIB_US_AB_Vest_Thompson","V_LIB_US_AB_Vest_Carbine","V_LIB_US_AB_Vest_Garand","V_LIB_US_AB_Vest_Grenadier","V_LIB_US_AB_Vest_Bar","V_LIB_US_AB_Vest_M1919","V_LIB_US_AB_Vest_Carbine_eng",

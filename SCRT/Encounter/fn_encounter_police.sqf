@@ -4,7 +4,7 @@ private _fileName = "fn_encounter_police";
 private _vehicles = [];
 private _groups = [];
 
-private _allPlayers = (call BIS_fnc_listPlayers) select {side _x == teamPlayer};
+private _allPlayers = (call BIS_fnc_listPlayers) select {side _x in [teamPlayer,civilian]};
 private _player = selectRandom _allPlayers;
 private _side = if (gameMode == 4) then {Invaders} else {Occupants};
 
@@ -38,7 +38,6 @@ private _policeVehicleData = [(getPos (_road select 0)), _dirveh, _policeVehicle
 private _policeVehicle = _policeVehicleData select 0;
 _policeVehicle limitSpeed 50;
 [_policeVehicle, _side] call A3A_fnc_AIVEHinit;
-[_policeVehicle, ["BeaconsStart", 1]] remoteExecCall ["animate", 0, _policeVehicle];
 
 private _policeVehicleCrew = _policeVehicleData select 1;
 {[_x] call A3A_fnc_NATOinit} forEach _policeVehicleCrew;

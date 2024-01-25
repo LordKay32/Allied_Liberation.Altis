@@ -1,4 +1,4 @@
-private ["_unit","_LeaderX","_airportsX","_base","_loadOut", "_oldBehaviour"];
+private ["_unit","_LeaderX","_airportsX","_base","_loadOut", "_oldBehaviour","_voice"];
 
 _unit = _this select 0;
 if (isPlayer _unit) exitWith {};
@@ -21,6 +21,8 @@ _unit setBehaviour "CARELESS";
 _unit setUnitPos "UP";
 
 if ((_unit getVariable "unitType") in SASTroops) then {
+	_voice = speaker _unit;
+	_unit setSpeaker "NoVoice";
 	_unit addEventHandler ["FiredMan", {
 			params ["_unit", "_weapon", "_muzzle", "_mode", "_ammo", "_magazine", "_projectile", "_vehicle"];
 			if (_muzzle in ["LIB_US_TNT_4pound_Muzzle","LIB_Ladung_Big_Muzzle","LIB_Ladung_Small_Muzzle","PipeBombMuzzle","LIB_US_M1A1_ATMINE_Muzzle","LIB_M3_Muzzle","LIB_US_M3_Muzzle","LIB_shumine_42_Muzzle","DemoChargeMuzzle","LIB_SMI_35_Muzzle","LIB_SMI_35_1_Muzzle","LIB_TMI_42_Muzzle"]) then {
@@ -45,6 +47,7 @@ if ((_unit getVariable "unitType") in SASTroops) then {
 	_unit enableAI "TARGET";
 	_unit enableAI "AUTOTARGET";
 	_unit setUnitPos "AUTO";
+	_unit setSpeaker _voice;
 };
 
 if ((_unit getVariable "unitType") in SDKTroops) then {

@@ -21,7 +21,7 @@ if (_x getVariable ["esNATO",false]) then {_leave = true};
 
 if (_leave) exitWith {["Dismiss Squad", "You cannot dismiss NATO groups."] call A3A_fnc_customHint;};
 
-_pos = getMarkerPos ([(airportsX + milbases + ["Synd_HQ"}) select {sidesX getVariable [_x, sideUnknown] == teamPlayer}, (getPos (leader _group))] call BIS_fnc_nearestPosition);
+_pos = getMarkerPos ([(airportsX + milbases + ["Synd_HQ"]) select {sidesX getVariable [_x, sideUnknown] == teamPlayer}, (getPos (leader _group))] call BIS_fnc_nearestPosition);
 
 {
 	theBoss sideChat format ["%2, I'm sending %1 back to base", _x,name petros];

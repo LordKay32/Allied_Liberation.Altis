@@ -92,7 +92,7 @@ switch (_type) do
     {
 		if ((units group player) findIf {(_x getVariable "unitType") in SDKTroops} == -1) exitWith
 		{
-		    ["Undercover", "You can only go Undercover with partizan units in your group."] call A3A_fnc_customHint;
+		    ["Undercover", "You can only go Undercover with partizan or SAS units in your group, and in the appropriate clothing."] call A3A_fnc_customHint;
 		    [false, "No Undercover without partizans"];
 		};
 

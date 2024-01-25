@@ -19,7 +19,7 @@ _loadout = switch _team do {
 			[(selectRandom unlockedmaps),"","",(selectRandom unlockedCompasses),(selectRandom unlockedwatches),""]];
 		} else {
 			[[],[],[],[_uniform, []],[],[],"","",[],
-			[(selectRandom unlockedmaps),"","ItemRadio",(selectRandom unlockedCompasses),(selectRandom unlockedwatches),""]];
+			["ItemMap","","ItemRadio","ItemCompass","ItemWatch",""]];
 		};
 	};
 

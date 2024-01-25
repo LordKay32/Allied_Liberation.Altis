@@ -128,6 +128,7 @@ DECLARE_SERVER_VAR(A3A_coldWarMode, false);
 
 //IntroMission
 DECLARE_SERVER_VAR(introFinished, false);
+introAttackStarted = false;
 
 //ArtyGroups
 DECLARE_SERVER_VAR(artyGroups, []);
@@ -181,10 +182,13 @@ testingTimerIsActive = false;
 A3A_tasksData = [];
 
 artilleryList = [true, true, true, true, true, true, true, true, true, true];
+publicVariable "artilleryList";
 flakList = [true, true, true, true];
+publicVariable "flakList";
 mineMarkers = ["minefield_1","minefield_2","minefield_3","minefield_4","minefield_5","minefield_6","minefield_7","minefield_8","minefield_9","minefield_10","minefield_11","minefield_12","minefield_13","minefield_14","minefield_15"];
-
 rebelCity = "NONE";
+publicVariable "rebelCity";
+
 //
 occupantKilled = 0;
 publicVariable "occupantKilled";
@@ -242,7 +246,9 @@ publicVariable "sectorsLost";
 //
 
 battleshipStarted = false;
+publicVariable "battleshipStarted";
 battleshipDone = false;
+publicVariable "battleshipDone";
 
 WW2Weapons = [
 	//Weapons
@@ -266,6 +272,7 @@ WW2Weapons = [
 	["LIB_Welrod_mk1", 10],
 	["LIB_FLARE_PISTOL", 50]
 ];
+publicVariable "WW2Weapons";
 
 WW2Magazines = [
 	//Ammo
@@ -304,6 +311,7 @@ WW2Magazines = [
 	["LIB_6Rnd_9x19_Welrod", 600],
 	["LIB_1Rnd_flare_white", 800]
 ];
+publicVariable "WW2Magazines";
 
 WW2Items = [
 	//Items
@@ -317,6 +325,7 @@ WW2Items = [
 	//Backpack
 	["B_Carryall_cbr", 50]
 ];
+publicVariable "WW2Items";
 
 WehrmachtUniforms = [
 	"U_LIB_GER_Schutze",
@@ -327,6 +336,7 @@ WehrmachtUniforms = [
 	"U_LIB_GER_Medic",
 	"U_LIB_GER_Scharfschutze"
 ];
+publicVariable "WehrmachtUniforms";
 
 WehrmachtVests = [
 	"V_LIB_GER_VestKar98",
@@ -335,18 +345,21 @@ WehrmachtVests = [
 	"V_LIB_GER_PioneerVest",
 	"V_LIB_GER_SniperBelt"
 ];
+publicVariable "WehrmachtVests";
 
 WehrMachtBackpacks = [
 	"B_LIB_GER_SapperBackpack_empty",
 	"B_LIB_GER_MedicBackpack_empty",
 	"B_LIB_GER_Panzer_Empty"
 ];
+publicVariable "WehrMachtBackpacks";
 
 WehrmachtHelmets = [
 	"H_LIB_GER_Helmet",
 	"H_LIB_GER_Cap",
 	"H_LIB_GER_HelmetCamo"
 ];
+publicVariable "WehrmachtHelmets";
 
 WehrmachtWeapons = [
 	"LIB_K98",
@@ -358,12 +371,14 @@ WehrmachtWeapons = [
 	"LIB_FG42G",
 	"LIB_G43"
 ];
+publicVariable "battleshipDone";
 
 WehrmachtLaunchers = [
 	"LIB_RPzB",
 	"LIB_PzFaust_30m",
 	"LIB_PzFaust_60m"
 ];
+publicVariable "WehrmachtLaunchers";
 
 WehrmachtMagazines = [
 	"LIB_5Rnd_792x57",
@@ -379,6 +394,7 @@ WehrmachtMagazines = [
 	"LIB_8Rnd_9x19_P08",
 	"LIB_1Rnd_RPzB"
 ];
+publicVariable "WehrmachtMagazines";
 
 WehrmachtExplosives = [	
 	"LIB_Shg24",
@@ -389,11 +405,13 @@ WehrmachtExplosives = [
 	"LIB_Ladung_Small_MINE_mag",
 	"LIB_Ladung_Big_MINE_mag"
 ];
+publicVariable "WehrmachtExplosives";
 
 WehrmachtItems = [
 	"fow_i_fak_ger",
 	"LIB_ACC_GW_SB_Empty"
 ];
+publicVariable "WehrmachtItems";
 
 ///////////////////////////////////////////
 //     INITIALISING ITEM CATEGORIES     ///

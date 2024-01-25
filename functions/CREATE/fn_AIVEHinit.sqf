@@ -372,7 +372,14 @@ if (_typeX == vehNATORepairTruck) then {
 };
 
 if (_typeX in (vehNATONormal + vehNATOAPC)) then {
-	_veh addEventHandler ["GetIn", {private ["_veh"];_veh = _this select 0; _base = [((airportsX + milbases + outposts + seaports + factories + resourcesX + ["Synd_HQ"]) select {sidesX getVariable [_x,sideUnknown] == teamPlayer}), getPos _veh] call BIS_fnc_nearestPosition; if ((side (_this select 2) == teamPlayer) && (_veh inArea _base) && !(_veh getVariable ["friendly", false])) then {_veh setVariable ["friendly",true,true]}}];
+	_veh addEventHandler ["GetIn", {private ["_veh"];_veh = _this select 0; _base = [((airportsX + milbases + outposts + seaports + factories + resourcesX + ["Synd_HQ"]) select {sidesX getVariable [_x,sideUnknown] == teamPlayer}), getPos _veh] call BIS_fnc_nearestPosition; if ((side (_this select 2) in [teamPlayer, civilian]) && (_veh inArea _base) && !(_veh getVariable ["friendly", false])) then {_veh setVariable ["friendly",true,true]}}];
+};
+
+if (_typeX in ["fow_w_mg42_deployed_high_ger_heer","fow_w_mg42_deployed_middle_ger_heer"]) then {
+	_veh addEventHandler ["GetOut", {
+		params ["_vehicle", "_role", "_unit", "_turret", "_isEject"];
+		_vehicle setDamage 1;
+	}];
 };
 
 if ((_side == teamPlayer) && (_typeX == staticATteamPlayer)) then {

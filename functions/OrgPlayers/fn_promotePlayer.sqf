@@ -13,7 +13,7 @@ _promoted = false;
 	private _dataX = [_player] call A3A_fnc_numericRank;
 	private _multiplier = _dataX select 0;
 	private _newRank = _dataX select 1;
-	private _rank = _x getVariable ["rankX","PRIVATE"];
+	private _rank = _x getVariable ["rankX","LIEUTENANT"];
 	
 	if (_rank != "COLONEL") then
 	{

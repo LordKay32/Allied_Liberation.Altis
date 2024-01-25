@@ -57,13 +57,13 @@ if (isServer) then {
 	["areInvadersDefeated"] call A3A_fnc_getStatVariable;
 	["rebelLoadouts"] call A3A_fnc_getStatVariable;
 	["randomizeRebelLoadoutUniforms"] call A3A_fnc_getStatVariable;
-	["artilleryList"] call A3A_fnc_getStatVariable;
-	["flakList"] call A3A_fnc_getStatVariable;
-	["battleshipStarted"] call A3A_fnc_getStatVariable;
-	["battleshipDone"] call A3A_fnc_getStatVariable;
+	["artilleryList"] call A3A_fnc_getStatVariable; publicVariable "artilleryList";
+	["flakList"] call A3A_fnc_getStatVariable; publicVariable "flakList";
+	["battleshipStarted"] call A3A_fnc_getStatVariable; publicVariable "battleshipStarted";
+	["battleshipDone"] call A3A_fnc_getStatVariable; publicVariable "battleshipDone";
 	["finalStatistics"] call A3A_fnc_getStatVariable;
-	["introFinished"] call A3A_fnc_getStatVariable;
-	["rebelCity"] call A3A_fnc_getStatVariable;
+	["introFinished"] call A3A_fnc_getStatVariable; publicVariable "introFinished";
+	["rebelCity"] call A3A_fnc_getStatVariable; publicVariable "rebelCity";
 
 	//===========================================================================
 	#include "\A3\Ui_f\hpp\defineResinclDesign.inc"

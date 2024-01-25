@@ -35,13 +35,13 @@ switch (true) do {
     case (!areOccupantsDefeated && {_newOccupantsValue < (_levelBoundsOccupants select 0)}): {
         aggressionLevelOccupants = ((ceil (_newOccupantsValue / 20)) min 5) max 1;
         publicVariable "aggressionLevelOccupants";
-        _notificationText = format ["%1 organisational level reduced to %2<br/>", nameOccupants, [aggressionLevelOccupants] call A3A_fnc_getAggroLevelString];
+        _notificationText = format ["%1 initiative level reduced to %2<br/>", nameOccupants, [aggressionLevelOccupants] call A3A_fnc_getAggroLevelString];
         _levelsChanged = true;
     };
     case (!areOccupantsDefeated && {_newOccupantsValue > (_levelBoundsOccupants select 1)}): {
         aggressionLevelOccupants = ((ceil (_newOccupantsValue / 20)) min 5) max 1;
         publicVariable "aggressionLevelOccupants";
-        _notificationText = format ["%1 organisational level increased to %2<br/>", nameOccupants, [aggressionLevelOccupants] call A3A_fnc_getAggroLevelString];
+        _notificationText = format ["%1 initiative level increased to %2<br/>", nameOccupants, [aggressionLevelOccupants] call A3A_fnc_getAggroLevelString];
         _levelsChanged = true;
     };
 };
@@ -51,13 +51,13 @@ switch (true) do {
     case (!areInvadersDefeated && {_newInvadersValue < (_levelBoundsInvaders select 0)}): {
         aggressionLevelInvaders = ((ceil (_newInvadersValue / 20)) min 5) max 1;
         publicVariable "aggressionLevelInvaders";
-        _notificationText = format ["%1%2 aggression level reduced to %3", _notificationText, nameInvaders, [aggressionLevelInvaders] call A3A_fnc_getAggroLevelString];
+        _notificationText = format ["%1%2 initiative level reduced to %3", _notificationText, nameInvaders, [aggressionLevelInvaders] call A3A_fnc_getAggroLevelString];
         _levelsChanged = true;
     };
     case (!areInvadersDefeated && {_newInvadersValue > (_levelBoundsInvaders select 1)}): {
         aggressionLevelInvaders = ((ceil (_newInvadersValue / 20)) min 5) max 1;
         publicVariable "aggressionLevelInvaders";
-        _notificationText = format ["%1%2 aggression level increased to %3<br/>", _notificationText, nameInvaders, [aggressionLevelInvaders] call A3A_fnc_getAggroLevelString];
+        _notificationText = format ["%1%2 initiative level increased to %3<br/>", _notificationText, nameInvaders, [aggressionLevelInvaders] call A3A_fnc_getAggroLevelString];
         _levelsChanged = true;
     };
 };
@@ -67,7 +67,7 @@ if(_levelsChanged) then {
     [] remoteExec ["A3A_fnc_statistics", [teamPlayer, civilian]];
     if(!_silent) then {
         //If not load progress, show message for everyone
-        _notificationText = format ["<t size='0.6' color='#C1C0BB'>Aggression level changed<br/> <t size='0.5' color='#C1C0BB'><br/>%1", _notificationText];
+        _notificationText = format ["<t size='0.6' color='#C1C0BB'>Initiative level changed<br/> <t size='0.5' color='#C1C0BB'><br/>%1", _notificationText];
         [petros, "income", _notificationText] remoteExec ["A3A_fnc_commsMP", [teamPlayer, civilian]];
     };
 };

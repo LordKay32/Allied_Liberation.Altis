@@ -6,6 +6,7 @@ private ["_positionX", "_sideX", "_dateLimit","_dateLimitNum","_nameDest","_type
 
 waitUntil {sleep 900; (["paros", "airport"] findIf {(sidesX getVariable [_x,sideUnknown] == teamPlayer)} != -1 || battleshipStarted == true)};
 battleshipStarted = true;
+publicVariable "battleshipStarted";
 sleep 120;
 _difficultX = if (aggressionLevelOccupants > 3) then {true} else {false};
 _bonus = if (_difficultX) then {2} else {1};
@@ -155,6 +156,7 @@ _displayTime = [_dateLimit] call A3A_fnc_dateToTimeString;//Converts the time po
 		waitUntil {sleep 1; (_objectives findIf { alive _x } == -1) or (_objectives findIf {_x inArea "battleship_4"} != -1)};
 	
 		battleshipDone = true;
+		publicVariable "battleshipDone";
 	
 		if (_objectives findIf { alive _x } == -1) then {
 			[_taskId, "DES", "SUCCEEDED"] call A3A_fnc_taskSetState;

@@ -4,7 +4,7 @@ if !(introFinished) exitWith {
 
 	while {readyMessage} do {
 		sleep 1;
-		titleText ["<t color='#ffffff' size='5'>READY", "PLAIN", 0.1, true, true];
+		titleText ["<t color='#ffffff' size='5'>Ready", "PLAIN", 0.1, true, true];
 		sleep 1;
 		titleFadeOut 0;
 	};

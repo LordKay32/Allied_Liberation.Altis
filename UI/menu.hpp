@@ -1473,8 +1473,8 @@ class commanderComm: SimpleMenuBig
 			text = Start Amphibious Landing;
 			x = 0.477 * safezoneW + safezoneX;
 			y = 0.29 * safezoneH + safezoneY;
-			tooltip = $STR_antistasi_dialogs_open_add_to_air_tooltip;
-			action = "closeDialog 0; if (introFinished) then {[""Start Mission"", ""You have already landed on Altis""] call A3A_fnc_customHint;} else {""StartMission.sqf"" remoteExec [""execVM"",2]};";
+			tooltip = starts amphibious landing on Altis;
+			action = "closeDialog 0; if (player == theBoss) then {if (introFinished) then {[""Start Mission"", ""You have already landed on Altis""] call A3A_fnc_customHint;} else {""StartMission.sqf"" remoteExec [""execVM"",2]};} else {[""Start Mission"", ""Only Player Commander has access to this function""] call A3A_fnc_customHint;};";
 		};
 
 		class r2Button: SimpleButton

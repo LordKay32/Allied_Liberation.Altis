@@ -12,11 +12,14 @@
  * _PARAM2 (TYPE): - DESCRIPTION.
  */
 
+if (introAttackStarted) exitWith {["Start Mission", "Mission already underway"] call A3A_fnc_customHint;};
+introAttackStarted = true;
+
 //if (isDedicated) then {"introCinematic.sqf" remoteExec ["execVM",-2]} else {"introCinematic.sqf" remoteExec ["execVM",0]};
 
 readyMessage = false;
 //["StartingIntro", true, 5] call BIS_fnc_blackIn;
-["StartingIntro", true, 5] remoteExec ["BIS_fnc_blackIn",-2];
+["StartingIntro", true, 5] remoteExec ["BIS_fnc_blackIn",0];
 publicVariable "readyMessage" ;
 
 "US_AssaultMrk" setMarkerAlpha 0;

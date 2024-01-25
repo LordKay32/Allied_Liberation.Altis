@@ -114,6 +114,9 @@ switch (_undercoverType) do
 				player setCaptive false; player removeEventHandler [_thisEvent, _thisEventHandler];
 			};
 		}];
+		
+		private _voice = speaker player;
+		player setSpeaker "NoVoice";
 
 		while {_reason == ""} do
 		{
@@ -360,6 +363,7 @@ if (captive player) then
 {
     [player, false] remoteExec["setCaptive"];
     player setCaptive false;
+    if (speaker player == "NoVoice") then player setSpeaker _voice;
 };
 
 if !(isNull (objectParent player)) then

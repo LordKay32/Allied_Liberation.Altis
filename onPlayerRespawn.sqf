@@ -38,7 +38,7 @@ if (side group player == teamPlayer) then
 	_moneyX = _oldUnit getVariable ["moneyX",0];
 	_moneyX = round (_moneyX - (20 * tierWar));
 	_eligible = _oldUnit getVariable ["eligible",true];
-	_rankX = _oldUnit getVariable ["rankX","PRIVATE"];
+	_rankX = _oldUnit getVariable ["rankX","LIEUTENANT"];
 	
 	if (_moneyX < 0) then {[0, _moneyX,0] remoteExec ["A3A_fnc_resourcesFIA",2]; _moneyX = 0};
 
@@ -80,7 +80,7 @@ if (side group player == teamPlayer) then
 	if (introFinished) then {
 		_oldUniform = uniform _oldUnit;
 		_newUnit setUnitLoadout [[],[],[],[_oldUniform, []],[],[],"","",[],
-		[(selectRandom unlockedmaps),"","ItemRadio",(selectRandom unlockedCompasses),(selectRandom unlockedwatches),""]];
+		["ItemMap","","ItemRadio","ItemCompass","ItemWatch",""]];
 	} else {
 		["RESPAWN"] call A3A_fnc_introLoadouts;
 	};

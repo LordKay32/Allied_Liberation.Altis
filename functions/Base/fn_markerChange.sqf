@@ -375,7 +375,7 @@ if (_markerX in resourcesX) then
 {[_markerX,_x] spawn A3A_fnc_deleteControls} forEach controlsX;
 if (_winner == teamPlayer) then
 {
-	[] call A3A_fnc_tierCheck;
+	//[] call A3A_fnc_tierCheck;
 
 	//Convert all of the static weapons to teamPlayer, essentially. Make them mannable by AI.
 	//Make the size larger, as rarely does the marker cover the whole outpost.

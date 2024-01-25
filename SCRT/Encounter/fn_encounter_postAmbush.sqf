@@ -4,7 +4,7 @@ private _fileName = "fn_encounter_postAmbush";
 private _vehicles = [];
 private _effects = [];
 
-private _allPlayers = (call BIS_fnc_listPlayers) select {side _x == teamPlayer};
+private _allPlayers = (call BIS_fnc_listPlayers) select {side _x in [teamPlayer, civilian]};
 private _player = selectRandom _allPlayers;
 private _originPosition = position _player;
 
@@ -27,7 +27,7 @@ _crater setDir _dirveh;
 _crater setVectorUp surfaceNormal getPos _crater;
 _vehicles pushBack _crater;
 
-private _side = selectRandom [Occupants, Invaders];
+private _side = Occupants;
 
 private _vehicleClass = nil;
 private _crewClass = nil;
@@ -89,7 +89,7 @@ for "_i" from 1 to 3 do {
     private _crew = [_groupCrew, _crewClass, _roadPosition, [], 0, "NONE"] call A3A_fnc_createUnit;
     [_crew] call A3A_fnc_NATOinit;
 
-    if ((random 100) > 20) then {
+    if ((random 100) > 50) then {
         sleep 0.5;
         _crew setDamage 1;
         private _dir = [_crew,_crashedVehicle] call BIS_fnc_dirTo;
