@@ -44,6 +44,8 @@ while {true} do {
   			} forEach _cargo_veh;  
  		};
 	 	sleep random [20,30,40];
+	 	{_boat animate [_x, 0]} foreach ['shutter_rotate','ramp_rotate'];
+	 	sleep 5;
 		private _timer = 0;
 		while {_timer < 180}	do {
 			sleep 1;

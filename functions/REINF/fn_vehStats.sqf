@@ -75,12 +75,12 @@ if (_this select 0 == "transport") exitWith {
 	_veh = cursorObject;
 	_groupX = hcSelected player select 0;
 	if (vehicle (leader _groupX) == (leader _groupX)) then {
-		if (typeOf _veh in [vehSDKTransPlaneUK, vehSDKTransPlaneUS]) then {
+		if (typeOf _veh in [vehSDKTransPlaneUK, vehSDKTransPlaneUS, vehSDKBoat, vehInfSDKBoat]) then {
 			[_groupX, _veh] spawn {
 			params ["_groupX", "_veh"];
 			units _groupX doMove (getPos _veh);
 			_groupX addVehicle _veh;
-			waitUntil {sleep 1; leader _groupX distance _veh < 25};
+			waitUntil {sleep 1; leader _groupX distance _veh < 30};
 			{
 			_x moveInAny _veh;
 			sleep 0.5;

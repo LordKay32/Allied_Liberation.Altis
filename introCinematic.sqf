@@ -113,7 +113,7 @@ readyMessage = false;
 
 	sleep 3;
 
-	titleText ["<t color='#ffffff' size='2.4'>With her airfields, harbours and radar station, Altis represents a strategic threat, and must be captured.", "PLAIN", 1, true, true];
+	titleText ["<t color='#ffffff' size='2.4'>With its airfields, harbours and radar station, Altis represents a major strategic threat, and must be captured before an invasion of Sicily can proceed.", "PLAIN", 1, true, true];
 
 	sleep 9;
 
@@ -152,10 +152,6 @@ sleep 5;
 _camera cameraEffect ["terminate", "back"]; 
 camDestroy _camera;
 setViewDistance 3200;
-setObjectViewDistance [2000,50];
+setObjectViewDistance [2400,50];
 ["EndingIntro", true, 3] call BIS_fnc_blackIn;
 enableRadio true;
-disableSerialization;
-_layer = ["statisticsX"] call bis_fnc_rscLayer;
-_layer cutRsc ["H8erHUD","PLAIN",0,false];
-[] spawn A3A_fnc_statistics;

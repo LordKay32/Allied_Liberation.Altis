@@ -136,6 +136,12 @@ if (spawner getVariable _markerX != 2) then {
 				_civ addItemToUniform _SDKMagazine;
 				};
 	        _civ setSkill 0.33;
+	        [_civ] spawn {
+	        	params ["_civ"];
+	        	_civ allowDamage false;
+	        	sleep 15;
+	        	_civ allowDamage true;
+	        };
 	        _civilians pushBack _civ;
 	    };
     

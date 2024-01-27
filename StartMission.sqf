@@ -15,12 +15,12 @@
 if (introAttackStarted) exitWith {["Start Mission", "Mission already underway"] call A3A_fnc_customHint;};
 introAttackStarted = true;
 
-//if (isDedicated) then {"introCinematic.sqf" remoteExec ["execVM",-2]} else {"introCinematic.sqf" remoteExec ["execVM",0]};
+if (isDedicated) then {"introCinematic.sqf" remoteExec ["execVM",-2]} else {"introCinematic.sqf" remoteExec ["execVM",0]};
 
-readyMessage = false;
+//readyMessage = false;
 //["StartingIntro", true, 5] call BIS_fnc_blackIn;
-["StartingIntro", true, 5] remoteExec ["BIS_fnc_blackIn",0];
-publicVariable "readyMessage" ;
+//["StartingIntro", true, 5] remoteExec ["BIS_fnc_blackIn",0];
+//publicVariable "readyMessage" ;
 
 "US_AssaultMrk" setMarkerAlpha 0;
 "UK_AssaultMrk" setMarkerAlpha 0;
@@ -128,7 +128,7 @@ theBoss hcSetGroup [_groupUS1];
 			[tankUS, teamPlayer] call A3A_fnc_AIvehinit;
 			_USTankCrew = USCrew;
 			for "_i" from 1 to 4 do {
-				private _unit = [(group _player1), _USTankCrew, getPos player, [], 0, "NONE"] call A3A_fnc_createUnit;
+				private _unit = [(group _player1), _USTankCrew, [0,0,0], [], 0, "NONE"] call A3A_fnc_createUnit;
 			};
 			{
 			_x moveInAny tankUS;
@@ -205,7 +205,7 @@ theBoss hcSetGroup [_groupUS3];
 			_player3 = (allPlayers select {roleDescription _x == "UK Officer (Engineer)"}) select 0;
 			_UKTankCrew = UKCrew;
 			for "_i" from 1 to 4 do {
-				private _unit = [(group _player3), _UKTankCrew, getPos player, [], 0, "NONE"] call A3A_fnc_createUnit;
+				private _unit = [(group _player3), _UKTankCrew, [0,0,0], [], 0, "NONE"] call A3A_fnc_createUnit;
 			};
 			{
 			_x moveInAny tankUK;
