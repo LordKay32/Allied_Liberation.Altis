@@ -9,7 +9,7 @@ while {true} do
 	waitUntil {sleep 15; time >= nextTick};
 	if (isMultiplayer) then {waitUntil {sleep 10; isPlayer theBoss}};
 	
-	_NATOPoints = (({sidesX getVariable [_x,sideUnknown] == Occupants} count (seaports + airportsX + milbases)) / (count (seaports + airportsX + milbases))) * 5;
+	_NATOPoints = (({sidesX getVariable [_x,sideUnknown] == Occupants} count (seaports + airportsX + milbases)) / (count (seaports + airportsX + milbases))) * 10;
 	
 	aggressionOccupants = aggressionOccupants + 5 + (_NATOPoints);
 	//aggressionInvaders = aggressionInvaders + 10;

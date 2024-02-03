@@ -95,7 +95,7 @@ if(_intelType == "Small") then
 				private _intel = (round (random [20, 25, 30]));
     	      	_text = format ["We have gained some intelligence information, %1 intel points addedd.", _intel];
     	      	server setVariable ["intelPoints", _intelPts + _intel, true];
-    	      	[] spawn A3A_fnc_statistics;
+    	      	[] remoteExec ["A3A_fnc_statistics",[teamPlayer,civilian]];
     	    };
         };
         case (TIME_LEFT):
@@ -151,7 +151,7 @@ if(_intelType == "Small") then
 				private _intel = (round (random [20, 25, 30]));
     	      	_text = format ["We have gained some intelligence information, %1 intel points addedd.", _intel];
     	      	server setVariable ["intelPoints", _intelPts + _intel, true];
-    	      	[] spawn A3A_fnc_statistics;
+    	      	[] remoteExec ["A3A_fnc_statistics",[teamPlayer,civilian]];
 			};
         };
         case (TASK):
@@ -160,7 +160,7 @@ if(_intelType == "Small") then
 			private _intel = (round (random [20, 25, 30]));
             _text = format ["We have gained some intelligence information, %1 intel points addedd.", _intel];
             server setVariable ["intelPoints", _intelPts + _intel, true];
-            [] spawn A3A_fnc_statistics;
+            [] remoteExec ["A3A_fnc_statistics",[teamPlayer,civilian]];
         };
     };
 };
@@ -215,7 +215,7 @@ if(_intelType == "Medium") then
 				private _intel = (round (random [40, 50, 60]));
 	            _text = format ["We have gained some intelligence information, %1 intel points added.", _intel];
 	            server setVariable ["intelPoints", _intelPts + _intel, true];
-	            [] spawn A3A_fnc_statistics;
+	            [] remoteExec ["A3A_fnc_statistics",[teamPlayer,civilian]];
 			} else {
 				_text = format ["We have gained intelligence on %1 activities occuring on Altis. A mission has been tasked.", _sideName];
 				[] spawn A3A_fnc_missionRequest;
@@ -242,7 +242,7 @@ if(_intelType == "Large") then
 				private _intel = (round (random [80, 100, 120]));
 	            _text = format ["We have gained some significant intelligence information, %1 intel points added.", _intel];
 	            server setVariable ["intelPoints", _intelPts + _intel, true];
-				[] spawn A3A_fnc_statistics;
+				[] remoteExec ["A3A_fnc_statistics",[teamPlayer,civilian]];
 			} else {
 				_text = format ["We have gained valuable intelligence on %1 activities occuring on Altis. Missions have been tasked.", _sideName];
 				[] spawn A3A_fnc_missionRequest;
