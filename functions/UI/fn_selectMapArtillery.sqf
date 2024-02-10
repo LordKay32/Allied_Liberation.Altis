@@ -38,7 +38,7 @@ if(_mode == "ADD") then {
 			switch (true) do {
 				case (_site in mortarpostsFIA): {
 
-					if ([(getMarkerPos _site), 500] call A3A_fnc_enemyNearCheck) exitWith {
+					if ([(getMarkerPos _site), 300] call A3A_fnc_enemyNearCheck) exitWith {
  						["Artillery Support", "This artillery crew cannot fire while there are enemies nearby."] call A3A_fnc_customHint;
 					};
 
@@ -54,7 +54,7 @@ if(_mode == "ADD") then {
 
 				case (_site in mobilemortarsFIA): {
 
-					if ([(getMarkerPos _site), 500] call A3A_fnc_enemyNearCheck) exitWith {
+					if ([(getMarkerPos _site), 300] call A3A_fnc_enemyNearCheck) exitWith {
  						["Artillery Support", "This mortar crew cannot fire while there are enemies nearby."] call A3A_fnc_customHint;
 					};
 

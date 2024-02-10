@@ -88,6 +88,7 @@ if ("para_" in (_unit getVariable "unitType")) then {
     _skill = _skill + 0.1;
 };
 _unit setSkill _skill;
+_unit setSkill ["spotDistance", (_skill - 0.2)];
 
 //Adjusts squadleaders with improved skill and adds intel action
 if (_type in squadLeaders) then
@@ -110,6 +111,11 @@ if((_unit skill "aimingShake") > aiAccuracyCeiling) then {
 
 if((_unit skill "aimingSpeed") > aiAccuracyCeiling) then {
     _unit setSkill ["aimingSpeed", aiAccuracyCeiling];
+};
+
+if (_type in NATOSniper) then {
+	_unit setskill ["aimingAccuracy", (skill _unit) + 0.2];
+	_unit setskill ["aimingShake", (skill _unit) + 0.2];
 };
 
 //Sets NVGs, lights, lasers, radios and spotting skills for the night

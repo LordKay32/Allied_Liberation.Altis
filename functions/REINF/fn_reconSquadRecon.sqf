@@ -19,8 +19,8 @@
 params ["_group"];
 
 {
-	_x setUnitTrait ["camouflageCoef",0.4];
-	_x setUnitTrait ["audibleCoef",0.4];
+	_x setUnitTrait ["camouflageCoef",0.2];
+	_x setUnitTrait ["audibleCoef",0.2];
 	[_x] spawn {
 		_unit = _this select 0;
 		while {alive _unit} do {	
@@ -36,7 +36,7 @@ while {true} do {
 	private _leader = (leader _group);
 	private _positionX = (getPos _leader);
 
-	private _entities = allGroups select {(side _x isEqualTo Occupants) && ((leader _x) distance _positionX < 300)};
+	private _entities = (_positionX nearEntities 300) select {side _x isEqualTo Occupants};
 
 	private _num = 0;
 	private _markerList = [];

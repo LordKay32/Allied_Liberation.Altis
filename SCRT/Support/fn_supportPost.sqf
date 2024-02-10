@@ -37,7 +37,7 @@ while {(_mrk in supportpostsFIA)} do {
 			{
 				params ["_target", "_caller", "_actionId", "_truckAmmo", "_truckRepair", "_truckFuel", "_truckAmmoGone", "_truckRepairGone", "_truckFuelGone"]; // script
 				
-				if ([_target,200] call A3A_fnc_enemyNearCheck) exitWith {["Service Vehicle", "This vehicle cannot be serviced with enemies nearby."] call A3A_fnc_customHint;};
+				if ([_target,300] call A3A_fnc_enemyNearCheck) exitWith {["Service Vehicle", "This vehicle cannot be serviced with enemies nearby."] call A3A_fnc_customHint;};
 				if (((_this select 6) == true) || ((_this select 7) == true) || ((_this select 8) == true)) exitWith {["Service Vehicle", "One or more of the support vehicles has left the support post."] call A3A_fnc_customHint;}; 
 				if (!alive (_this select 3) || !alive (_this select 4) || !alive (_this select 5)) exitWith {["Service Vehicle", "One or more of the support vehicles has been destroyed."] call A3A_fnc_customHint;}; 
 				

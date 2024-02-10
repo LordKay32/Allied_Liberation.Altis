@@ -18,7 +18,7 @@ private["_vector", "_positionX", "_timer", "_exit", "_entities", "_statics", "_n
 if ((combatMode _group != "GREEN") && (west knowsAbout (leader _group) < 4)) then {_group setCombatMode "GREEN"};
 
 _vector = _reconPos getDir _dirPos;
-_positionX = _reconPos getPos [200, _vector];
+_positionX = _reconPos getPos [300, _vector];
 _timer = 0;
 
 [
@@ -36,7 +36,7 @@ _groupMarker setMarkerText "Recon Team";
 _exit = false;
 
 while {_timer <= 60} do {
-	_entities = (_positionX nearEntities 400) select {side _x isEqualTo Occupants};
+	_entities = (_positionX nearEntities 500) select {side _x isEqualTo Occupants};
 	_num = 0;
 	_markerList = [];
 	{
@@ -70,9 +70,10 @@ if (_exit == true) exitWith {
 	private _wp1 = _group addWaypoint [(getMarkerPos _markerX), 0];
 	_wp1 setWaypointSpeed "FULL";
 		{
+		"LIB_US_M18" createVehicle getPos _x;
 		[_x] spawn {
 			params ["_unit"];
-			sleep 2;
+			sleep 20;
 			while {true} do {	
 				[_unit,_unit] spawn A3A_fnc_chargeWithSmoke;
 				sleep 60;
@@ -89,7 +90,7 @@ if (_exit == true) exitWith {
 	} forEach _markerList;
 };
 while {true} do {
-	_entities = allGroups select {(side _x isEqualTo west) && ((leader _x) distance _positionX < 400)};
+	_entities = allGroups select {(side _x isEqualTo west) && ((leader _x) distance _positionX < 500)};
 	
 	_num = 0;
 	_markerList = [];

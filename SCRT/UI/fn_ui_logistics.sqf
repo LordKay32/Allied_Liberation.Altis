@@ -19,14 +19,14 @@
 params ["_PARAM1", "_PARAM2"];
 private ["_VAR1", "_VAR2"];
 
-	private _resAdd = 500;//0
+	private _resAdd = 1000;//0
 	private _hrSDKAdd = 0;//0
-	private _hrAllAdd = 2;
+	private _hrAllAdd = 4;
 	private _planes = 0;
 	private _vehicles = 2;
-	private _weapons = 0;
-	private _magazines = 0;
-	private _items = 0;
+	private _weapons = 25;
+	private _magazines = 2500;
+	private _items = 50;
 	private _popReb = 0;
 	private _popGov = 0;
 	private _popKilled = 0;
@@ -52,7 +52,7 @@ private ["_VAR1", "_VAR2"];
 		private _radioTowerSide = [_city] call A3A_fnc_getSideRadioTowerInfluence;
 		
 		_resAddCity = _numCiv * (_supportReb / 100);
-		_hrAddCity = _numCiv * (_supportReb / 50000);
+		_hrAddCity = _numCiv * (_supportReb / 75000);
 
 		if (sidesX getVariable [_city,sideUnknown] == _governmentCitySide) then
 		{
@@ -80,7 +80,7 @@ private ["_VAR1", "_VAR2"];
 			_planes = _planes + 1;
 			_weapons = _weapons + 50;
 			_magazines = _magazines + 5000;
-			_items = _items + 50;
+			_items = _items + 100;
 		};
 	} forEach airportsX;
 
@@ -92,7 +92,7 @@ private ["_VAR1", "_VAR2"];
 			_vehicles = _vehicles + 4;
 			_weapons = _weapons + 50;
 			_magazines = _magazines + 5000;
-			_items = _items + 50;
+			_items = _items + 100;
 		};
 	} forEach (seaports - ["seaport_3","seaport_4","seaport_6","seaport_7","seaport_8"]);
 	
@@ -104,7 +104,7 @@ private ["_VAR1", "_VAR2"];
 			_vehicles = _vehicles + 2;
 			_weapons = _weapons + 25;
 			_magazines = _magazines + 2500;
-			_items = _items + 25;
+			_items = _items + 50;
 		};
 	} forEach ["seaport_3","seaport_4","seaport_6","seaport_7","seaport_8"];
 

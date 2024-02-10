@@ -155,7 +155,7 @@ onMapSingleClick "positionDir = _pos";
 
 [
     "Recon Mission",
-    parseText "Select the direction you want the squad to recon (will return information for 600m in this direction)."
+    parseText "Select the direction you want the squad to recon (will return information for 800m in this direction)."
 ] call A3A_fnc_customHint;
 
 waitUntil {sleep 0.5; count positionDir > 0};

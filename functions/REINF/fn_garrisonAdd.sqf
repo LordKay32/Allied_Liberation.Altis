@@ -49,7 +49,7 @@ if (surfaceIsWater _positionX) exitWith {
 	["Garrison", "This Garrison is still updating, please try again in a few seconds.", "FAIL"] call SCRT_fnc_ui_showDynamicTextMessage;
 };
 
-if ([_positionX, 500] call A3A_fnc_enemyNearCheck) exitWith {
+if ([_positionX, 300] call A3A_fnc_enemyNearCheck) exitWith {
 	["Garrison", "You cannot recruit with enemies near the zone.", "FAIL"] call SCRT_fnc_ui_showDynamicTextMessage;
 };
 

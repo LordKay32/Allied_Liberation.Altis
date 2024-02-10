@@ -50,7 +50,7 @@ if (side group _injurer == teamPlayer) then
 if (A3A_hasACEMedical) exitWith {};
 
 if (_damage >= 1 && {_hitPoint != "hithead"} && random 100 > 80) exitWith {_unit removeAllEventHandlers "HandleDamage"};
-if (_damage >= 1 && {_hitPoint == "hithead"} && random 100 > 20) exitWith {_unit removeAllEventHandlers "HandleDamage"};
+if (_damage >= 1 && {_hitPoint == "hithead"} && random 100 > 50) exitWith {_unit removeAllEventHandlers "HandleDamage"};
 
 private _makeUnconscious =
 {

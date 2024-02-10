@@ -41,8 +41,8 @@ if (_part == "" && _damage > 0.1) then
 // Let ACE medical handle the rest (inc return value) if it's running
 if (A3A_hasACEMedical) exitWith {};
 
-if (_damage >= 1 && {_hitPoint != "hithead"} && random 100 > 60) exitWith {_unit removeAllEventHandlers "HandleDamage"};
-if (_damage >= 1 && {_hitPoint == "hithead"} && random 100 > 15) exitWith {_unit removeAllEventHandlers "HandleDamage"};
+if (_damage >= 1 && {_hitPoint != "hithead"} && random 100 > 80) exitWith {_unit removeAllEventHandlers "HandleDamage"};
+if (_damage >= 1 && {_hitPoint == "hithead"} && random 100 > 50) exitWith {_unit removeAllEventHandlers "HandleDamage"};
 
 private _makeUnconscious =
 {

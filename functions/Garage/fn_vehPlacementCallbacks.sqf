@@ -44,7 +44,7 @@ switch (_callbackTarget) do {
 				{
 					[false, "You need to be close to one of your garrisons to be able to retrieve a vehicle from your garage"];
 				};
-				if ([player,500] call A3A_fnc_enemyNearCheck) exitWith
+				if ([player,300] call A3A_fnc_enemyNearCheck) exitWith
 				{
 					[false, "You cannot deploy vehicles with enemies nearby"];
 				};

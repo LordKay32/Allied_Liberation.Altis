@@ -27,7 +27,7 @@ if(_mode == "ADD") then {
                 ] spawn SCRT_fnc_ui_showMessage;
             };
 
-            if ([_positionX, 500] call A3A_fnc_enemyNearCheck) exitWith {
+            if ([_positionX, 300] call A3A_fnc_enemyNearCheck) exitWith {
                 [
                     "FAIL",
                     "Recruit",  

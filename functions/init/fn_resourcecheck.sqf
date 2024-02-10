@@ -9,20 +9,20 @@ while {true} do
 	waitUntil {sleep 15; time >= nextTick};
 	if (isMultiplayer) then {waitUntil {sleep 10; isPlayer theBoss}};
 	
-	_NATOPoints = (({sidesX getVariable [_x,sideUnknown] == Occupants} count (seaports + airportsX + milbases)) / (count (seaports + airportsX + milbases))) * 10;
+	_NATOPoints = (({sidesX getVariable [_x,sideUnknown] == Occupants} count (seaports + airportsX + milbases)) / (count (seaports + airportsX + milbases))) * 5;
 	
 	aggressionOccupants = aggressionOccupants + 5 + (_NATOPoints);
 	//aggressionInvaders = aggressionInvaders + 10;
 
-	private _resAdd = 500;//0
+	private _resAdd = 1000;//0
 	private _hrSDKAdd = 0;//0
-	private _hrAllAdd = 2;
+	private _hrAllAdd = 4;
 	private _planes = 0;
 	private _vehicles = 2;
 	private _civVehicles = 0;
-	private _weapons = 0;
-	private _magazines = 0;
-	private _items = 0;
+	private _weapons = 25;
+	private _magazines = 2500;
+	private _items = 50;
 	private _popReb = 0;
 	private _popGov = 0;
 	private _popKilled = 0;
@@ -116,7 +116,7 @@ while {true} do
 			_planes = _planes + 1;
 			_weapons = _weapons + 50;
 			_magazines = _magazines + 5000;
-			_items = _items + 50;
+			_items = _items + 100;
 		};
 	} forEach airportsX;
 
@@ -128,7 +128,7 @@ while {true} do
 			_vehicles = _vehicles + 4;
 			_weapons = _weapons + 50;
 			_magazines = _magazines + 5000;
-			_items = _items + 50;
+			_items = _items + 100;
 		};
 	} forEach (seaports - ["seaport_3","seaport_4","seaport_6","seaport_7","seaport_8"]);
 	
@@ -140,7 +140,7 @@ while {true} do
 			_vehicles = _vehicles + 2;
 			_weapons = _weapons + 25;
 			_magazines = _magazines + 2500;
-			_items = _items + 25;
+			_items = _items + 50;
 		};
 	} forEach ["seaport_3","seaport_4","seaport_6","seaport_7","seaport_8"];
 
@@ -214,11 +214,11 @@ while {true} do
 
 	private _vehList = [vehSDKLightUnarmed, vehSDKLightArmed, vehSDKTruck, vehSDKTruckClosed, vehSDKRepair, vehSDKFuel, vehSDKAmmo, vehSDKMedical, vehSDKHeavyArmed, vehSDKAPCUK1, vehSDKAPCUS, vehSDKAPCUK2, vehSDKAT, vehSDKTankChur, vehSDKTankCroc, vehSDKTankHow, vehSDKTankUKM4, vehSDKTankUSM5, vehSDKTankUSM4, UKMGStatic, USMGStatic, staticATteamPlayer, staticAAteamPlayer, SDKMortar, SDKArtillery, vehInfSDKBoat, vehSDKBoat, vehSDKAttackBoat];
 	private _planesList = [vehSDKPlaneUK2, vehSDKPlaneUK3, vehSDKPlaneUS1, vehSDKPlaneUS2, vehUKPayloadPlane, vehUSPayloadPlane, vehSDKTransPlaneUK, vehSDKTransPlaneUS];
+
 	private _actual = 0;
 	private _vehMax = 0;
-	private _allWeights = [];
-
 	for "_i" from 1 to _vehicles do {
+	private _allWeights = [];
 	{
 	if (_x in [vehSDKAttackBoat, vehSDKBoat, vehSDKTankChur, vehSDKTankUKM4, SDKArtillery, vehSDKTankCroc, vehSDKTankHow]) then {_vehMax = 2};
 	if (_x in [vehInfSDKBoat, vehSDKHeavyArmed, vehSDKAPCUK1, vehSDKAPCUK2, vehSDKAPCUS, vehSDKTankUSM4, vehSDKTankUSM5, SDKMortar, vehSDKRepair, vehSDKFuel, vehSDKAmmo, vehSDKMedical, vehSDKAT]) then {_vehMax = 4};
@@ -239,6 +239,13 @@ while {true} do
 
 	_selectedVeh = _vehList selectRandomWeighted _allWeights;
 	
+	if (_selectedVeh in [vehSDKAttackBoat, vehSDKBoat, vehSDKTankChur, vehSDKTankUKM4, SDKArtillery, vehSDKTankCroc, vehSDKTankHow]) then {_vehMax = 2};
+	if (_selectedVeh in [vehInfSDKBoat, vehSDKHeavyArmed, vehSDKAPCUK1, vehSDKAPCUK2, vehSDKAPCUS, vehSDKTankUSM4, vehSDKTankUSM5, SDKMortar, vehSDKRepair, vehSDKFuel, vehSDKAmmo, vehSDKMedical, vehSDKAT]) then {_vehMax = 4};
+	if (_selectedVeh in [staticATteamPlayer, staticAAteamPlayer]) then {_vehMax = 6};
+	if (_selectedVeh in [vehSDKLightArmed, vehSDKTruck, vehSDKTruckClosed]) then {_vehMax = 8};
+	if (_selectedVeh in [UKMGStatic, USMGStatic]) then {_vehMax = 12};
+	if (_selectedVeh == vehSDKLightUnarmed) then {_vehMax = 16};
+	
 	_currentNum = server getVariable (_selectedVeh + "_count");
 	_newNum = if (_currentNum < _vehMax) then {_currentNum + 1} else {_currentNum};
 
@@ -247,6 +254,7 @@ while {true} do
 
 	//Plane calc
 	for "_i" from 1 to _planes do {
+	private _allWeights = [];
 	{
 	if (_x in [vehUKPayloadPlane, vehUSPayloadPlane]) then {_vehMax = 1};
 	if (_x in [vehSDKPlaneUK3,vehSDKPlaneUS2,vehSDKTransPlaneUK,vehSDKTransPlaneUS]) then {_vehMax = 2};
@@ -263,6 +271,10 @@ while {true} do
 	} forEach _planesList;
 
 	_selectedVeh = _planesList selectRandomWeighted _allWeights;
+
+	if (_selectedVeh in [vehUKPayloadPlane, vehUSPayloadPlane]) then {_vehMax = 1};
+	if (_selectedVeh in [vehSDKPlaneUK3,vehSDKPlaneUS2,vehSDKTransPlaneUK,vehSDKTransPlaneUS]) then {_vehMax = 2};
+	if (_selectedVeh in [vehSDKPlaneUS1, vehSDKPlaneUK2]) then {_vehMax = 4};
 
 	_currentNum = server getVariable (_selectedVeh + "_count");
 	_newNum = if (_currentNum < _vehMax) then {_currentNum + 1} else {_currentNum};
@@ -304,7 +316,7 @@ while {true} do
 	[WW2Items, _items, 5] call _resupplyGear;
 	//
 	
-	bombRuns = bombRuns + 0.25 * ({sidesX getVariable [_x,sideUnknown] == teamPlayer} count airportsX);
+	bombRuns = bombRuns + 0.5 * ({sidesX getVariable [_x,sideUnknown] == teamPlayer} count airportsX);
 
 	if (bombRuns > 5) then {
 		bombRuns = 5;
@@ -395,7 +407,7 @@ while {true} do
 	//city rebellion mission
 	_potCities = townsX select {(sidesX getVariable [_x,sideUnknown] != teamPlayer) && ([_x] call A3A_fnc_isFrontline) && (spawner getVariable _x == 2)};
 
-	if ((sidesX getVariable ["airport_2", sideUnknown] == teamPlayer) && (sidesX getVariable ["seaport_4", sideUnknown] == teamPlayer) && count _potCities > 0 && (random 100 < 20) && rebelCity == "NONE") then {_rebelCity = selectRandom _potCities; [_rebelCity] spawn A3A_fnc_cityRebel};
+	if ((sidesX getVariable ["airport_2", sideUnknown] == teamPlayer) && (sidesX getVariable ["seaport_4", sideUnknown] == teamPlayer) && count _potCities > 0 && (random 100 < 25) && rebelCity == "NONE") then {_rebelCity = selectRandom _potCities; [_rebelCity] spawn A3A_fnc_cityRebel};
 
 	if (isDedicated) then
 		{

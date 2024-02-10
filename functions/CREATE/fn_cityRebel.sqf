@@ -72,8 +72,8 @@ private _fnc_adjustNearCities = {
 waitUntil {sleep 1;	(spawner getVariable _markerX != 2) || (dateToNumber date > _dateLimitNum)};
 
 if (spawner getVariable _markerX != 2) then {
-
-	for "_i" from 1 to  8 do {
+	sleep 30;
+	for "_i" from 1 to 8 do {
 	    private _groupCivil = createGroup teamPlayer;
 	    _groups pushBack _groupCivil;
 	    private _pos = while {true} do {
@@ -139,7 +139,7 @@ if (spawner getVariable _markerX != 2) then {
 	        [_civ] spawn {
 	        	params ["_civ"];
 	        	_civ allowDamage false;
-	        	sleep 15;
+	        	sleep 30;
 	        	_civ allowDamage true;
 	        };
 	        _civilians pushBack _civ;
@@ -207,7 +207,7 @@ if (spawner getVariable _markerX != 2) then {
 
 if (_exit) exitWith {};
 
-waitUntil {sleep 1;	(sidesX getVariable [_markerX, sideUnknown] == teamPlayer) or ({alive _x} count _civilians < count _civilians / 4)};
+waitUntil {sleep 1;	(sidesX getVariable [_markerX, sideUnknown] == teamPlayer) or ({alive _x} count _civilians < count _civilians / 8)};
 
 if (sidesX getVariable [_markerX, sideUnknown] == teamPlayer) then {
     [_taskId, "invaderPunish", "SUCCEEDED"] call A3A_fnc_taskSetState;

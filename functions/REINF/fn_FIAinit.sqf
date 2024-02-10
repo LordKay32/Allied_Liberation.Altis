@@ -29,6 +29,18 @@ if (_typeX in [UKPilot,USPilot]) then {
 	_unit setSkill 0.9;
 };
 
+if((_unit skill "aimingAccuracy") > aiAccuracyCeiling) then {
+    _unit setSkill ["aimingAccuracy", aiAccuracyCeiling];
+};
+
+if((_unit skill "aimingShake") > aiAccuracyCeiling) then {
+    _unit setSkill ["aimingShake", aiAccuracyCeiling];
+};
+
+if((_unit skill "aimingSpeed") > aiAccuracyCeiling) then {
+    _unit setSkill ["aimingSpeed", aiAccuracyCeiling];
+};
+
 if (_typeX in [SDKSL,UKSL,USSL,paraSL,SASSL]) then {
 	_unit setskill ["courage", (skill _unit) + 0.2];
 	_unit setskill ["commanding", (skill _unit) + 0.2];
