@@ -33,7 +33,7 @@ if (count _statics == 0) exitWith {};
 
 // Find unlocked & unoccupied statics
 private _freeStatics = _statics select {
-    (_x in [USMGStatic, UKMGStatic, staticATteamPlayer, staticAAteamPlayer])
+    (typeOf _x in ([USMGStatic, UKMGStatic, staticATteamPlayer, staticAAteamPlayer, staticATOccupants] + NATOMG + staticAAOccupants))
     and isNil { _x getVariable "lockedForAI" }
     and isNull (gunner _x)
 };

@@ -13,8 +13,8 @@ _groupX setCombatMode "GREEN";
 	[_x,_markerX] spawn A3A_fnc_FIAinitBASES;
 	if ((_x getVariable "unitType") in squadLeaders) then {_x linkItem "ItemRadio"};
 	_x setVariable ["spawner",true,true];
-	_x setUnitTrait ["camouflageCoef",0.4];
-	_x setUnitTrait ["audibleCoef",0.4];
+	_x setUnitTrait ["camouflageCoef",0.1];
+	_x setUnitTrait ["audibleCoef",0.1];
 	[_x] spawn {
 		_unit = _this select 0;
 		while {alive _unit} do {	

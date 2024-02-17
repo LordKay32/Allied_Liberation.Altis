@@ -155,7 +155,7 @@ private _groupSDKStatics = grpNull;
 	
 	if (typeOf _x in [USMGStatic, UKMGStatic, staticATteamPlayer, staticAAteamPlayer]) then {
 		if (isNull _groupStatics) then { _groupStatics = createGroup teamPlayer };
-		if (typeOf _x in [USMGStatic]) then {_index = if (_USindex == -1) then {_UKindex} else {_USindex}};
+		if (typeOf _x in (NATOMG + staticAAOccupants + [USMGStatic, staticATOccupants])) then {_index = if (_USindex == -1) then {_UKindex} else {_USindex}};
 		if (typeOf _x in [UKMGStatic, staticATteamPlayer, staticAAteamPlayer]) then {_index = if (_UKindex == -1) then {_USindex} else {_UKindex}};
 		_unit = [_groupStatics, (_garrison select _index), _positionX, [], 0, "NONE"] call A3A_fnc_createUnit;
 		_unit moveInGunner _x;
@@ -163,7 +163,8 @@ private _groupSDKStatics = grpNull;
 	};
 	[_unit,_markerX] call A3A_fnc_FIAinitBases;
 	_soldiers pushBack _unit;
-	if (typeOf _x in [staticATteamPlayer, staticAAteamPlayer]) then {
+	
+	if (typeOf _x in [staticATteamPlayer, staticAAteamPlayer, staticATOccupants]) then {
 		_USindex = _garrison findIf {_x == USMil};
 		_UKindex = _garrison findIf {_x == UKMil};
 		if ((_USindex == -1) && (_UKindex == -1)) exitWith {};

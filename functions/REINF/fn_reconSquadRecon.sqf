@@ -19,8 +19,8 @@
 params ["_group"];
 
 {
-	_x setUnitTrait ["camouflageCoef",0.2];
-	_x setUnitTrait ["audibleCoef",0.2];
+	_x setUnitTrait ["camouflageCoef",0.1];
+	_x setUnitTrait ["audibleCoef",0.1];
 	[_x] spawn {
 		_unit = _this select 0;
 		while {alive _unit} do {	

@@ -38,28 +38,28 @@ if (_vehInBase) then {
 	["Check Vehicle in Base", "<t color='#00ff00'>This vehicle is inside a base</t>"] call A3A_fnc_customHint;
 } else {
 	["Check Vehicle in Base", "<t color='#ff0000'>This vehicle is NOT inside a base. Check your map to see the nearest base area.</t>"] call A3A_fnc_customHint;
-
-	_friendlyBases = ((airportsX + milbases + outposts + seaports) select {(sidesX getVariable [_x,sideUnknown] == teamPlayer)}) + ["Synd_HQ"];
-
-	private _playerInBase = false;
-	private _markerX = "";
-	
-	{
-	if (player inArea _x) exitWith {_playerInBase = true; _markerX = _x}
-	} forEach _friendlyBases;
-	
-	if (!(_playerInBase)) then {
-		_markerX = [_friendlyBases, player] call BIS_fnc_nearestPosition;
-	};
-
-	_originalColor = markerColor _markerX;
-	_newColor = colorTeamPlayer;
-
-	_markerX setMarkerColorLocal _newColor;
-	_markerX setMarkerAlphaLocal 1;
-
-	sleep 20;
-
-	_markerX setMarkerColorLocal _originalColor;
-	_markerX setMarkerAlphaLocal 0;
 };
+
+_friendlyBases = ((airportsX + milbases + outposts + seaports) select {(sidesX getVariable [_x,sideUnknown] == teamPlayer)}) + ["Synd_HQ"];
+
+private _playerInBase = false;
+private _markerX = "";
+
+{
+if (player inArea _x) exitWith {_playerInBase = true; _markerX = _x}
+} forEach _friendlyBases;
+
+if (!(_playerInBase)) then {
+	_markerX = [_friendlyBases, player] call BIS_fnc_nearestPosition;
+};
+
+_originalColor = markerColor _markerX;
+_newColor = colorTeamPlayer;
+
+_markerX setMarkerColorLocal _newColor;
+_markerX setMarkerAlphaLocal 1;
+
+sleep 20;
+
+_markerX setMarkerColorLocal _originalColor;
+_markerX setMarkerAlphaLocal 0;

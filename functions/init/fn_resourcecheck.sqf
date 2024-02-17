@@ -1,14 +1,15 @@
-private _filename = "fn_citySupportChange";
+private _filename = "fn_resourcecheck";
 if (!isServer) exitWith {
     [1, "Server-only function miscalled", _filename] call A3A_fnc_log;
 };
 
 while {true} do
 {
-	nextTick = time + 1800;
-	waitUntil {sleep 15; time >= nextTick};
-	if (isMultiplayer) then {waitUntil {sleep 10; isPlayer theBoss}};
+	//nextTick = time + 300;
+	nextTick = dateToNumber ([date select 0, date select 1, date select 2, date select 3, (date select 4) + 30]);
+	waitUntil {sleep 15; dateToNumber date >= nextTick};
 	
+	if (isMultiplayer) then {waitUntil {sleep 10; isPlayer theBoss}};
 	_NATOPoints = (({sidesX getVariable [_x,sideUnknown] == Occupants} count (seaports + airportsX + milbases)) / (count (seaports + airportsX + milbases))) * 5;
 	
 	aggressionOccupants = aggressionOccupants + 5 + (_NATOPoints);
@@ -209,7 +210,7 @@ while {true} do
 		};
 	};
 	};
-
+	
 	//Vehicle calc
 
 	private _vehList = [vehSDKLightUnarmed, vehSDKLightArmed, vehSDKTruck, vehSDKTruckClosed, vehSDKRepair, vehSDKFuel, vehSDKAmmo, vehSDKMedical, vehSDKHeavyArmed, vehSDKAPCUK1, vehSDKAPCUS, vehSDKAPCUK2, vehSDKAT, vehSDKTankChur, vehSDKTankCroc, vehSDKTankHow, vehSDKTankUKM4, vehSDKTankUSM5, vehSDKTankUSM4, UKMGStatic, USMGStatic, staticATteamPlayer, staticAAteamPlayer, SDKMortar, SDKArtillery, vehInfSDKBoat, vehSDKBoat, vehSDKAttackBoat];
@@ -282,7 +283,6 @@ while {true} do
 	server setVariable [_selectedVeh + "_count", _newNum, true];
 	};
 	//
-	
 	//Weapons, mags and items calc
 	private _resupplyGear = {
 		params ["_gearType", "_gearNumber", "_divider"];	
@@ -315,7 +315,6 @@ while {true} do
 	[WW2Magazines, _magazines, 10] call _resupplyGear;
 	[WW2Items, _items, 5] call _resupplyGear;
 	//
-	
 	bombRuns = bombRuns + 0.5 * ({sidesX getVariable [_x,sideUnknown] == teamPlayer} count airportsX);
 
 	if (bombRuns > 5) then {

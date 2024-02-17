@@ -279,6 +279,7 @@ class A3A
         class spawnVehicle {};
         class spawnVehicleAtMarker {};
         class spawnVehiclePrecise {};
+        class truckFunctions {};
         class updateCAMark {};
         class vehAvailable {};
         class VEHdespawner {};

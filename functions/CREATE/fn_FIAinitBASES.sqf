@@ -29,18 +29,18 @@ _unit allowFleeing 0;
 _typeX = _unit getVariable "unitType";
 
 if (_typeX in [SDKMedic,SDKMG,SDKMil,SDKSL,SDKEng]) then {
-	_unit setSkill 0.4;
+	_unit setSkill (0.3 + (0.012 * skillFIA));
 };
 if (_typeX in [UKstaticCrewTeamPlayer,UKsniper,UKMil,UKMedic,UKMG,UKExp,UKGL,UKSL,UKEng,UKATman,USstaticCrewTeamPlayer,USUnarmed,USsniper,USMil,USMedic,USMG,USExp,USGL,USSL,USEng,USATman]) then {
-	_unit setSkill 0.66;
+	_unit setSkill 0.6;
 };
 if (_typeX in [parasniper,paraMil,paraMedic,paraMG,paraExp,paraGL,paraSL,paraEng,paraATman]) then {
-	_unit setSkill 0.75;
+	_unit setSkill 0.7;
 };
 if (_typeX in [SASsniper,SASMil,SASMedic,SASMG,SASExp,SASSL,SASATman]) then {
-	_unit setSkill 0.9;
-	_unit setUnitTrait ["camouflageCoef",0.8];
-	_unit setUnitTrait ["audibleCoef",0.8];
+	_unit setSkill 0.8;
+	_unit setUnitTrait ["camouflageCoef",0.4];
+	_unit setUnitTrait ["audibleCoef",0.4];
 };
 if (_typeX in [UKCrew,USCrew]) then {
 	_unit setSkill 0.75;
@@ -49,16 +49,17 @@ if (_typeX in [UKPilot,USPilot]) then {
 	_unit setSkill 0.9;
 };
 
-if((_unit skill "aimingAccuracy") > aiAccuracyCeiling) then {
-    _unit setSkill ["aimingAccuracy", aiAccuracyCeiling];
+//was aiAccuracyCeiling
+if((_unit skill "aimingAccuracy") > 0.5) then {
+    _unit setSkill ["aimingAccuracy", 0.5];
 };
 
-if((_unit skill "aimingShake") > aiAccuracyCeiling) then {
-    _unit setSkill ["aimingShake", aiAccuracyCeiling];
+if((_unit skill "aimingShake") > 0.5) then {
+    _unit setSkill ["aimingShake", 0.5];
 };
 
-if((_unit skill "aimingSpeed") > aiAccuracyCeiling) then {
-    _unit setSkill ["aimingSpeed", aiAccuracyCeiling];
+if((_unit skill "aimingSpeed") > 0.5) then {
+    _unit setSkill ["aimingSpeed", 0.5];
 };
 
 if (_typeX in [SDKSL,UKSL,USSL,paraSL,SASSL]) then {

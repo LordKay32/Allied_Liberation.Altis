@@ -79,7 +79,7 @@ else
 };
 
 //Calculates the skill of the given unit
-private _skill = 0.7;
+private _skill = 0.66;
 if ("sf_" in (_unit getVariable "unitType")) then
 {
     _skill = _skill + 0.2;
@@ -101,16 +101,17 @@ if (_type in squadLeaders) then
     [_unit, "Intel_Small"] remoteExec ["A3A_fnc_flagaction",[teamPlayer,civilian], _unit];
 };
 
-if((_unit skill "aimingAccuracy") > aiAccuracyCeiling) then {
-    _unit setSkill ["aimingAccuracy", aiAccuracyCeiling];
+// was aiAccuracyCeiling
+if((_unit skill "aimingAccuracy") > 0.5) then {
+    _unit setSkill ["aimingAccuracy", 0.5];
 };
 
-if((_unit skill "aimingShake") > aiAccuracyCeiling) then {
-    _unit setSkill ["aimingShake", aiAccuracyCeiling];
+if((_unit skill "aimingShake") > 0.5) then {
+    _unit setSkill ["aimingShake", 0.5];
 };
 
-if((_unit skill "aimingSpeed") > aiAccuracyCeiling) then {
-    _unit setSkill ["aimingSpeed", aiAccuracyCeiling];
+if((_unit skill "aimingSpeed") > 0.5) then {
+    _unit setSkill ["aimingSpeed", 0.5];
 };
 
 if (_type in NATOSniper) then {

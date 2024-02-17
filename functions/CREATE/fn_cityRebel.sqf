@@ -19,6 +19,7 @@ private ["_markerX", "_groups", "_partizans", "_civilians", "_exit"];
 
 _markerX = _this select 0;
 if (sidesX getVariable [_markerX, sideUnknown] == teamPlayer) exitWith {};
+if (_markerX in destroyedSites) exitWith {rebelCity = "NONE"; publicVariable "rebelCity"};
 rebelCity = _markerX;
 publicVariable "rebelCity";
 

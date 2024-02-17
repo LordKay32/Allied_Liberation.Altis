@@ -58,14 +58,16 @@ _veh setVariable ["A3A_sellVehicle_inProgress",true,false];  // Only processed o
 private _typeX = typeOf _veh;
 private _costs = call {
 	if (_typeX in vehFIA) exitWith { ([_typeX] call A3A_fnc_vehiclePrice) / 2 };
-    if (_veh isKindOf "StaticWeapon") exitWith {400};			// in case rebel static is same as enemy statics
-    if (_typeX in vehPoliceCars) exitWith {250};
-    if (_typeX in (arrayCivVeh + civBoats + [civBoat,civCar,civTruck])) exitWith {150};
-    if (_typeX in vehNormal || {_typeX in (vehBoats + vehAmmoTrucks + vehSupplyTrucks)}) exitWith {600};
+	if (_typeX in ["LIB_FlaK_36","LIB_FlaK_36_AA"]) exitWith {2000};
+	if (_typeX in ["LIB_Flakvierling_38",staticATOccupants]) exitWith {1000};
+    if (_veh isKindOf "StaticWeapon") exitWith {500};		
+    if (_typeX in vehPoliceCars) exitWith {500};
+    if (_typeX in (arrayCivVeh + civBoats + [civBoat,civCar,civTruck])) exitWith {250};
+    if (_typeX in vehNormal || {_typeX in (vehBoats + vehAmmoTrucks + vehSupplyTrucks)}) exitWith {750};
     if (_typeX in [vehCSATPatrolHeli, vehNATOPatrolHeli, civHeli]) exitWith {3000};
-    if (_typeX in (vehAPCs + vehTransportAir + vehUAVs)) exitWith {2000};
+    if (_typeX in (vehAPCs + vehTransportAir + vehUAVs)) exitWith {3000};
     if (_typeX in (vehAttackHelis + vehTanks + vehAA + vehMRLS)) exitWith {4000};
-    if (_typeX in (vehNATOPlanes + vehNATOPlanesAA + vehCSATPlanes + vehCSATPlanesAA)) exitWith {6000};
+    if (_typeX in (vehNATOPlanes + vehNATOPlanesAA + vehCSATPlanes + vehCSATPlanesAA)) exitWith {5000};
     0;
 };
 
