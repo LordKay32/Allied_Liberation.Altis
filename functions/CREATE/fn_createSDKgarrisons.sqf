@@ -50,6 +50,7 @@ if (_markerX != "Synd_HQ") then
 		if (_markerX in airportsX + milbases) then {[_veh,"SDKFlag2"] remoteExec ["A3A_fnc_flagaction",0,_veh]};
 		if (_markerX in seaports + outposts) then {[_veh,"SDKFlag2OP"] remoteExec ["A3A_fnc_flagaction",0,_veh]};
 	} else {
+		if (_markerX in destroyedSites) exitWith {};
 		//if (_markerX in [?cities, villages?]) then {
 		private _SDKpos = [];
 		private _dir = 0;
@@ -153,7 +154,7 @@ private _groupSDKStatics = grpNull;
 	if ((_USindex == -1) && (_UKindex == -1)) exitWith {};
 	private _unit = objNull;
 	
-	if (typeOf _x in [USMGStatic, UKMGStatic, staticATteamPlayer, staticAAteamPlayer]) then {
+	if (typeOf _x in ([USMGStatic, UKMGStatic, staticATteamPlayer, staticAAteamPlayer, staticATOccupants] + NATOMG + staticAAOccupants)) then {
 		if (isNull _groupStatics) then { _groupStatics = createGroup teamPlayer };
 		if (typeOf _x in (NATOMG + staticAAOccupants + [USMGStatic, staticATOccupants])) then {_index = if (_USindex == -1) then {_UKindex} else {_USindex}};
 		if (typeOf _x in [UKMGStatic, staticATteamPlayer, staticAAteamPlayer]) then {_index = if (_UKindex == -1) then {_USindex} else {_UKindex}};

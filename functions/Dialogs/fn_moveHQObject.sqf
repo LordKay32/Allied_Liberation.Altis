@@ -6,7 +6,7 @@ _playerX = _this select 1;
 _id = _this select 2;
 _isStatic = (_thingX isKindOf "StaticWeapon");
 
-if (!_isStatic && player != theBoss) exitWith {["Move HQ", "Only Player Commander is allowed to move HQ assets."] call A3A_fnc_customHint;};
+//if (!_isStatic && player != theBoss) exitWith {["Move HQ", "Only Player Commander is allowed to move HQ assets."] call A3A_fnc_customHint;};
 if (!(isNull attachedTo _thingX)) exitWith {["Move HQ", "The asset you want to move is being moved by another player."] call A3A_fnc_customHint;};
 if (vehicle _playerX != _playerX) exitWith {["Move HQ", "You cannot move HQ assets while in a vehicle."] call A3A_fnc_customHint;};
 
@@ -86,7 +86,7 @@ waitUntil {sleep 1;
 };
 
 [_thingX, _playerX, _actionX] call _fnc_placeObject;
-if !(_isStatic) then { _thingX addAction ["Move this asset", A3A_fnc_moveHQObject,nil,0,false,true,"","(_this == theBoss)"] };
+if !(_isStatic) then { _thingX addAction ["Move this asset", A3A_fnc_moveHQObject,nil,0,false,true,"",""] };
 
 if (vehicle _playerX != _playerX) exitWith {["Move HQ", "You cannot move HQ assets while in a vehicle."] call A3A_fnc_customHint;};
 

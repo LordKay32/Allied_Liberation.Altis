@@ -307,6 +307,7 @@ if (_unitType == UKUnarmed) then {
 	_weapsBox addMagazineCargoGlobal ["LIB_32Rnd_9x19_Sten", round random [20, 30, 40]];
 	_weapsBox addMagazineCargoGlobal ["LIB_30Rnd_770x56", round random [10, 15, 20]];
 	_weapsBox addMagazineCargoGlobal ["LIB_MillsBomb", round random [20, 25, 30]];
+	_weapsBox addItemCargoGlobal ["fow_i_fak_uk", round random [20, 30, 40]];
 } else {
 	_weapsBox addWeaponCargoGlobal ["LIB_M1_Garand", round random [8, 12, 16]];
 	_weapsBox addWeaponCargoGlobal ["LIB_M1A1_Thompson", round random [8, 12, 16]];
@@ -314,9 +315,13 @@ if (_unitType == UKUnarmed) then {
 	_weapsBox addMagazineCargoGlobal ["LIB_8Rnd_762x63", round random [20, 30, 40]];
 	_weapsBox addMagazineCargoGlobal ["LIB_30Rnd_45ACP", round random [20, 30, 40]];
 	_weapsBox addMagazineCargoGlobal ["LIB_20Rnd_762x63", round random [10, 15, 20]];
-	_weapsBox addMagazineCargoGlobal ["LIB_US_Mk_2", round random [20, 25, 30]];	
+	_weapsBox addMagazineCargoGlobal ["LIB_US_Mk_2", round random [20, 25, 30]];
+	_weapsBox addItemCargoGlobal ["fow_i_fak_us", round random [20, 30, 40]];	
 };
+_weapsBox addItemCargoGlobal ["Medikit", round random [8, 12, 16]];
+_weapsBox addItemCargoGlobal ["ToolKit", round random [8, 12, 16]];
 _weapsBox setVectorDirAndUp [[0,0,-1], [0,1,0]];
+_weapsBox call A3A_fnc_logistics_addLoadAction;
 _props pushBack _weapsBox;
 
 //////////////////////

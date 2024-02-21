@@ -7,7 +7,7 @@ if ([player,300] call A3A_fnc_enemyNearCheck) exitWith {["Deploy Vehicle", "You 
 private _typeVehX = _this select 0;
 if (_typeVehX == "not_supported") exitWith {["Deploy Vehicle", "The vehicle you requested is not supported in your current modset."] call A3A_fnc_customHint;};
 
-vehiclePurchase_cost = [_typeVehX] call A3A_fnc_vehiclePrice;
+vehiclePurchase_cost = if (_typeVehX == "IG_supplyCrate_F") then {500} else {[_typeVehX] call A3A_fnc_vehiclePrice};
 
 private _resourcesFIA = 0;
 

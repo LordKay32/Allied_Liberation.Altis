@@ -82,6 +82,7 @@ if (_this select 0 == "transport") exitWith {
 			_groupX addVehicle _veh;
 			waitUntil {sleep 1; leader _groupX distance _veh < 30};
 			{
+			[_x] allowGetIn true;
 			_x moveInAny _veh;
 			sleep 0.5;
 			} forEach units _groupX};

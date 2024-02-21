@@ -981,7 +981,7 @@ class radioComm: SimpleMenuBigger
 			x = 0.477 * safezoneW + safezoneX;
 			y = 0.29 * safezoneH + safezoneY;
 			tooltip = $STR_antistasi_dialogs_players_money_tooltip;
-			action = "closeDialog 0; createDialog 'player Command Points';";
+			action = "closeDialog 0; createDialog 'playerMoney';";
 		};
 
 		class r2Button: SimpleButton
@@ -1184,11 +1184,11 @@ class aiManagement: SimpleMenuBigger
 		class r2Button: SimpleButton
 		{
 			idc = -1;
-			text = Recon Mission;
+			text = SAS Undercover Gear;
 			x = 0.477 * safezoneW + safezoneX;
 			y = 0.388 * safezoneH + safezoneY;
-			tooltip = Deploy recon mission from Watchpost;
-			action = "closeDialog 0; [] spawn SCRT_fnc_ui_reconMission;";
+			tooltip = Get SAS members of your squad to don German gear;
+			action = "closeDialog 0; [] call A3A_fnc_AIMilUndercover;";
 		};
 
 		class r3Button: SimpleButton
@@ -1258,7 +1258,7 @@ class transferQuery: SimpleMenuSmall
 	};
 };
 
-class squadActions: SimpleMenuBig 
+class squadActions: SimpleMenuBigger 
 {
 	idd=100;
 	
@@ -1301,7 +1301,7 @@ class squadActions: SimpleMenuBig
 
 		class SITREPButton: SimpleButton
 		{
-			idc = 126;
+			idc = -1;
 			text = "SITREP";
 			x = 0.257187 * safezoneW + safezoneX;
 			y = 0.486 * safezoneH + safezoneY;
@@ -1309,6 +1309,16 @@ class squadActions: SimpleMenuBig
 			action = "[""stats""] call A3A_fnc_vehStats;";
 		};
 		
+		class planeHeightButton: SimpleButton
+		{
+			idc = -1;
+			text = Change aircraft altitude;
+			x = 0.257187 * safezoneW + safezoneX;
+			y = 0.682 * safezoneH + safezoneY;
+			tooltip = Changes altitude of aircraft (250/500/750/1000);
+			action = "[] spawn A3A_fnc_planeHeight";
+		};
+
 		class holdFireButton: SimpleButton
 		{
 			idc = -1;
@@ -1319,14 +1329,14 @@ class squadActions: SimpleMenuBig
 			action = "[""hold""] spawn A3A_fnc_squadActions";
 		};
 
-		class retreatButton: SimpleButton
+		class reconButton: SimpleButton
 		{
 			idc = -1;
-			text = Retreat;
+			text = Recon Mission;
 			x = 0.477 * safezoneW + safezoneX;
 			y = 0.388 * safezoneH + safezoneY;
-			tooltip = Squad will break combat and retreat to the nearest safe zone;
-			action = "[""flee""] spawn A3A_fnc_squadActions";
+			tooltip = Deploy recon mission from Watchpost;
+			action = "closeDialog 0; [] spawn SCRT_fnc_ui_reconMission;";
 		};
 
 		class waypointButton: SimpleButton
@@ -1357,6 +1367,16 @@ class squadActions: SimpleMenuBig
 			y = 0.584 * safezoneH + safezoneY;
 			tooltip = Toggles holding group in place;
 			action = "[""path""] spawn A3A_fnc_squadActions";
+		};
+		
+		class loadVehButton: SimpleButton
+		{
+			idc = -1;
+			text = Retreat;
+			x = 0.477 * safezoneW + safezoneX;
+			y = 0.682 * safezoneH + safezoneY;
+			tooltip = Squad will break combat and retreat to the nearest safe zone;
+			action = "[""flee""] spawn A3A_fnc_squadActions";
 		};
 	};
 };

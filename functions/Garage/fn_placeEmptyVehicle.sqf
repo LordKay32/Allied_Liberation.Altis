@@ -12,6 +12,10 @@ if (_garageVeh isKindOf "Air") then {
 	};
 };
 
+if (_vehicleType == "IG_supplyCrate_F") then {
+	[_garageVeh] remoteExec ["A3A_fnc_truckFunctions", [teamPlayer,civilian], _garageVeh];
+};
+
 _garageVeh setDir _dir;
 //Set position exactly
 

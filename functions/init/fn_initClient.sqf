@@ -494,17 +494,17 @@ true
 
 boxX allowDamage false;
 boxX addAction ["Transfer Vehicle cargo to Arsenal", {[] spawn A3A_fnc_empty;}, 4];
-boxX addAction ["Move this asset", A3A_fnc_moveHQObject,nil,0,false,true,"","(_this == theBoss)", 4];
+boxX addAction ["Move this asset", A3A_fnc_moveHQObject,nil,0,false,true,"","", 4];
 if (A3A_hasACE) then { [boxX, boxX] call ace_common_fnc_claim;};	//Disables ALL Ace Interactions
 flagX allowDamage false;
 flagX addAction ["Deploy US Infantry", {if ([player,300] call A3A_fnc_enemyNearCheck) then {["Deploy Unit", "You cannot deploy units while there are enemies near you."] call A3A_fnc_customHint;} else { createDialog 'USunitRecruit'; }},nil,0,false,true,"","(isPlayer _this) and (_this == _this getVariable ['owner',objNull]) and (side (group _this) == teamPlayer)"];
 flagX addAction ["Travel to rally point", {[] spawn SCRT_fnc_rally_travelToRallyPoint},nil,0,false,true,"","(isPlayer _this) && (_this == _this getVariable ['owner',objNull]) && (side (group _this) == teamPlayer) && (!isNil 'isRallyPointPlaced' && {isRallyPointPlaced})",4];
-flagX addAction ["Move this asset", A3A_fnc_moveHQObject,nil,0,false,true,"","(_this == theBoss)", 4];
+flagX addAction ["Move this asset", A3A_fnc_moveHQObject,nil,0,false,true,"","", 4];
 
 flagUK allowDamage false;
 flagUK addAction ["Deploy UK Infantry", {if ([player,300] call A3A_fnc_enemyNearCheck) then {["Deploy Unit", "You cannot deploy units while there are enemies near you."] call A3A_fnc_customHint;} else { createDialog 'UKunitRecruit'; }},nil,0,false,true,"","(isPlayer _this) and (_this == _this getVariable ['owner',objNull]) and (side (group _this) == teamPlayer)"];
 flagUK addAction ["Travel to rally point", {[] spawn SCRT_fnc_rally_travelToRallyPoint},nil,0,false,true,"","(isPlayer _this) && (_this == _this getVariable ['owner',objNull]) && (side (group _this) == teamPlayer) && (!isNil 'isRallyPointPlaced' && {isRallyPointPlaced})",4];
-flagUK addAction ["Move this asset", A3A_fnc_moveHQObject,nil,0,false,true,"","(_this == theBoss)", 4];
+flagUK addAction ["Move this asset", A3A_fnc_moveHQObject,nil,0,false,true,"","", 4];
 
 //Adds a light to the flag
 private _flagLight = "#lightpoint" createVehicle (getPos flagX);
@@ -520,7 +520,7 @@ vehicleBox addAction ["Heal nearby units", A3A_fnc_vehicleBoxHeal,nil,0,false,tr
 //[vehicleBox] call HR_GRG_fnc_initGarage;
 if (A3A_hasACE) then { [vehicleBox, VehicleBox] call ace_common_fnc_claim;};	//Disables ALL Ace Interactions
 vehicleBox addAction ["Deploy Vehicle", {if ([player,300] call A3A_fnc_enemyNearCheck) then {["Deploy Vehicle", "You cannot deploy vehicles while there are enemies near you."] call A3A_fnc_customHint;} else {["MAIN"] call SCRT_fnc_ui_createBuyVehicleMenu}},nil,0,false,true,"","(isPlayer _this) and (_this == _this getVariable ['owner',objNull]) and (side (group _this) == teamPlayer)", 4];
-vehicleBox addAction ["Move this asset", A3A_fnc_moveHQObject,nil,0,false,true,"","(_this == theBoss)", 4];
+vehicleBox addAction ["Move this asset", A3A_fnc_moveHQObject,nil,0,false,true,"","", 4];
 
 mapX allowDamage false;
 mapX addAction ["Map Info", A3A_fnc_cityinfo,nil,0,false,true,"","(isPlayer _this) and (_this == _this getVariable ['owner',objNull]) && (side (group _this) == teamPlayer)", 4];
@@ -560,7 +560,7 @@ mapX addAction [
 	"(isPlayer _this) and (_this == _this getVariable ['owner',objNull]) and (side (group _this) == teamPlayer) and player != theBoss",
 	4
 ];
-mapX addAction ["Move this asset", A3A_fnc_moveHQObject,nil,0,false,true,"","(_this == theBoss)", 4];
+mapX addAction ["Move this asset", A3A_fnc_moveHQObject,nil,0,false,true,"","", 4];
 mapX addAction ["AI Load Info", { [] remoteExec ["A3A_fnc_AILoadInfo",2];},nil,0,false,true,"","((_this == theBoss) || (serverCommandAvailable ""#logout""))"];
 [] spawn SCRT_fnc_common_setUnitTraits;
 

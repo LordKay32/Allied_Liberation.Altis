@@ -461,6 +461,7 @@ if (_varName in _specialVarLoads) then {
 				_veh setVectorDirAndUp [_xVectorDir,_xVectorUp];
 			};
 			[_veh, teamPlayer] call A3A_fnc_AIVEHinit;
+			if (typeOf _veh == "IG_supplyCrate_F") then {[_veh] remoteExec ["A3A_fnc_truckFunctions", [teamPlayer,civilian], _veh]};
 			if ((_veh isKindOf "StaticWeapon") or (_veh isKindOf "Building")) then {
 				staticsToSave pushBack _veh;
 			}

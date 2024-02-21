@@ -88,9 +88,9 @@ if (_frontierX) then {
 		[_mine] spawn {
 			_mine = _this select 0;
 			while {true} do {
-				waitUntil {sleep 0.5; (_mine nearEntities [["Man","Car"], 5] findIf {side _x == civilian} != -1)};
+				waitUntil {sleep 0.5; (_mine nearEntities [["Man","Car"], 15] findIf {side _x == civilian} != -1)};
 				_mine enableSimulationGlobal false;
-				waitUntil {sleep 0.5; (_mine nearEntities [["Man","Car"], 5] findIf {side _x == civilian} == -1)};
+				waitUntil {sleep 0.5; (_mine nearEntities [["Man","Car"], 15] findIf {side _x == civilian} == -1)};
 				_mine enableSimulationGlobal true;
 			};
 		};			

@@ -201,7 +201,7 @@ switch (_type) do
 		    {
 		        ((side _x == Invaders) || (side _x == Occupants)) &&
 		        {(_x knowsAbout player > 1.4) &&
-		        {_x distance player < 500}}
+		        {_x distance player < 300}}
 		    } count allUnits > 0
 		) exitWith
 		{

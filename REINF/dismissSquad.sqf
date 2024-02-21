@@ -27,7 +27,11 @@ if (_leave) exitWith {["Dismiss Squad", "You cannot dismiss NATO groups."] call 
 	_group = _x;
 	theBoss sideChat format ["%2, I'm sending %1 back to base", _group,name petros];
 	theBoss hcRemoveGroup _x;
-	_pos = getMarkerPos ([(airportsX + milbases + ["Synd_HQ"]) select {sidesX getVariable [_x, sideUnknown] == teamPlayer}, (getPos (leader _group))] call BIS_fnc_nearestPosition);
+	_pos = if ((vehicle leader _x) isKindOf "boat") then {
+		getMarkerPos ([(seaports) select {sidesX getVariable [_x, sideUnknown] == teamPlayer}, (getPos (leader _group))] call BIS_fnc_nearestPosition);
+	} else {
+		getMarkerPos ([(airportsX + milbases + ["Synd_HQ"]) select {sidesX getVariable [_x, sideUnknown] == teamPlayer}, (getPos (leader _group))] call BIS_fnc_nearestPosition);
+	};
 	_wp = _group addWaypoint [_pos, 0];
 	_wp setWaypointType "MOVE";
 	_wp setWaypointCompletionRadius 50;

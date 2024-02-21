@@ -189,7 +189,7 @@ private _friendlySites = ["Synd_HQ"] + (airportsX + milbases + outposts + seapor
 	_veh = _x;
 	_typeVehX = typeOf _veh;
 	if ((_friendlySites findIf {_veh inArea _x} != -1) and !(_veh in staticsToSave) and !(_typeVehX in ["ACE_SandbagObject","Land_FoodSacks_01_cargo_brown_F","Land_Pallet_F", "Land_DeskChair_01_black_F", "Land_PortableDesk_01_black_F","Land_Laptop_02_unfolded_F","Land_Ammobox_rounds_F","Land_Cargo20_military_green_F"])) then {
-		if (((not (_veh isKindOf "StaticWeapon")) and (not (_veh isKindOf "ReammoBox")) and (not (_veh isKindOf "ReammoBox_F")) and (not(_veh isKindOf "Building"))) and (not (_typeVehX == civSupplyVehicle)) and (count attachedObjects _veh == 0) and (alive _veh) and ({(alive _x) and (!isPlayer _x)} count crew _veh == 0) and (not(_typeVehX == "WeaponHolderSimulated"))) then {
+		if (((not (_veh isKindOf "StaticWeapon")) and (not (_veh isKindOf "ReammoBox")) and (not ((_veh isKindOf "ReammoBox_F") and (not (typeOf _veh == "IG_supplyCrate_F")))) and (not(_veh isKindOf "Building"))) and (not (_typeVehX == civSupplyVehicle)) and (count attachedObjects _veh == 0) and (alive _veh) and ({(alive _x) and (!isPlayer _x)} count crew _veh == 0) and (not(_typeVehX == "WeaponHolderSimulated"))) then {
 			_posVeh = getPosWorld _veh;
 			_xVectorUp = vectorUp _veh;
 			_xVectorDir = vectorDir _veh;

@@ -43,7 +43,7 @@ if (sidesX getVariable [_markerX,sideUnknown] == teamPlayer) then {
 		case(_markerX in citiesX): {
 			if (_markerX in destroyedSites) then {
 				_mrkD setMarkerType "plp_mark_civ_ruins";
-				_mrkD setMarkerText format ["%2 Ruins%1",_textX,_markerX];
+				_textX = format ["%2 Ruins%1",_textX,_markerX];
 			} else {
 				_mrkD setMarkerText "";
 			};

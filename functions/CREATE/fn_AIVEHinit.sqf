@@ -41,7 +41,7 @@ _veh call A3A_fnc_vehicleTextureSync;
 private _typeX = typeOf _veh;
 
 //JB - add service vehicle functions
-[_veh] remoteExec ["A3A_fnc_truckFunctions"];
+[_veh] remoteExec ["A3A_fnc_truckFunctions", [teamPlayer,civilian], _veh];
 
 if (_side != teamPlayer) then {
 	//JB - unflip enemy Ai Vehs
@@ -223,6 +223,13 @@ if (_typeX in vehNormal || {_typeX in (vehAttack + vehBoats + vehAA)}) then {
 			};
 		};
 
+		if (_typeX in vehNATOTransportPlanes) then {_veh addEventHandler ["HandleDamage", {(_this select 2)*1.02}]};
+		if (_typeX == "sab_nl_ptboat") then {_veh addEventHandler ["HandleDamage", {(_this select 2)*2}]};
+		
+		if (_typeX in [vehSDKTransPlaneUK,vehSDKTransPlaneUS]) then {
+				[_veh, "paradrop"] remoteExec ["A3A_fnc_flagAction", [teamPlayer,civilian]];
+    		};
+		
 		_veh addEventHandler ["GetIn",
 		{
 			_veh = _this select 0;
@@ -232,7 +239,7 @@ if (_typeX in vehNormal || {_typeX in (vehAttack + vehBoats + vehAA)}) then {
 				moveOut _unit;
 				["General", "You are not trained to operate German aircraft"] call A3A_fnc_customHint;
 			};
-			if (!((_unit getVariable "unitType") in [USPilot,UKPilot]) and (!isPlayer _unit) and (_unit getVariable ["spawner",false]) and (side group _unit == teamPlayer)) then
+			if (!((_unit getVariable "unitType") in [USPilot,UKPilot]) and (!isPlayer _unit) and (_unit getVariable ["spawner",false]) and (side group _unit == teamPlayer)and !(_role == "cargo")) then
 			{
 				moveOut _unit;
 				["General", "Only pilots can crew an aircraft"] call A3A_fnc_customHint;

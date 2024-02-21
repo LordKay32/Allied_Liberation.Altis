@@ -15,12 +15,13 @@
  * nothing
  */
 
-	
+private _units = (units group player) - [player];
 
-	private _unit = _this select 0;
+{
+	private _unit = _x;
 	private _unitType = _unit getVariable "unitType";
 	
-	if (_unitType in SDKTroops) exitWith {_exit = false; _exit};
+	if !(_unitType in SASTroops) then {continue};
 	
 	private _availableUniforms = [];
 	private _availableVests = [];
@@ -37,7 +38,6 @@
 	private _weapon = "";	
 	private _launcher = "";
 	private _backPack = "";
-	private _exit = false;
 
 	{
 	_number = [jna_dataList select (_x call jn_fnc_arsenal_itemType), _x] call jn_fnc_arsenal_itemCount;
@@ -95,10 +95,10 @@
 	if ((_number > 0) && (_ammoCount > 1)) then {_availableLaunchers pushBack _x};
 	} forEach WehrmachtLaunchers; 
 
-	if (count _availableUniforms == 0) exitWith {["Undercover", "There are no more uniforms available for your unit to go undercover."] call A3A_fnc_customHint; _exit == true};
-	if (count _availableVests == 0) exitWith {["Undercover", "There are no more vests available for your unit to go undercover."] call A3A_fnc_customHint; _exit == true};
-	if (count _availableHelmets == 0) exitWith {["Undercover", "There are no more helmets available for your unit to go undercover."] call A3A_fnc_customHint; _exit == true};
-	if (count _availableWeapons == 0) exitWith {["Undercover", "There are no more weapons available for your unit to go undercover."] call A3A_fnc_customHint; _exit == true};
+	if (count _availableUniforms == 0) exitWith {["Undercover", "There are no more uniforms available for your unit to go undercover."] call A3A_fnc_customHint};
+	if (count _availableVests == 0) exitWith {["Undercover", "There are no more vests available for your unit to go undercover."] call A3A_fnc_customHint};
+	if (count _availableHelmets == 0) exitWith {["Undercover", "There are no more helmets available for your unit to go undercover."] call A3A_fnc_customHint};
+	if (count _availableWeapons == 0) exitWith {["Undercover", "There are no more weapons available for your unit to go undercover."] call A3A_fnc_customHint};
 
 	private _vest = "";
 
@@ -209,6 +209,4 @@
 	_loadout = getUnitLoadout _unit;
 	_fullUnitGear = _loadout call A3A_fnc_reorgLoadoutUnit;
 	{ [_x select 0 call jn_fnc_arsenal_itemType, _x select 0, _x select 1] call jn_fnc_arsenal_removeItem } forEach _fullUnitGear;
-	
-	_exit;
-
+} forEach _units;

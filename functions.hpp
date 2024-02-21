@@ -184,6 +184,7 @@ class A3A
         class occupantInvaderUnitKilledEH {};
         class paradrop {};
         class partizanAttack {};
+        class planeHeight {};
         class rearmCall {};
         class recallGroup {};
         class smokeCoverAuto {};

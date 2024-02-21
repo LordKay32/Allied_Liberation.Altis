@@ -18,7 +18,7 @@ while {alive _dog} do
 		_dog moveTo getPosATL leader _groupX;
 		{
 		_spotted = _x;
-		if ((captive _spotted) and (vehicle _spotted == _spotted)) then
+		if ((captive _spotted) and (vehicle _spotted == _spotted) and !(uniform _spotted in wehrmachtUniforms)) then
 			{
 			[_spotted,false] remoteExec ["setCaptive",0,_spotted]; _spotted setCaptive false;
 			};

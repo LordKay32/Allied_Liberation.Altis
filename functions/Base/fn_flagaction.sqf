@@ -32,7 +32,7 @@ switch _typeX do
             [] spawn SCRT_fnc_misc_orbitingCamera;
 		    [] call SCRT_fnc_ui_populateHqMenu;
         },nil,0,false,true,"","(isPlayer _this) and (_this == theBoss) and (vehicle _this == _this) and (petros == leader group petros)", 4];
-        petros addAction ["Move this asset", A3A_fnc_moveHQObject,nil,0,false,true,"","(_this == theBoss)"];
+        petros addAction ["Move this asset", A3A_fnc_moveHQObject,nil,0,false,true,"",""];
     };
     case "truckX":
     {
@@ -138,14 +138,14 @@ switch _typeX do
     {
         removeAllActions _flag;
         _flag addaction [ 
-        	(format ["<img image='%1' size='1' color='#ffffff'/>", "\A3\ui_f\data\GUI\Rsc\RscDisplayArsenal\spaceArsenal_ca.paa"] + format["<t size='1'> %1</t>", (localize "STR_A3_Arsenal")]), 
-        	JN_fnc_arsenal_handleAction, 
+        	(format ["<img image='%1' size='1' color='#ffffff'/>", "\A3\ui_f\data\GUI\Rsc\RscDisplayArsenal\spaceArsenal_ca.paa"] + format["<t size='1'> %1</t>", "Deploy arsenal box (500CP)"]), 
+        	{["IG_supplyCrate_F"] spawn A3A_fnc_addFIAveh;}, 
         	[], 
         	6, 
         	true, 
         	false, 
         	"", 
-        	"alive _target && {_target distance _this < 5} && {vehicle player == player}" 
+        	"alive _target && {_target distance _this < 5} && {vehicle player == player} && count (nearestObjects [_target, ['IG_supplyCrate_F'], 500]) == 0;" 
     	];
         _flag addAction ["Deploy US Troops", {if ([player,300] call A3A_fnc_enemyNearCheck) then {["Unit Recruitment", "You cannot recruit units while there are enemies near you."] call A3A_fnc_customHint;} else { createDialog 'USunitRecruit'; }},nil,0,false,true,"","(isPlayer _this) and (_this == _this getVariable ['owner',objNull])",4];
 		_flag addAction ["Deploy Vehicle", {if ([player,300] call A3A_fnc_enemyNearCheck) then {["Deploy Vehicle", "You cannot deploy vehicles while there are enemies near you."] call A3A_fnc_customHint;} else {["AIRPORT"] call SCRT_fnc_ui_createBuyVehicleMenu}},nil,0,false,true,"","(isPlayer _this) and (_this == _this getVariable ['owner',objNull])",4];
@@ -155,7 +155,7 @@ switch _typeX do
     {
         removeAllActions _flag;
         _flag addaction [ 
-        	(format ["<img image='%1' size='1' color='#ffffff'/>", "\A3\ui_f\data\GUI\Rsc\RscDisplayArsenal\spaceArsenal_ca.paa"] + format["<t size='1'> %1</t>", (localize "STR_A3_Arsenal")]), 
+        	(format ["<img image='%1' size='1' color='#ffffff'/>", "\A3\ui_f\data\GUI\Rsc\RscDisplayArsenal\spaceArsenal_ca.paa"] + format["<t size='1'> %1</t>", "Deploy arsenal box (500CP)"]), 
         	JN_fnc_arsenal_handleAction, 
         	[], 
         	6, 
@@ -238,7 +238,7 @@ switch _typeX do
     };
     case "static":
     {
-        private _cond = "(_target getVariable ['ownerSide', teamPlayer] == teamPlayer) and (isNull attachedTo _target) and (_this call A3A_fnc_isMember) and ";
+        private _cond = "(_target getVariable ['ownerSide', teamPlayer] == teamPlayer) and (isNull attachedTo _target) and (_this call A3A_fnc_isMember) and (alive _target) and ";
         _flag addAction ["Allow AIs to use this weapon", A3A_fnc_unlockStatic, nil, 1, false, false, "", _cond+"!isNil {_target getVariable 'lockedForAI'}", 4];
         _flag addAction ["Prevent AIs using this weapon", A3A_fnc_lockStatic, nil, 1, false, false, "", _cond+"isNil {_target getVariable 'lockedForAI'}", 4];
         _flag addAction ["Kick AI off this weapon", A3A_fnc_lockStatic, nil, 1, true, false, "", _cond+"isNil {_target getVariable 'lockedForAI' and {!(isNull gunner _target) and {!(isPlayer gunner _target)}}}", 4];
@@ -251,4 +251,39 @@ switch _typeX do
         _flag addAction ["Recruit Partisan Squad", {if ([player,300] call A3A_fnc_enemyNearCheck) then {["Recruit Partisan Squad", "You cannot recruit a squad while there are enemies near you."] call A3A_fnc_customHint;} else { [groupsSDKSquad] spawn A3A_fnc_addFIAsquadHC; }},nil,0,false,true,"","(isPlayer _this) and (_this == _this getVariable ['owner',objNull]) and (side (group _this) == teamPlayer) and (_this == theBoss)"];
         _flag addAction ["Buy Civilian Vehicle", {if ([player,300] call A3A_fnc_enemyNearCheck) then {["Buy Civilian Vehicle", "You cannot buy vehicles while there are enemies near you."] call A3A_fnc_customHint;} else {["SDK"] call SCRT_fnc_ui_createBuyVehicleMenu}},nil,0,false,true,"","(isPlayer _this) and (_this == _this getVariable ['owner',objNull])",4];
 	};
+	case "paradrop":
+	{
+				_flag addaction [ 
+       			"In Line Paradrop Squad", 
+        		{
+    			params ["_target", "_caller", "_actionId", "_arguments"];
+    			actionIDforGetOut = _actionId;
+		   		_dropUnits = units group _caller;
+		   		{
+		   			if (_x getVariable "unitType" in (UKTroops + USTroops + SDKTroops)) then {continue};
+		   			_x allowDamage false;
+		   			[_target,_x] spawn LIB_fnc_deployStaticLine;
+		   			sleep 0.5;
+		   			[_x] spawn {		
+	 				   	_unit = _this select 0;
+				   		waitUntil {sleep 1; isTouchingGround _unit};
+				   		sleep 2;
+				   		_unit allowDamage true;
+				   	};
+		   		
+		   		} forEach _dropUnits;
+		   		_target removeAction actionIDforGetOut;
+    			}, 
+    		    [], 
+    		    6, 
+    		    false, 
+    		    true, 
+    		    "", 
+    		    "(isPlayer _this) && (('cargo' in (assignedVehicleRole _this)) || ('turret' in (assignedVehicleRole _this))) && (getPos _target select 2) > 150;"
+    			];
+    	_flag addEventHandler ["GetOut", {
+		params ["_vehicle", "_role", "_unit", "_turret", "_isEject"];
+		_vehicle removeAction actionIDforGetOut;
+		}];
+    };
 };

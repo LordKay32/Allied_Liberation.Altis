@@ -1,5 +1,5 @@
 private _positionOrigin = getMarkerPos supportMarkerOrigin;
-private _flareCount = round random [4,5,7];
+private _flareCount = round random [9,12,15];
 
 if(!isNil "petros" && {alive petros}) then {
     petros sideChat "Starting flare barrage. ETA 30 seconds.";
@@ -25,7 +25,7 @@ for "_i" from 1 to _flareCount do {
     
     playSound3D [(selectRandom flareSounds), _flare, false,  getPosASL _flare, 1.5, 1, 450, 0];
 
-    sleep 20;
+    sleep 22;
 };
 
 isSupportMarkerPlacingLocked = false;

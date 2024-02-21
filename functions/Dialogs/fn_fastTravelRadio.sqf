@@ -1,7 +1,7 @@
 private ["_roads","_pos","_positionX","_groupX"];
 
 private _checkX = false;
-private _distanceX = 250;
+private _distanceX = 100;
 
 private _markersX = markersX + [respawnTeamPlayer];
 

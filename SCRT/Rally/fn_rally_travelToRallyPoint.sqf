@@ -66,4 +66,3 @@ if (_remainingTravels < 1) then {
 };
 
 sleep 5;
-{_x allowDamage true} forEach units _groupX;

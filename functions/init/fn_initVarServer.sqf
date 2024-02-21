@@ -371,7 +371,7 @@ WehrmachtWeapons = [
 	"LIB_FG42G",
 	"LIB_G43"
 ];
-publicVariable "battleshipDone";
+publicVariable "WehrmachtWeapons";
 
 WehrmachtLaunchers = [
 	"LIB_RPzB",
@@ -1179,6 +1179,9 @@ DECLARE_SERVER_VAR(A3A_vehClassToCrew,_vehClassToCrew);
 {server setVariable [_x + "_count", 2, true]} forEach [civCar,vehSDKLightArmed,vehSDKTruck,vehSDKTruckClosed,vehSDKAPCUS,vehSDKTankUSM4,vehSDKTankUSM5,vehInfSDKBoat];
 {server setVariable [_x + "_count", 4, true]} forEach [UKMGStatic,USMGStatic];
 {server setVariable [_x + "_count", 6, true]} forEach [vehSDKBike,vehSDKLightUnarmed];
+
+//WW2 arsenal boxes
+server setVariable ["IG_supplyCrate_F" + "_count", 1000, true];
 
 ///////////////////////////
 //     MOD TEMPLATES    ///

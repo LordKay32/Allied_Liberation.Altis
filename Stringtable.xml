@@ -251,8 +251,8 @@
         <Chinesesimp>使用该选项将你面前的玩家从会员列表中移除。</Chinesesimp>
       </Key>
       <Key ID="STR_antistasi_dialogs_donate_faction_title">
-        <Original>Donate 100 Money to Faction</Original>
-        <English>Donate 100 Money to Faction</English>
+        <Original>Donate 100 CP to Faction</Original>
+        <English>Donate 100 CP to Faction</English>
         <French>Faites un don de 100 argent à Faction</French>
         <Russian>Передать 100 денег фракции</Russian>
         <German>Spende 100 Geld an die Fraktion</German>
@@ -269,8 +269,8 @@
         <Chinesesimp>将你的个人资产捐献给反抗阵营。这将会提高你在叛军中的声望。</Chinesesimp>
       </Key>
       <Key ID="STR_antistasi_dialogs_donate_player_title">
-        <Original>Donate 100 command points to player</Original>
-        <English>Donate 100 command points to player</English>
+        <Original>Donate 100 CP to player</Original>
+        <English>Donate 100 CP to player</English>
         <French>Donner 100 d'argent au joueur</French>
         <Russian>Передать 100 денег игроку</Russian>
         <German>Spende 100 Geld an den Spieler</German>

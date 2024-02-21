@@ -7,8 +7,8 @@ if (!isPlayer _LeaderX) exitWith {};
 if (!captive _LeaderX) exitWith {};
 if (captive _unit) exitWith {};
 
-private _failed = [_unit] call A3A_fnc_AIMilUndercover;
-if (_failed) exitWith {};
+//private _failed = [_unit] call A3A_fnc_AIMilUndercover;
+//if (_failed) exitWith {};
 
 [_unit,true] remoteExec ["setCaptive",0,_unit];
 _unit setCaptive true;

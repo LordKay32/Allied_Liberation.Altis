@@ -22,13 +22,11 @@ deleteMarker _marker;
 
 if (typeOf _veh in ["LIB_C47_Skytrain","LIB_C47_RAF"]) then {
 	{ 
-	[_veh,_x] spawn LIB_fnc_deployStaticLine; 
-	sleep 0.3;
+	_x allowDamage false;
+	[_veh,_x] remoteExec ["LIB_fnc_deployStaticLine", _veh]; 
+	sleep 0.33;
 	[_x] spawn {		
     	_unit = _this select 0;
-   		waitUntil {sleep 1; (getPos _unit) select 2 < 50};
-   		waitUntil {sleep 0.1; (getPos _unit) select 2 < 20};
-   		_unit allowDamage false;
    		waitUntil {sleep 1; isTouchingGround _unit};
    		sleep 2;
    		_unit allowDamage true;

@@ -21,10 +21,10 @@ if (_capturing) then {
 	prisonersCaptured = prisonersCaptured + 1;
 	publicVariable "prisonersCaptured";
 	while {alive _unit} do {
-		sleep 30;
-		private _friendly = ((nearestObjects [_unit, ["man", "Car", "Tank"], 1500]) select {side _x == teamPlayer}) select 1;
+		sleep 15;
+		private _friendly = ((nearestObjects [_unit, ["man", "Car", "Tank"], 1000]) select {side _x == teamPlayer && _x != _unit}) select 0;
 		private _distance = _unit distance _friendly;
-		if ((random 100 < (_distance/5)) && (vehicle _unit == _unit)) exitWith {
+		if ((random 100 < ((_distance/100)^2) || _distance > 500) && (vehicle _unit == _unit)) exitWith {
 			_group = createGroup _sideX;
 			[_unit] joinSilent _group;
 			_unit setCaptive false;
@@ -36,15 +36,20 @@ if (_capturing) then {
 			[_unit, _sideX] remoteExec ["A3A_fnc_fleeToSide", _unit];
 			_playerX globalChat localize "A prisoner is escaping!";
 		};
-		if (_unit distance flagX < 100) exitWith {
+	
+		private _friendlyBases = (milbases + airportsX + ["Synd_HQ"]) select {sidesX getVariable [_x, sideUnknown] == teamPlayer};
+		private _nearestBase = [_friendlyBases, _unit] call BIS_fnc_nearestPosition;
+		private _basePos = getMarkerPos _nearestBase;
+	
+		if (_unit distance _basePos < 100) exitWith {
 			sleep 10;
 			_group = createGroup teamPlayer;
 			[_unit] joinSilent _group;
 			_unit setCombatBehaviour "CARELESS";
 			_group setSpeedMode "LIMITED";
 			if (vehicle _unit != _unit) then {unassignVehicle _unit; [_unit] orderGetin false;};
-			_unit doMove (getPos flagX);
-			waitUntil {sleep 0.5; _unit distance flagX < 50};
+			_unit doMove _basePos;
+			waitUntil {sleep 1; _unit distance _basePos < 50};
 			_unit playmove "AmovPercMstpSnonWnonDnon_AmovPsitMstpSnonWnonDnon_ground"; 
         	_unit disableAI "ANIM"; 
         	_unit disableAI "MOVE"; 

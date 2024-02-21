@@ -17,7 +17,7 @@ if (_this select 0 == "flee") exitWith {
 if (_this select 0 == "waypoint") exitWith {
 	if (count hcSelected player > 1) exitWith {["Squad Actions", "Select only one group on the HC bar."] call A3A_fnc_customHint;};
 	private _groupX = hcSelected player select 0;
-	if !(typeOf assignedVehicle (leader _groupX) in ["LIB_C47_Skytrain","LIB_C47_RAF","LIB_LCM3_Armed"]) exitWith {["Squad Actions", "Select a transport plane group or landing craft group."] call A3A_fnc_customHint;};
+	if !(typeOf assignedVehicle (leader _groupX) in ["LIB_C47_Skytrain","LIB_C47_RAF","LIB_LCM3_Armed","LIB_LCVP"]) exitWith {["Squad Actions", "Select a transport plane group or landing craft group."] call A3A_fnc_customHint;};
 	
 	private _paras = [];
 	private _nonParas = [];
@@ -31,14 +31,15 @@ if (_this select 0 == "waypoint") exitWith {
 		} else {
 			_nonParas pushBack _x;
 		};
+		if (isPlayer _x) then {_paras pushBackUnique _x};
 		} forEach _unitsInCargo;
 
 		_numNonParas = count _nonParas;
 		
 		_numWPs = count	(waypoints _groupX);	
 
-		["Paradrop", "Select the paradrop waypoint, use Ctrl LMB to designate."] call A3A_fnc_customHint;
-		_veh flyInHeightASL [400, 400, 400];
+		["Paradrop", "Select the paradrop waypoint, use Right Ctrl + LMB to designate."] call A3A_fnc_customHint;
+		_veh flyInHeight 250;
 		waitUntil {sleep 0.5; ((count (waypoints _groupX) > _numWPs) or (not visiblemap))};
 
 		if (!visibleMap) exitWith {["Paradrop", "Paradrop canceled."] call A3A_fnc_customHint;};

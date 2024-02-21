@@ -9,11 +9,12 @@ if (count _this > 0) then
 	}
 else
 	{
-	_trucksX = nearestObjects [boxX, ["Helicopter","Plane","LandVehicle","ReammoBox_F"], 20];
+	_boxX = nearestObject [player, "IG_supplyCrate_F"];
+	_trucksX = nearestObjects [_boxX, ["Helicopter","Plane","LandVehicle","ReammoBox_F"], 20];
 	_trucksX = _trucksX select {not (_x isKindOf "StaticWeapon")};
 	// Prevent trolling by hiding small UAVs near the arsenal
 	_trucksX = _trucksX select {getNumber (configFile >> "CfgVehicles" >> (typeof _x) >> "isUAV") == 0};
-	_trucksX = _trucksX - [boxX,vehicleBox];
+	_trucksX = _trucksX - [_boxX,vehicleBox];
 	if (count _trucksX < 1) then {_truckX = vehicleBox} else {_truckX = _trucksX select 0};
 	};
 

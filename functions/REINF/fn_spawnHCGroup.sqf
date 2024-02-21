@@ -84,13 +84,29 @@ if (_idFormat == "SAS-Rcn-") then {
 	[_group] spawn A3A_fnc_reconSquadRecon;
 };
 
-if (_idFormat in ["Nav.Inf-","RAF.Tran-","USAAF.Tran-"]) then {
+if (_idFormat == "Nav.Inf-") then {
 		{
 		_x disableAI "AUTOCOMBAT";
 		_x disableAI "AUTOTARGET";
 		_x disableAI "TARGET";
 		_x setBehaviour "CARELESS";
 	} forEach _units;
+};
+
+if (_idFormat in ["RAF.Tran-","USAAF.Tran-"]) then {
+		{
+		_x disableAI "AUTOCOMBAT";
+		_x disableAI "AUTOTARGET";
+		_x disableAI "TARGET";
+		_x setBehaviour "CARELESS";
+	} forEach _units;
+	[_group,_vehicle] spawn {
+		params ["_group","_vehicle"];
+		waitUntil {sleep 1; waypointPosition [_group, 0] distance [0,0,0] > 250};
+		if !(isEngineOn _vehicle) then {units _group doFollow leader _group};
+		sleep 1;
+		if !(isEngineOn _vehicle) then {driver _vehicle doMove waypointPosition [_group, 0]};
+	}
 };
 
 petros directSay "SentGenReinforcementsArrived";

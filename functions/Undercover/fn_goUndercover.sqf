@@ -40,6 +40,7 @@ private _fileName = "fn_goUndercover";
 
 private _undercoverType = "";
 private _reason = "";
+private _voice = speaker player;
 
 if (
 	uniform player in wehrmachtUniforms &&
@@ -115,7 +116,6 @@ switch (_undercoverType) do
 			};
 		}];
 		
-		private _voice = speaker player;
 		player setSpeaker "NoVoice";
 
 		while {_reason == ""} do
@@ -363,7 +363,7 @@ if (captive player) then
 {
     [player, false] remoteExec["setCaptive"];
     player setCaptive false;
-    if (speaker player == "NoVoice") then player setSpeaker _voice;
+    if (speaker player == "NoVoice") then {player setSpeaker _voice};
 };
 
 if !(isNull (objectParent player)) then
