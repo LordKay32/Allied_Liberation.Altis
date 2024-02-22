@@ -27,9 +27,9 @@ _displayTime = [_dateLimit] call A3A_fnc_dateToTimeString;//Converts the time po
 		_escortShip = if (_sideX == Occupants) then {"sab_nl_vincenzo"} else {selectRandom vehCSATPlanesAA};
 		_crew = "sab_nl_sailor_blue";
 		
-		_reward = 5000;
+		_reward = 2500;
 		private _taskId = "DES" + str A3A_taskCount;
-		[[teamPlayer,civilian],_taskId,[format["A heavy cruiser of the Italian Regia Marina has been sheltering in the Pyrgos Gulf. Due to our recent advances, it is now threatened by Allied air power. It has weighed anchor and is heading for the open sea. Go and sink it. <br/><br/>Reward: %1CP per player", _reward],"Sink Heavy Cruiser","battleship_1"],_positionX,false,0,true,"Destroy",true] call BIS_fnc_taskCreate;
+		[[teamPlayer,civilian],_taskId,[format["A heavy cruiser of the Italian Regia Marina has been sheltering in Pyrgos Gulf. Due to our recent advances, it is now threatened by Allied forces. It has weighed anchor and is heading for the open sea. Go and sink it. <br/><br/>Reward: %1CP per player", _reward],"Sink Heavy Cruiser","battleship_1"],_positionX,false,0,true,"Destroy",true] call BIS_fnc_taskCreate;
 		[_taskId, "DES", "CREATED"] remoteExecCall ["A3A_fnc_taskUpdate", 2];
 
 	private _spawnShip = {
@@ -160,17 +160,15 @@ _displayTime = [_dateLimit] call A3A_fnc_dateToTimeString;//Converts the time po
 	
 		if (_objectives findIf { alive _x } == -1) then {
 			[_taskId, "DES", "SUCCEEDED"] call A3A_fnc_taskSetState;
-			[0,5000*_bonus,0] remoteExec ["A3A_fnc_resourcesFIA",2];
+			[0,5000,0] remoteExec ["A3A_fnc_resourcesFIA",2];
    	        [0,10*_bonus,_positionX] remoteExec ["A3A_fnc_citySupportChange",2];
 			[1200*_bonus, _sideX] remoteExec ["A3A_fnc_timingCA",2];
-			{ [500*_bonus, _x] call A3A_fnc_playerScoreAdd } forEach (call BIS_fnc_listPlayers) select { side _x == teamPlayer || side _x == civilian};
-			[100*_bonus,theBoss] call A3A_fnc_playerScoreAdd;
+			{[250, _x] call A3A_fnc_playerScoreAdd } forEach (call BIS_fnc_listPlayers) select { side _x == teamPlayer || side _x == civilian};
 		} else {
 	    	[_taskId, "DES", "FAILED"] call A3A_fnc_taskSetState;
-			[0,-500*_bonus,0] remoteExec ["A3A_fnc_resourcesFIA",2];
+			[0,-1000,0] remoteExec ["A3A_fnc_resourcesFIA",2];
 			[0,-5*_bonus,_positionX] remoteExec ["A3A_fnc_citySupportChange",2];
 			[-600*_bonus, _sideX] remoteExec ["A3A_fnc_timingCA",2];
-			[-50*_bonus,theBoss] call A3A_fnc_playerScoreAdd;
 		};
 
 		sleep 300;

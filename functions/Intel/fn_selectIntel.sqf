@@ -166,40 +166,30 @@ if(_intelType == "Small") then
 };
 if(_intelType == "Medium") then
 {
-    _intelContent = selectRandomWeighted [CONVOYS, 0.25, CONVOY_ROUTE, 0.25, TASK, 0.5];
+    _intelContent = selectRandomWeighted [CONVOYS, 0.5, TASK, 0.5];
 
     switch (_intelContent) do
     {
-		case (CONVOYS):
-        {
-            [] call A3A_fnc_cleanConvoyMarker;
-            private _convoyMarkers = [];
-            if(_side == Occupants) then
-            {
-                _convoyMarkers = server getVariable ["convoyMarker_Occupants", []];
-            }
-            else
-            {
-                _convoyMarkers = server getVariable ["convoyMarker_Invaders", []];
-            };
-            {
-                _x setMarkerAlpha 1;
-            } forEach _convoyMarkers;
-            _text = format ["We found the %1 convoy radio decryption key!<br/>%2 convoys are marked on the map", _sideName, count _convoyMarkers];
-        };
-        case (CONVOY_ROUTE):
+        case (CONVOYS):
         {
             if (!("CONVOY" in A3A_activeTasks) && !bigAttackInProgress) then
 			{
-                private _potentials = (outposts + milbases + airportsX + resourcesX + factories);
+                private _potentials = (outposts + milbases + airportsX + seaports);
 	            _potentials = _potentials select { sidesX getVariable [_x, sideUnknown] != teamPlayer };
                 private _site = [_potentials, petros] call BIS_fnc_nearestPosition;
-				private _base = [_site] call A3A_fnc_findBasesForConvoy;
+                private _possibleBases = (airportsX + milbases) select {sidesX getVariable [_x, sideUnknown] != teamPlayer};
+                _possibleBases = _possibleBases select {[_x] call A3A_fnc_isFrontline == false};
+				private _base = [_site, _possibleBases] call A3A_fnc_findBasesForConvoy;
                 private _fromName = [_base] call A3A_fnc_localizar;
                 private _toName = [_site] call A3A_fnc_localizar;
-                _text = format ["We found some information about possible convoy route from %1 to %2. We can prepare an ambush on it.", _fromName, _toName];
                 if (_base != "") then {
+                	_text = format ["We found some information about possible convoy route from %1 to %2. We can prepare an ambush on it.", _fromName, _toName];
 					[[_site,_base, "", -1, true],"A3A_fnc_convoy"] call A3A_fnc_scheduler;
+				} else {
+                	_worldName = [] call SCRT_fnc_misc_getWorldName;
+                	private _money = (round (random [20, 35, 50]) * 100);
+                	_text = format ["We found some intelligence on %1 operations in Europe, we have transferred it to Allied high command. %2 command points received.", _sideName, _money];
+                	[0, _money, 0] remoteExec ["A3A_fnc_resourcesFIA",2]; 
 				};
 			} else {
                 _worldName = [] call SCRT_fnc_misc_getWorldName;

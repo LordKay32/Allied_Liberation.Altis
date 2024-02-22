@@ -98,7 +98,6 @@ waitUntil {sleep 1;(({[_x] call A3A_fnc_canFight} count _soldiers) / (count _sol
 if (!alive petros) then
 	{
 	[_taskId, "DEF_HQ", "FAILED", true] call A3A_fnc_taskSetState;
-	[-50,theBoss] call A3A_fnc_playerScoreAdd;
 	}
 else
 	{

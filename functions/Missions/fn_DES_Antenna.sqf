@@ -27,7 +27,7 @@ _displayTime = [_dateLimit] call A3A_fnc_dateToTimeString;//Converts the time po
 _mrkFinal = createMarker [format ["DES%1", random 100], _positionX];
 _mrkFinal setMarkerShape "ICON";
 
-_reward = if (_difficultX) then {1000} else {500};
+_reward = if (_difficultX) then {1000} else {800};
 private _taskId = "DES" + str A3A_taskCount;
 [[teamPlayer,civilian],_taskId,[format ["We have located a radio tower in %1, capture or destroy it. This will interrupt %3 communications and propaganda efforts. <br/><br/>Reward: %4CP per player",_nameDest,_displayTime,_sideName,_reward],"Destroy Radio Tower",_mrkFinal],_positionX,false,0,true,"Destroy",true] call BIS_fnc_taskCreate;
 [_taskId, "DES", "CREATED"] remoteExecCall ["A3A_fnc_taskUpdate", 2];
@@ -38,20 +38,18 @@ _bonus = if (_difficultX) then {2} else {1};
 if (dateToNumber date > _dateLimitNum) then
 	{
 	[_taskId, "DES", "FAILED"] call A3A_fnc_taskSetState;
-	//[5,0,_positionX] remoteExec ["A3A_fnc_citySupportChange",2];
-	[-10*_bonus,theBoss] call A3A_fnc_playerScoreAdd;
+	[5,0,_positionX] remoteExec ["A3A_fnc_citySupportChange",2];
 	}
 else
 	{
 	sleep 15;
 	[_taskId, "DES", "SUCCEEDED"] call A3A_fnc_taskSetState;
-	//[-5,0,_positionX] remoteExec ["A3A_fnc_citySupportChange",2];
+	[-5,0,_positionX] remoteExec ["A3A_fnc_citySupportChange",2];
     if (_sideX == Occupants) then {aggressionOccupants = aggressionOccupants - 10} else {aggressionInvaders = aggressionInvaders - 10};
 	[] call A3A_fnc_calculateAggression;
 	[600*_bonus, _side] remoteExec ["A3A_fnc_timingCA",2];
-	[0,500*_bonus,0] remoteExec ["A3A_fnc_resourcesFIA",2];
-    { [500*_bonus, _x] call A3A_fnc_playerScoreAdd } forEach (call BIS_fnc_listPlayers) select { side _x == teamPlayer || side _x == civilian};
-	[10*_bonus,theBoss] call A3A_fnc_playerScoreAdd;
+	[0,_reward*2,0] remoteExec ["A3A_fnc_resourcesFIA",2];
+    { [_reward/10, _x] call A3A_fnc_playerScoreAdd } forEach (call BIS_fnc_listPlayers) select { side _x == teamPlayer || side _x == civilian};
 	};
 
 deleteMarker _mrkFinal;

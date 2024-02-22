@@ -34,7 +34,7 @@ switch (true) do {
 		_typeVehX = if (_sideX == Occupants) then {selectRandom vehNATOTransportPlanes} else {selectRandom vehCSATTransportPlanes};
 		_typeEscortX = if (_sideX == Occupants) then {selectRandom vehNATOPlanesAA} else {selectRandom vehCSATPlanesAA};
 
-		_reward = (1000*_bonus);
+		_reward = 1000;
 		private _taskId = "DES" + str A3A_taskCount;
 		[[teamPlayer,civilian],_taskId,[format ["A high ranking enemy officer is flying into %1, his transport plane will enter Altian airspace from the north-west at %2. Intercept it and shoot it down.<br/><br/>Reward: %3CP per player.",_nameDest,_departingDisplayTime,_reward],"Shoot down enemy officer",_markerX],_positionX,false,0,true,"Destroy",true] call BIS_fnc_taskCreate;
 		[_taskId, "DES", "CREATED"] remoteExecCall ["A3A_fnc_taskUpdate", 2];
@@ -137,17 +137,15 @@ switch (true) do {
 	
 		if (not alive _official) then {
 			[_taskId, "DES", "SUCCEEDED"] call A3A_fnc_taskSetState;
-			[0,1000*_bonus,0] remoteExec ["A3A_fnc_resourcesFIA",2];
+			[0,2000,0] remoteExec ["A3A_fnc_resourcesFIA",2];
 		    if (_sideX == Occupants) then {aggressionOccupants = aggressionOccupants - 20} else {aggressionInvaders = aggressionInvaders - 20};
 			[] call A3A_fnc_calculateAggression;
 			[1200*_bonus, _sideX] remoteExec ["A3A_fnc_timingCA",2];
-			{ [100*_bonus, _x] call A3A_fnc_playerScoreAdd } forEach (call BIS_fnc_listPlayers) select { side _x == teamPlayer || side _x == civilian};
-			[50*_bonus,theBoss] call A3A_fnc_playerScoreAdd;
+			{ [100, _x] call A3A_fnc_playerScoreAdd } forEach (call BIS_fnc_listPlayers) select { side _x == teamPlayer || side _x == civilian};
 		} else {
 		    [_taskId, "DES", "FAILED"] call A3A_fnc_taskSetState;
 			[0,-500*_bonus,0] remoteExec ["A3A_fnc_resourcesFIA",2];
 			[-600*_bonus, _sideX] remoteExec ["A3A_fnc_timingCA",2];
-			[-20*_bonus,theBoss] call A3A_fnc_playerScoreAdd;
 		};
 
 		sleep 300;
@@ -163,12 +161,12 @@ switch (true) do {
 		
 		private _targetVehicles = [];
 		private _vehicles = [];
-		_typeVehX = if (_sideX == Occupants) then {vehNATOPlanes select 2} else {selectRandom vehCSATPlanes};
+		_typeVehX = if (_sideX == Occupants) then {"sab_sw_he177"} else {selectRandom vehCSATPlanes};
 		_typeEscortX = if (_sideX == Occupants) then {selectRandom vehNATOPlanesAA} else {selectRandom vehCSATPlanesAA};
 
-		_reward = (1000*_bonus);
+		_reward = 500;
 		private _taskId = "DES" + str A3A_taskCount;
-		[[teamPlayer,civilian],_taskId,[format ["Enemy JU-88 bombers have arrived from the mainland, they are parked at %1. Destroy as many as you can before they cause us trouble.<br/><br/>Reward: %2CP per player.",_nameDest,_reward],"Destroy Bombers",_markerX],_positionX,false,0,true,"Destroy",true] call BIS_fnc_taskCreate;
+		[[teamPlayer,civilian],_taskId,[format ["Enemy Heinkel He 177 bombers have arrived from the mainland, they are parked at %1. Destroy them.<br/><br/>Reward: %2CP per destroyed aircraft per player.",_nameDest,_reward],"Destroy Bombers",_markerX],_positionX,false,0,true,"Destroy",true] call BIS_fnc_taskCreate;
 		[_taskId, "DES", "CREATED"] remoteExecCall ["A3A_fnc_taskUpdate", 2];
 
 		private _spawnPoints = nearestObjects [_positionX, ["Land_HelipadEmpty_F"], 500]; 
@@ -181,7 +179,6 @@ switch (true) do {
 		} forEach _spawnPoints;
 		
 		_numberVehs = count _targetVehicles;
-		_targetNum = _numberVehs/2;
 		
 		for "i" from 1 to _bonus do {
 			_spawnPos = _positionX; 
@@ -202,13 +199,13 @@ switch (true) do {
 		
 		_vehicles append _targetVehicles;
 		
-		waitUntil {sleep 1;(dateToNumber date > _dateLimitNum) or ({!alive _x} count _targetVehicles >= _targetNum)};
+		waitUntil {sleep 1;(dateToNumber date > _dateLimitNum) or ({!alive _x} count _targetVehicles == 0)};
 	
 		if ({!alive _x} count _targetVehicles > _targetNum) then {
 		
 			[_taskId, "DES", "SUCCEEDED"] call A3A_fnc_taskSetState;
 			
-			[0,1000*_bonus,0] remoteExec ["A3A_fnc_resourcesFIA",2];
+			[0,1000*_targetVehicles,0] remoteExec ["A3A_fnc_resourcesFIA",2];
 	        if (_sideX == Occupants) then {aggressionOccupants = aggressionOccupants - 20} else {aggressionInvaders = aggressionInvaders - 20};
 			[] call A3A_fnc_calculateAggression;
 			if (_sideX == Invaders) then {
@@ -217,15 +214,14 @@ switch (true) do {
 	            [0,5*_bonus,_positionX] remoteExec ["A3A_fnc_citySupportChange",2]
 	        };
 			[1200*_bonus, _sideX] remoteExec ["A3A_fnc_timingCA",2];
-			{ [20*_bonus, _x] call A3A_fnc_playerScoreAdd } forEach (call BIS_fnc_listPlayers) select { side _x == teamPlayer || side _x == civilian};
-			[50*_bonus,theBoss] call A3A_fnc_playerScoreAdd;
+			{ [(50*_targetVehicles), _x] call A3A_fnc_playerScoreAdd } forEach (call BIS_fnc_listPlayers) select { side _x == teamPlayer || side _x == civilian};
+
 		} else {
 		    [_taskId, "DES", "FAILED"] call A3A_fnc_taskSetState;
 			[0,-500*_bonus,0] remoteExec ["A3A_fnc_resourcesFIA",2];
 			if (_sideX == Occupants) then {aggressionOccupants = aggressionOccupants + 20} else {aggressionInvaders = aggressionInvaders + 20};
 			[] call A3A_fnc_calculateAggression;
 			[-600*_bonus, _sideX] remoteExec ["A3A_fnc_timingCA",2];
-			[-20*_bonus,theBoss] call A3A_fnc_playerScoreAdd;
 		};
 
 		[_taskId, "DES", 1200] spawn A3A_fnc_taskDelete;

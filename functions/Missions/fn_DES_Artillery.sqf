@@ -16,7 +16,7 @@ _sideName = if (_sideX == Occupants) then {nameOccupants} else {nameInvaders};
 _nameDest = [_markerX] call A3A_fnc_localizar;
 
 private _taskId = "DES" + str A3A_taskCount;
-[[teamPlayer,civilian],_taskId,[format ["We have discovered a %1 artillery post at an %2. Destroy the artillery pieces, and we may get some relief from enemy shelling. <br/><br/>Reward: 1000CP per player",_sideName, _nameDest],"Destroy Artillery",_markerX],_positionX,false,0,true,"Destroy",true] call BIS_fnc_taskCreate;
+[[teamPlayer,civilian],_taskId,[format ["We have discovered a %1 artillery post at %2. Destroy the artillery pieces, and we may get some relief from enemy shelling. <br/><br/>Reward: 1000CP per player",_sideName, _nameDest],"Destroy Artillery",_markerX],_positionX,false,0,true,"Destroy",true] call BIS_fnc_taskCreate;
 [_taskId, "DES", "CREATED"] remoteExecCall ["A3A_fnc_taskUpdate", 2];
 	
 _artilleryPieces = nearestObjects [_positionX, [NATOHowitzer], 250];
@@ -26,15 +26,13 @@ waitUntil {sleep 1;(dateToNumber date > _dateLimitNum) or _artilleryPieces findI
 if (_artilleryPieces findIf {alive _x} == -1) then {	
 	[_taskId, "DES", "SUCCEEDED"] call A3A_fnc_taskSetState;
 	
-	[0,1000,0] remoteExec ["A3A_fnc_resourcesFIA",2];
+	[0,2000,0] remoteExec ["A3A_fnc_resourcesFIA",2];
     if (_sideX == Occupants) then {aggressionOccupants = aggressionOccupants - 20} else {aggressionInvaders = aggressionInvaders - 20};
 	[] call A3A_fnc_calculateAggression;
 	[1200, _sideX] remoteExec ["A3A_fnc_timingCA",2];
 	{ [100, _x] call A3A_fnc_playerScoreAdd } forEach (call BIS_fnc_listPlayers) select { side _x == teamPlayer || side _x == civilian};
-	[50,theBoss] call A3A_fnc_playerScoreAdd;
 } else {
     [_taskId, "DES", "FAILED"] call A3A_fnc_taskSetState;
 	[-600, _sideX] remoteExec ["A3A_fnc_timingCA",2];
-	[-20,theBoss] call A3A_fnc_playerScoreAdd;
 };
 [_taskId, "DES", 1200] spawn A3A_fnc_taskDelete;

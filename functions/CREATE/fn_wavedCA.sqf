@@ -60,7 +60,7 @@ diag_log format ["%1: [Antistasi] | INFO | Side Attacker:%2, Side Defender: %3",
 _nameDest = [_mrkDestination] call A3A_fnc_localizar;
 
 private _taskId = "rebelAttack" + str A3A_taskCount;
-[_sideTsk,_taskId,[format ["%2 Is attacking from the %1. Intercept them or we may loose a sector",_nameOrigin,_nameENY],format ["%1 Attack",_nameENY],_mrkOrigin],getMarkerPos _mrkOrigin,false,0,true,"Defend",true] call BIS_fnc_taskCreate;
+[_sideTsk,_taskId,[format ["The %2 is attacking from %1. Defend against them or we may lose a sector",_nameOrigin,_nameENY],format ["%1 Attack",_nameENY],_mrkOrigin],objNull,false,0,true,"Defend",true] call BIS_fnc_taskCreate;
 [_sideTsk1,_taskId+"B",[format ["We are attacking %2 from the %1. Help the operation if you can",_nameOrigin,_nameDest],format ["%1 Attack",_nameENY],_mrkDestination],getMarkerPos _mrkDestination,false,0,true,"Attack",true] call BIS_fnc_taskCreate;
 [_taskId, "rebelAttack", "CREATED"] remoteExecCall ["A3A_fnc_taskUpdate", 2];
 
@@ -861,22 +861,6 @@ while {(_waves > 0)} do
 		};
 	};
 
-
-
-
-
-if (_isSDK) then
-	{
-	if (!(sidesX getVariable [_mrkDestination,sideUnknown] == teamPlayer)) then
-		{
-		[-10,theBoss] call A3A_fnc_playerScoreAdd;
-		}
-	else
-		{
-		{if (isPlayer _x) then {[10,_x] call A3A_fnc_playerScoreAdd}} forEach ([500,0,_posDestination,teamPlayer] call A3A_fnc_distanceUnits);
-		[5,theBoss] call A3A_fnc_playerScoreAdd;
-		};
-	};
 diag_log "Antistasi: Reached end of winning conditions. Starting despawn";
 sleep 30;
 [_taskId, "rebelAttack", 0, true] spawn A3A_fnc_taskDelete;

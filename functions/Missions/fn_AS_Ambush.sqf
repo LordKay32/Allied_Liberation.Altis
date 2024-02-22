@@ -276,14 +276,13 @@ switch(true) do {
         [_taskId, "AS", "FAILED"] call A3A_fnc_taskSetState;
 
         [-900, _sideX] remoteExec ["A3A_fnc_timingCA",2];
-        [-20,theBoss] call A3A_fnc_playerScoreAdd;
-        if (_sideX == Occupants) then {aggressionOccupants = aggressionOccupants + 5} else {aggressionInvaders = aggressionInvaders + 5};
+        if (_sideX == Occupants) then {aggressionOccupants = aggressionOccupants + 10} else {aggressionInvaders = aggressionInvaders + 10};
         [] call A3A_fnc_calculateAggression;
     };
     case (!alive _officer): {
         [3, "Officer died, success.", _filename] call A3A_fnc_log;
         [_taskId, "AS", "SUCCEEDED"] call A3A_fnc_taskSetState;
-        [0, 1000,0] remoteExec ["A3A_fnc_resourcesFIA",2];
+        [0, 2000,0] remoteExec ["A3A_fnc_resourcesFIA",2];
         [1800, _sideX] remoteExec ["A3A_fnc_timingCA",2];
         { [100,_x] call A3A_fnc_playerScoreAdd } forEach (call BIS_fnc_listPlayers) select { side _x == teamPlayer || side _x == civilian};
         if (_sideX == Occupants) then {aggressionOccupants = aggressionOccupants - 10} else {aggressionInvaders = aggressionInvaders - 10};

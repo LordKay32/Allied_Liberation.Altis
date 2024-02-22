@@ -32,7 +32,7 @@ switch (true) do {
 		_escortShip = if (_sideX == Occupants) then {"sab_nl_t22"} else {selectRandom vehCSATPlanesAA};
 		_crew = "sab_nl_sailor_blue";
 
-		_reward = if (_difficultX) then {2000} else {1000};
+		_reward = 2000;
 		private _taskId = "DES" + str A3A_taskCount;
 		[[teamPlayer,civilian],_taskId,[format ["An enemy sea convoy is bringing supplies and men to %1 from the mainland. Intercept it and destroy the transport ships. <br/><br/>Reward: %2CP per player",_nameDest, _reward],"Destroy Sea Convoy",_markerX],_positionX,false,0,true,"Destroy",true] call BIS_fnc_taskCreate;
 		[_taskId, "DES", "CREATED"] remoteExecCall ["A3A_fnc_taskUpdate", 2];
@@ -234,7 +234,7 @@ switch (true) do {
 	
 		if (_objectives findIf { alive _x } == -1) then {
 			[_taskId, "DES", "SUCCEEDED"] call A3A_fnc_taskSetState;
-			[0,1000*_bonus,0] remoteExec ["A3A_fnc_resourcesFIA",2];
+			[0,4000,0] remoteExec ["A3A_fnc_resourcesFIA",2];
 			if (_sideX == Invaders) then {
     		        aggressionInvaders = aggressionInvaders - 20;
     		    } else {
@@ -242,14 +242,13 @@ switch (true) do {
     		    };
     		    [] call A3A_fnc_calculateAggression;
 			[1200*_bonus, _sideX] remoteExec ["A3A_fnc_timingCA",2];
-			{ [100*_bonus, _x] call A3A_fnc_playerScoreAdd } forEach (call BIS_fnc_listPlayers) select { side _x == teamPlayer || side _x == civilian};
-			[50*_bonus,theBoss] call A3A_fnc_playerScoreAdd;
+			{ [200, _x] call A3A_fnc_playerScoreAdd } forEach (call BIS_fnc_listPlayers) select { side _x == teamPlayer || side _x == civilian};
 		} else {
 			_time = time + 600;
 			waitUntil {sleep 1; (_objectives findIf { alive _x } == -1) or (time > _time)};
 			if (_objectives findIf { alive _x } == -1) then {
 				[_taskId, "DES", "SUCCEEDED"] call A3A_fnc_taskSetState;
-				[0,1000*_bonus,0] remoteExec ["A3A_fnc_resourcesFIA",2];
+				[0,4000,0] remoteExec ["A3A_fnc_resourcesFIA",2];
 				if (_sideX == Invaders) then {
     		        aggressionInvaders = aggressionInvaders - 20;
     		    } else {
@@ -257,15 +256,13 @@ switch (true) do {
     		    };
     		    [] call A3A_fnc_calculateAggression;
 				[1200*_bonus, _sideX] remoteExec ["A3A_fnc_timingCA",2];
-				{ [100*_bonus, _x] call A3A_fnc_playerScoreAdd } forEach (call BIS_fnc_listPlayers) select { side _x == teamPlayer || side _x == civilian};
-				[50*_bonus,theBoss] call A3A_fnc_playerScoreAdd;
+				{ [200, _x] call A3A_fnc_playerScoreAdd } forEach (call BIS_fnc_listPlayers) select { side _x == teamPlayer || side _x == civilian};
 			} else {
 		    	[_taskId, "DES", "FAILED"] call A3A_fnc_taskSetState;
 				[0,-500*_bonus,0] remoteExec ["A3A_fnc_resourcesFIA",2];
 				if (_sideX == Occupants) then {aggressionOccupants = aggressionOccupants + 20} else {aggressionInvaders = aggressionInvaders + 20};
 				[] call A3A_fnc_calculateAggression;
 				[-600*_bonus, _sideX] remoteExec ["A3A_fnc_timingCA",2];
-				[-20*_bonus,theBoss] call A3A_fnc_playerScoreAdd;
 			};
 		};
 
@@ -289,7 +286,7 @@ switch (true) do {
 		private _spawnArray = ["uboat_1","uboat_2","uboat_3","uboat_4"];
 
 		private _taskId = "DES" + str A3A_taskCount;
-		[[teamPlayer,civilian],_taskId,[format ["A U-boat is taking on fuel and supplies at the %1. Destroy it before it goes back out to sea and threatens our convoys. <br/><br/>Reward: 1000CP per player.",_nameDest],"Destroy U-boat",_markerX],_positionX,false,0,true,"Destroy",true] call BIS_fnc_taskCreate;
+		[[teamPlayer,civilian],_taskId,[format ["A U-boat is taking on fuel and supplies at %1. Destroy it before it goes back out to sea and threatens our convoys. <br/><br/>Reward: 1000CP per player.",_nameDest],"Destroy U-boat",_markerX],_positionX,false,0,true,"Destroy",true] call BIS_fnc_taskCreate;
 		[_taskId, "DES", "CREATED"] remoteExecCall ["A3A_fnc_taskUpdate", 2];
 
 		_bonus = if (_difficultX) then {2} else {1};
@@ -308,7 +305,7 @@ switch (true) do {
 		if (!alive _sub) then {	
 			[_taskId, "DES", "SUCCEEDED"] call A3A_fnc_taskSetState;
 			
-			[0,1000*_bonus,0] remoteExec ["A3A_fnc_resourcesFIA",2];
+			[0,2000,0] remoteExec ["A3A_fnc_resourcesFIA",2];
 			if (_sideX == Invaders) then {
 	            [0,10*_bonus,_positionX] remoteExec ["A3A_fnc_citySupportChange",2];
 	            aggressionInvaders = aggressionInvaders - 10;
@@ -318,12 +315,10 @@ switch (true) do {
 	        };
 	        [] call A3A_fnc_calculateAggression;
 			[1200*_bonus, _sideX] remoteExec ["A3A_fnc_timingCA",2];
-			{ [1000*_bonus, _x] call A3A_fnc_playerScoreAdd } forEach (call BIS_fnc_listPlayers) select { side _x == teamPlayer || side _x == civilian};
-			[20*_bonus,theBoss] call A3A_fnc_playerScoreAdd;
+			{ [100, _x] call A3A_fnc_playerScoreAdd } forEach (call BIS_fnc_listPlayers) select { side _x == teamPlayer || side _x == civilian};
 		} else {
 		    [_taskId, "DES", "FAILED"] call A3A_fnc_taskSetState;
 			[-600*_bonus, _sideX] remoteExec ["A3A_fnc_timingCA",2];
-			[-10*_bonus,theBoss] call A3A_fnc_playerScoreAdd;
 		};
 
 		[_taskId, "DES", 1200] spawn A3A_fnc_taskDelete;

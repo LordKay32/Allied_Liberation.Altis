@@ -32,7 +32,7 @@ switch(true) do {
 	_nameDest = [_markerX] call A3A_fnc_localizar;
 	
 	private _taskId = "RES" + str A3A_taskCount;
-	[[teamPlayer,civilian],_taskId,[format ["The Werhmacht have rounded up some partizans and civilians for execution in %1. Rescue them and bring them back to an Allied base.<br/><br/>Reward: 200CP per player per rescued civilian.",_nameDest],"Partizan POW Rescue",_markerX],_positionX,false,0,true,"run",true] call BIS_fnc_taskCreate;
+	[[teamPlayer,civilian],_taskId,[format ["The Werhmacht have rounded up some partizans and civilians for execution in %1. Rescue them and bring them back to an Allied controlled town.<br/><br/>Reward: 100CP per player per rescued civilian.",_nameDest],"Partizan POW Rescue",_markerX],_positionX,false,0,true,"run",true] call BIS_fnc_taskCreate;
 	[_taskId, "RES", "CREATED"] remoteExecCall ["A3A_fnc_taskUpdate", 2];
 	
 	_officerClass = if (_side == Occupants) then {NATOOfficer} else {CSATOfficer};
@@ -62,7 +62,7 @@ switch(true) do {
 	private _chosenPos = selectRandom _allPositions;
 	private _POWposition = _chosenPos getPos [4,180];
 	private _soldierPos = _chosenPos getPos [4,0];
-	private _countX = round random [4,7,10];
+	private _countX = round random [6,9,12];
 	
 	_grpPOW = createGroup teamPlayer;
 	for "_i" from 0 to _countX do
@@ -117,7 +117,7 @@ switch(true) do {
 	{[_x,""] call A3A_fnc_NATOinit} forEach units _groupX;
 	_groups pushBack _groupX;
 	
-	waitUntil {sleep 1; ({alive _x} count _POWs == 0) or ({(alive _x) and (_x distance getMarkerPos ([(((airportsX + milbases) select {(sidesX getVariable [_x,sideUnknown] == teamPlayer)}) + ["Synd_HQ"]),_x] call BIS_fnc_nearestPosition) < 50)} count _POWs > 0) or (dateToNumber date > _dateLimitNum)};
+	waitUntil {sleep 1; ({alive _x} count _POWs == 0) or ({(alive _x) and (_x distance getMarkerPos ([(citiesX select {(sidesX getVariable [_x,sideUnknown] == teamPlayer)}),_x] call BIS_fnc_nearestPosition) < 100)} count _POWs > 0) or (dateToNumber date > _dateLimitNum)};
 	
 	if (dateToNumber date > _dateLimitNum) then
 		{
@@ -143,7 +143,7 @@ switch(true) do {
 			};
 		};
 	
-	waitUntil {sleep 1; ({alive _x} count _POWs == 0) or ({(alive _x) and (_x distance getMarkerPos ([(((airportsX + milbases) select {(sidesX getVariable [_x,sideUnknown] == teamPlayer)}) + ["Synd_HQ"]),_x] call BIS_fnc_nearestPosition) < 50)} count _POWs > 0)};
+	waitUntil {sleep 1; ({alive _x} count _POWs == 0) or ({(alive _x) and (_x distance getMarkerPos ([(citiesX select {(sidesX getVariable [_x,sideUnknown] == teamPlayer)}),_x] call BIS_fnc_nearestPosition) < 100)} count _POWs > 0)};
 	
 	_bonus = if (_difficultX) then {2} else {1};
 		
@@ -158,7 +158,7 @@ switch(true) do {
 		{
 		sleep 5;
 		[_taskId, "RES", "SUCCEEDED"] call A3A_fnc_taskSetState;
-		_countX = {(alive _x) and (_x distance getMarkerPos ([(((airportsX + milbases) select {(sidesX getVariable [_x,sideUnknown] == teamPlayer)}) + ["Synd_HQ"]),_x] call BIS_fnc_nearestPosition) < 250)} count _POWs;
+		_countX = {(alive _x) and (_x distance getMarkerPos ([(citiesX select {(sidesX getVariable [_x,sideUnknown] == teamPlayer)}),_x] call BIS_fnc_nearestPosition) < 100)} count _POWs;
 		_hr = _countX;
 		_resourcesFIA = 200 * _countX;
 		[_hr,_resourcesFIA,SDKUnarmed] remoteExec ["A3A_fnc_resourcesFIA",2];
@@ -174,7 +174,7 @@ switch(true) do {
 	_weaponsX = [];
 	{
 	_unit = _x;
-	if (_unit distance getMarkerPos ([(((airportsX + milbases) select {(sidesX getVariable [_x,sideUnknown] == teamPlayer)}) + ["Synd_HQ"]),_x] call BIS_fnc_nearestPosition) < 250) then
+	if (_unit distance getMarkerPos ([(citiesX select {(sidesX getVariable [_x,sideUnknown] == teamPlayer)}),_x] call BIS_fnc_nearestPosition) < 1000) then
 		{
 		{_weaponsX pushBack ([_x] call BIS_fnc_baseWeapon)} forEach weapons _unit;
 		{_ammunition pushBack _x} forEach magazines _unit;
@@ -194,9 +194,9 @@ switch(true) do {
 	deleteMarkerLocal _mrk;
 	
 	[_taskId, "RES", 1200] spawn A3A_fnc_taskDelete;
-	};
+};
 
-	case (_markerX in outposts): {
+case (_markerX in outposts): {
 
 	private _difficultX =if (aggressionLevelOccupants > 3) then {true} else {false};
 	_leave = false;
@@ -219,7 +219,7 @@ switch(true) do {
 	_nameDest = [_markerX] call A3A_fnc_localizar;
 	
 	private _taskId = "RES" + str A3A_taskCount;
-	[[teamPlayer,civilian],_taskId,[format ["A group of Allied POWs are located in the %1. Rescue them and bring them back to an Allied base.<br/><br/>Reward: 200CP per player per POW rescued, and HR.",_nameDest],"POW Rescue",_markerX],_positionX,false,0,true,"run",true] call BIS_fnc_taskCreate;
+	[[teamPlayer,civilian],_taskId,[format ["A group of Allied POWs are located in %1. Rescue them and bring them back to an Allied base.<br/><br/>Reward: 100CP per player per POW rescued, and HR.",_nameDest],"POW Rescue",_markerX],_positionX,false,0,true,"run",true] call BIS_fnc_taskCreate;
 	[_taskId, "RES", "CREATED"] remoteExecCall ["A3A_fnc_taskUpdate", 2];
 	
 	_officerClass = if (_side == Occupants) then {NATOOfficer} else {CSATOfficer};
@@ -249,7 +249,7 @@ switch(true) do {
 	private _chosenPos = selectRandom _allPositions;
 	private _POWposition = _chosenPos getPos [4,180];
 	private _soldierPos = _chosenPos getPos [4,0];
-	private _countX = round random [4,7,10];
+	private _countX = round random [6,8,10];
 	
 	_grpPOW = createGroup teamPlayer;
 	for "_i" from 0 to _countX do
@@ -327,7 +327,7 @@ switch(true) do {
 		sleep 5;
 		
 		[_taskId, "RES", "SUCCEEDED"] call A3A_fnc_taskSetState;
-		_alivePOWs = _POWs select {(alive _x) and (_x distance getMarkerPos ([(((airportsX + milbases) select {(sidesX getVariable [_x,sideUnknown] == teamPlayer)}) + ["Synd_HQ"]),_x] call BIS_fnc_nearestPosition) < 250)};
+		_alivePOWs = _POWs select {(alive _x) and (_x distance getMarkerPos ([(((airportsX + milbases) select {(sidesX getVariable [_x,sideUnknown] == teamPlayer)}) + ["Synd_HQ"]),_x] call BIS_fnc_nearestPosition) < 1000)};
 		_countX = count _alivePOWs;
 		_typeUnits = [];
 		{
@@ -336,7 +336,7 @@ switch(true) do {
 		_hr = _countX;
 		_resourcesFIA = 200 * _countX;
 		[_hr,_resourcesFIA,_unitTypes] remoteExec ["A3A_fnc_resourcesFIA",2];
-		{ [_countX*20, _x] call A3A_fnc_playerScoreAdd } forEach (call BIS_fnc_listPlayers) select { side _x == teamPlayer || side _x == civilian};
+		{ [_countX*10, _x] call A3A_fnc_playerScoreAdd } forEach (call BIS_fnc_listPlayers) select { side _x == teamPlayer || side _x == civilian};
 		[round ((_countX)*10),theBoss] call A3A_fnc_playerScoreAdd;
 		{[_x] join _grpPOW; [_x] orderGetin false} forEach _POWs;
 		};
@@ -347,7 +347,7 @@ switch(true) do {
 	_weaponsX = [];
 	{
 	_unit = _x;
-	if (_unit distance getMarkerPos ([(((airportsX + milbases) select {(sidesX getVariable [_x,sideUnknown] == teamPlayer)}) + ["Synd_HQ"]),_x] call BIS_fnc_nearestPosition) < 250) then
+	if (_unit distance getMarkerPos ([(((airportsX + milbases) select {(sidesX getVariable [_x,sideUnknown] == teamPlayer)}) + ["Synd_HQ"]),_x] call BIS_fnc_nearestPosition) < 1000) then
 		{
 		{_weaponsX pushBack ([_x] call BIS_fnc_baseWeapon)} forEach weapons _unit;
 		{_ammunition pushBack _x} forEach magazines _unit;

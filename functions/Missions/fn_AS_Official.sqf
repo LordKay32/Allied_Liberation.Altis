@@ -19,9 +19,9 @@ _nameDest = [_markerX] call A3A_fnc_localizar;
 _naming = if (_sideX == Occupants) then {nameOccupants} else {nameInvaders};
 
 private _taskString = if (_markerX in airportsX) then { 
-	format ["We have been informed that a senior Luftwaffe commander is inspecting the %1. Take him out.<br/><br/>Reward: 1000CP per player.",_nameDest];
+	format ["We have been informed that a senior Luftwaffe commander is inspecting %1. Take him out.<br/><br/>Reward: 1000CP per player.",_nameDest];
 } else {
-	format ["We have been informed that a senior Wehrmacht commander is inspecting the %1. Take him out.<br/><br/>Reward: 1000CP per player.",_nameDest];
+	format ["We have been informed that a senior Wehrmacht commander is inspecting %1. Take him out.<br/><br/>Reward: 1000CP per player.",_nameDest];
 };
 
 private _taskId = "AS" + str A3A_taskCount;
@@ -55,7 +55,7 @@ _officialAlerted = [_official, _markerX] spawn {
 		sleep 1;
 		_friendlyList = (nearestObjects [_official, ["Man", "Car", "Tank"], 1200]) select {side _x == teamPlayer};
 		{
-			if (_official knowsAbout _x > 0.1 && captive _x == false) then {
+			if (_official knowsAbout _x > 1.4 && captive _x == false) then {
 				_isAlerted = true;
 			};
 		} forEach _friendlyList;
@@ -101,7 +101,7 @@ waitUntil {sleep 1; (dateToNumber date > _dateLimitNum) or (not alive _official)
 
 if (not alive _official) then {
 	[_taskId, "AS", "SUCCEEDED"] call A3A_fnc_taskSetState;
-	[0,1000,0] remoteExec ["A3A_fnc_resourcesFIA",2];
+	[0,2000,0] remoteExec ["A3A_fnc_resourcesFIA",2];
 	[2400, _sideX] remoteExec ["A3A_fnc_timingCA",2];
 	{ [100,_x] call A3A_fnc_playerScoreAdd } forEach (call BIS_fnc_listPlayers) select { side _x == teamPlayer || side _x == civilian};
 	[_markerX,60] call A3A_fnc_addTimeForIdle;
@@ -110,8 +110,9 @@ if (not alive _official) then {
 } else {
 	[_taskId, "AS", "FAILED"] call A3A_fnc_taskSetState;
 	[-1200, _sideX] remoteExec ["A3A_fnc_timingCA",2];
-	[-20,theBoss] call A3A_fnc_playerScoreAdd;
 	[_markerX,-60] call A3A_fnc_addTimeForIdle;
+	if (_sideX == Occupants) then {aggressionOccupants = aggressionOccupants + 20} else {aggressionInvaders = aggressionInvaders + 20};
+    [] call A3A_fnc_calculateAggression;
 };
 
 sleep 300;
