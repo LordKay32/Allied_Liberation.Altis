@@ -227,7 +227,7 @@ if (_typeX in vehNormal || {_typeX in (vehAttack + vehBoats + vehAA)}) then {
 		if (_typeX == "sab_nl_ptboat") then {_veh addEventHandler ["HandleDamage", {(_this select 2)*2}]};
 		
 		if (_typeX in [vehSDKTransPlaneUK,vehSDKTransPlaneUS]) then {
-				[_veh, "paradrop"] remoteExec ["A3A_fnc_flagAction", [teamPlayer,civilian]];
+				[_veh, "paradrop"] remoteExec ["A3A_fnc_flagAction", [teamPlayer,civilian],_veh];
     		};
 		
 		_veh addEventHandler ["GetIn",
