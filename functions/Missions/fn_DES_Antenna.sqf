@@ -6,7 +6,7 @@ private ["_antenna","_positionX","_timeLimit","_markerX","_nameDest","_mrkFinal"
 
 _antenna = _this select 0;
 _markerX = [markersX,_antenna] call BIS_fnc_nearestPosition;
-
+_sideX = if (sidesX getVariable [_markerX,sideUnknown] == Occupants) then {Occupants} else {Invaders};
 _difficultX = if (aggressionLevelOccupants > 3) then {true} else {false};
 _leave = false;
 _contactX = objNull;
@@ -42,7 +42,7 @@ if (dateToNumber date > _dateLimitNum) then
 	}
 else
 	{
-	sleep 15;
+	sleep 10;
 	[_taskId, "DES", "SUCCEEDED"] call A3A_fnc_taskSetState;
 	[-5,0,_positionX] remoteExec ["A3A_fnc_citySupportChange",2];
     if (_sideX == Occupants) then {aggressionOccupants = aggressionOccupants - 10} else {aggressionInvaders = aggressionInvaders - 10};

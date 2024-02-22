@@ -147,6 +147,7 @@ switch (_type) do {
 		
 		{
 		_artilleryPieces = nearestObjects [(getMarkerPos _x), [NATOHowitzer], 250];
+		_artilleryPieces = _artilleryPieces select {side _x == Occupants};
 		if (count _artilleryPieces > 1) then {_possibleMarkers pushBack _x};
 		} forEach ["outpost_9", "outpost_20", "outpost_17", "outpost_12", "outpost_40"];
 		_possibleMarkers = _possibleMarkers select {spawner getVariable _x != 0};

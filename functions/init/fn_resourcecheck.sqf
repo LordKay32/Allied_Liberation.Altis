@@ -315,10 +315,10 @@ while {true} do
 	[WW2Magazines, _magazines, 10] call _resupplyGear;
 	[WW2Items, _items, 5] call _resupplyGear;
 	//
-	bombRuns = bombRuns + 0.5 * ({sidesX getVariable [_x,sideUnknown] == teamPlayer} count airportsX);
+	bombRuns = bombRuns + 0.25;
 
-	if (bombRuns > 5) then {
-		bombRuns = 5;
+	if (bombRuns > 3) then {
+		bombRuns = 3;
 	};
 
 	publicVariable "bombRuns";
