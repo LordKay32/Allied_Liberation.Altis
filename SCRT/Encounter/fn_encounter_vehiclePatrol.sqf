@@ -36,19 +36,10 @@ private _roadcon = roadsConnectedto (_road select 0);
 private _dirveh = if (count _roadcon > 0) then {[_road select 0, _roadcon select 0] call BIS_fnc_dirTo} else {random 360};
 private _roadPosition = getPos (_road select 0);
 
-private _isFia = if (random 10 > (tierWar + difficultyCoef)) then {true} else {false};
 private _vehClass = if (_side == Occupants) then {
-    if (_isFia) then {
-        selectRandom (vehFIAAPC + vehFIATanks)
-    } else {
-        selectRandom vehNATOAttack
-    };
+	selectRandom (vehFIAAPC + vehFIATanks)
 } else {
-    if (_isFia) then {
-        selectRandom (vehWAMAPC + vehWAMTanks)
-    } else {
-        selectRandom vehCSATAttack
-    };
+	selectRandom (vehWAMAPC + vehWAMTanks)
 };
 
 if (_vehClass == "" || {_vehClass == "not_supported"}) exitWith {

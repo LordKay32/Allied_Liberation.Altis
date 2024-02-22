@@ -24,7 +24,7 @@ private _fileName = "fn_encounter_gameEventLoop";
 
 isEventInProgress = false;
 
-private _chance = 5;
+private _chance = 10;
 
 while {true} do {
     sleep 600;
