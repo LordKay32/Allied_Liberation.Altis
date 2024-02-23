@@ -548,8 +548,8 @@
         <Chinesesimp>购买载具</Chinesesimp>
       </Key>
       <Key ID="STR_antistasi_dialogs_buy_vehicle_note_text">
-        <Original>Note that rebel vehicle roster will expand as war evolves.</Original>
-        <English>Note that rebel vehicle roster will expand as war evolves.</English>
+        <Original>Vehicle Roster</Original>
+        <English>Vehicle Roster</English>
         <French>Notez que la liste des véhicules rebelles augmentera au fur et à mesure que la guerre évoluera.</French>
         <Russian>Обратите внимание, что список доступной для повстанцев техники будет расширяться по мере развития войны.</Russian>
         <German>Beachten Sie, dass die Liste der Rebellenfahrzeuge im Verlauf des Krieges erweitert wird.</German>
