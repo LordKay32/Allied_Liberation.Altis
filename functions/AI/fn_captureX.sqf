@@ -24,7 +24,7 @@ if (_capturing) then {
 		sleep 15;
 		private _friendly = ((nearestObjects [_unit, ["man", "Car", "Tank"], 1000]) select {side _x == teamPlayer && _x != _unit}) select 0;
 		private _distance = _unit distance _friendly;
-		if ((random 100 < ((_distance/100)^2) || _distance > 500) && (vehicle _unit == _unit)) exitWith {
+		if ((random 100 < ((_distance/50)^2) || _distance > 500) && (vehicle _unit == _unit)) exitWith {
 			_group = createGroup _sideX;
 			[_unit] joinSilent _group;
 			_unit setCaptive false;
