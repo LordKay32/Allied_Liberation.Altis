@@ -722,8 +722,6 @@ class A3A
         class shader_ratioToHex {};
         class updateInfoBarShown {};
         class disableInfoBar {};
-        class selectMapArtillery {};
-        class setArtilleryMode {};
     };
 
     class Undercover

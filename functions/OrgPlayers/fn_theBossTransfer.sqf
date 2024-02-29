@@ -49,10 +49,6 @@ else {
 	} forEach allGroups;
 };
 
-{
-_x setGroupOwner (groupOwner group theBoss);
-} forEach artyGroups;
-
 [3, format ["New boss %1 set.", theBoss], _filename] call A3A_fnc_log;
 
 [_silent] spawn {

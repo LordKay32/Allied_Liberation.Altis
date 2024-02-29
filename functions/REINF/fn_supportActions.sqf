@@ -17,23 +17,25 @@ if !(_leader in _veh) exitWith {["Support Task", "This support team is busy."] c
 switch (typeOf _veh) do {
 
     case vehSDKRepair: {
-    	_list = ((getPos _veh) nearEntities [["Car", "Turret", "Tank", "APC"], 50]) select {side _x != west};
+    	_list = ((getPos _veh) nearEntities [vehFIA, 50]);
     	{
     	[_x, 0] remoteExec ["setDamage"];
-    	// if (isPlayer crew) then {play sound for player?};
+		sleep 1;
     	} forEach _list;
+    	["Support Task", "The engineering team has finished repairing nearby vehicles."] call A3A_fnc_customHint;
     };
     
     case vehSDKAmmo: {
     	_list = ((getPos _veh) nearEntities [vehFIA, 50]) select {count allTurrets [_x, false] > 0};
     	{
     	[_x, 1] remoteExec ["setVehicleAmmoDef"];
-    	// if (isPlayer crew) then {play sound for player?};
+    	sleep 1;
     	} forEach _list;
+    	["Support Task", "The engineering team has finished rearming nearby vehicles."] call A3A_fnc_customHint;
     };
     
     case vehSDKFuel: {
-    	_list = ((getPos _veh) nearEntities [["Car", "Tank", "APC"], 50]) select {side _x != west};
+    	_list = ((getPos _veh) nearEntities [vehFIA, 50]);
     	{
     	_fuel = fuel _x;
     	// if (isPlayer crew) then {play sound for player?};
@@ -44,6 +46,7 @@ switch (typeOf _veh) do {
     		sleep 1;
     	};
     	} forEach _list;
+    	["Support Task", "The engineering team has finished refueling nearby vehicles."] call A3A_fnc_customHint;
     };
     
     case vehSDKMedical: {

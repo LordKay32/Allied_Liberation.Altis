@@ -59,7 +59,7 @@ private _revealTo = [Invaders,Occupants] select (sidesX getVariable [_base,sideU
 
 for "_i" from 1 to 30 do {
 	_mineX = createMine [ selectRandom _mines ,_pos,[],50];
-	_revealTo revealMine _mineX;
+	_revealTo revealMine _mineX;	
 };
 
 //[-4000] remoteExec ["resourcesAAF",2];

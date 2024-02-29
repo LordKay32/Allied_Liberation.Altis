@@ -15,7 +15,8 @@
  * nothing
  */
 
-private _units = (units group player) - [player];
+private _players = call BIS_fnc_listPlayers;
+private _units = (units group player) select {!(_x in _players)};
 
 {
 	private _unit = _x;
@@ -113,7 +114,7 @@ private _units = (units group player) - [player];
 			_uniform = if ("U_LIB_GER_Medic" in _availableUniforms) then {"U_LIB_GER_Medic"} else {selectRandom _availableUniforms};
 			_vest = selectRandom (_availableVests - ["V_LIB_GER_SniperBelt"]);
 			_helmet = selectRandom _availableHelmets;
-			_backPack = if ("B_LIB_GER_MedicBackpack_empty" in _availableBackpacks) then {"B_LIB_GER_MedicBackpack_empty"} else {selectRandom _availableBackpacks};
+			if (count _availableBackpacks != 0) then {_backPack = if ("B_LIB_GER_MedicBackpack_empty" in _availableBackpacks) then {"B_LIB_GER_MedicBackpack_empty"} else {selectRandom _availableBackpacks};};
 			_weapon = if ("LIB_K98" in _availableWeapons) then {"LIB_K98"} else {selectRandom _availableWeapons};
 		};
 		case (_unitType == SASMG): {
@@ -136,7 +137,7 @@ private _units = (units group player) - [player];
 			_uniform = selectRandom _availableUniforms;
 			_vest = selectRandom (_availableVests - ["V_LIB_GER_SniperBelt"]);
 			_helmet = selectRandom _availableHelmets;
-			_backPack = if ("B_LIB_GER_SapperBackpack_empty" in _availableBackpacks) then {"B_LIB_GER_SapperBackpack_empty"} else {selectRandom _availableBackpacks};
+			if (count _availableBackpacks != 0) then {_backPack = if ("B_LIB_GER_SapperBackpack_empty" in _availableBackpacks) then {"B_LIB_GER_SapperBackpack_empty"} else {selectRandom _availableBackpacks};};
 			_weapon = if ("LIB_K98" in _availableWeapons) then {"LIB_K98"} else {selectRandom _availableWeapons};
 		};
 		case (_unitType == SASSniper): {

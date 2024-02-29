@@ -84,6 +84,7 @@ if (_frontierX) then {
 		_mineType = if (_sideX == Occupants) then {(A3A_faction_occ getVariable "minefieldAPERS") select 0} else {(A3A_faction_inv getVariable "minefieldAPERS") select 0};
 		_mine = createMine [ _mineType ,_randomMinePos,[],0];
 		_sideX revealMine _mine;
+		civilian revealMine _mine;
 		_minesX pushBack _mine;
 		[_mine] spawn {
 			_mine = _this select 0;

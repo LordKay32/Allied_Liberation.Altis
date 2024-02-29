@@ -42,7 +42,7 @@ if (count _availableMinesPool < 1) then {
 	if (_quantity < 5) then {_quantity = 5};
 };
 
-_costs = (2*(server getVariable USExp)) + ([vehSDKLightUnarmed] call A3A_fnc_vehiclePrice);
+_costs = (2*(server getVariable USExp)) + ([vehSDKTruck] call A3A_fnc_vehiclePrice);
 _hr = 2;
 _costTextBox ctrlSetText format ["Cost: %1 mines, %2 HR and %3%4", _quantity, _hr, _costs, currencySymbol];
 

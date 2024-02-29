@@ -12,10 +12,9 @@ if (isNil "_garrison") then {
     garrison setVariable [_markerX,_garrison,true];
 };
 
-private _groupX = [_positionX, teamPlayer, _garrison,true,false] call A3A_fnc_spawnGroup;
+private _groupX = [([_positionX, 50, (0)] call BIS_Fnc_relPos), teamPlayer, _garrison,true,false] call A3A_fnc_spawnGroup;
 private _groupXUnits = units _groupX;
 _groupXUnits apply { [_x,_markerX] spawn A3A_fnc_FIAinitBases; if ((_x getVariable "unitType") in squadLeaders) then {_x linkItem "ItemRadio"} };
-artyGroups pushBack _groupX;
 
 {
     private _relativePosition = [_positionX, 4, _x] call BIS_Fnc_relPos;
@@ -31,7 +30,7 @@ _props pushBack _GC;
 private _veh = objNull;
 
 //overriden static position and direction
-
+private _groupE = createGroup teamPlayer;
 if (SDKArtillery in _statics) then {
 	private _staticPositionInfo = staticPositions getVariable [_markerX, []];
 	if (!(_staticPositionInfo isEqualTo [])) then {
@@ -52,13 +51,11 @@ if (SDKArtillery in _statics) then {
 		garrison setVariable [(_markerX + "_statics"),_statics,true];
 	}];
 	_veh lock 3;
-	artySupport synchronizeObjectsAdd [_veh];
 	
 	sleep 1;
 
 	[_veh,"Move_Outpost_Static"] remoteExec ["A3A_fnc_flagaction",[teamPlayer,civilian], _veh];
 
-	private _groupE = createGroup teamPlayer;
 	private _mortarGroup = _groupXUnits;
 	private _crewManIndex = _mortarGroup findIf  {(_x getVariable "unitType") == USMil};
 	if (_crewManIndex != -1) then {
@@ -80,6 +77,9 @@ if (SDKArtillery in _statics) then {
 	    _crewMan moveInAny _veh;
 		[_crewMan] joinSilent _groupE;
 	};
+	_groupE setGroupOwner (groupOwner group theBoss);
+	_groupE setGroupIdGlobal ["US-Art-" + str ({side (leader _x) == teamPlayer} count allGroups)];
+	theBoss hcSetGroup [_groupE];
 };
 
 _groupX setBehaviour "SAFE";
@@ -93,7 +93,6 @@ private _wp4 = _groupX addWaypoint [[_positionX, 50, (0)] call BIS_Fnc_relPos, 0
 _wp4 setWaypointType "CYCLE";
 
 [_veh, teamPlayer] call A3A_fnc_AIVEHinit;
-_groupX setGroupOwner (groupOwner group theBoss);
 
 waitUntil {
 	sleep 1; 
@@ -111,8 +110,6 @@ if ({alive _x} count units _groupX == 0) then {
 
 waitUntil {sleep 1; (!(_markerX in mortarpostsFIA))};
 
-artyGroups = artyGroups - [_groupX];
-
 if (!isNull _veh) then { 
     deleteVehicle _veh;
 };
@@ -121,6 +118,11 @@ if (!isNull _veh) then {
     deleteVehicle _x 
 } forEach units _groupX;
 deleteGroup _groupX;
+
+{ 
+    deleteVehicle _x 
+} forEach units _groupE;
+deleteGroup _groupE;
 
 {
 	deleteVehicle _x;

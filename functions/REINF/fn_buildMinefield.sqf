@@ -9,7 +9,7 @@ private _mine = _this select 3;
 
 private _allLoadouts = [];
 
-private _costs = (2*(server getVariable USExp)) + ([vehSDKLightUnarmed] call A3A_fnc_vehiclePrice);
+private _costs = (2*(server getVariable USExp)) + ([vehSDKTruck] call A3A_fnc_vehiclePrice);
 [-2,(-1*_costs), USExp] remoteExec ["A3A_fnc_resourcesFIA",2];
 
 #include "\A3\Ui_f\hpp\defineResinclDesign.inc"
@@ -101,7 +101,7 @@ if (not(sidesX getVariable [_nearX,sideUnknown] == teamPlayer)) exitWith {
     ] spawn SCRT_fnc_ui_showMessage;
 };
 {
-if (((side _x == Invaders) or (side _x == Occupants)) and (_x distance (getMarkerPos _nearX) < 500) and ([_x] call A3A_fnc_canFight) and !(isPlayer _x)) exitWith {["Minefields", "You cannot deploy units when there are enemies near the base."] call A3A_fnc_customHint};
+if (((side _x == Invaders) or (side _x == Occupants)) and (_x distance (getMarkerPos _nearX) < 300) and ([_x] call A3A_fnc_canFight) and !(isPlayer _x)) exitWith {["Minefields", "You cannot deploy units when there are enemies near the base."] call A3A_fnc_customHint};
 } forEach allUnits;
 
 positionTel = [];
@@ -186,9 +186,9 @@ _unit = [_groupX, USExp, _positionX, [], 0, "NONE"] call A3A_fnc_createUnit;
 _groupX setGroupId ["MineF"];
 
 _road = [getMarkerPos respawnTeamPlayer] call A3A_fnc_findNearestGoodRoad;
-_pos = position _road findEmptyPosition [1,30,vehSDKLightUnarmed];
+_pos = position _road findEmptyPosition [1,30,vehSDKTruck];
 
-_truckX = vehSDKLightUnarmed createVehicle _positionTel;
+_truckX = (if (server getVariable (vehSDKTruck + "_count") >= (server getVariable (vehSDKTruckClosed + "_count"))) then {vehSDKTruck} else {vehSDKTruckClosed}) createVehicle _positionTel;
 _truckX setDir _dirVeh;
 
 _groupX addVehicle _truckX;
@@ -210,9 +210,9 @@ _truckX allowCrewInImmobile true;
 
 //waitUntil {sleep 1; (count crew _truckX > 0) or (!alive _truckX) or ({alive _x} count units _groupX == 0)};
 
-waitUntil {sleep 1; (!alive _truckX) or ((_truckX distance _positionMines < 50) and ({alive _x} count units _groupX > 0))};
+waitUntil {sleep 1; (!alive _truckX) or ((_truckX distance _positionMines < 25) and ({alive _x} count units _groupX > 0))};
 
-if ((_truckX distance _positionMines < 50) and ({alive _x} count units _groupX > 0)) then
+if ((_truckX distance _positionMines < 25) and ({alive _x} count units _groupX > 0)) then
 	{
 	if (isPlayer leader _groupX) then
 		{
@@ -226,9 +226,13 @@ if ((_truckX distance _positionMines < 50) and ({alive _x} count units _groupX >
 		waitUntil {!(isPlayer leader _groupX)};
 		};
 	theBoss hcRemoveGroup _groupX;
+	{
+	[_x] orderGetIn false;
+	[_x] allowGetIn false;
+	} forEach units _groupX;
 	[petros,"hint","Engineer Team deploying mines.", "Minefields"] remoteExec ["A3A_fnc_commsMP",[teamPlayer,civilian]];
 	_nul = [leader _groupX, _mrk, "SAFE","SPAWNED", "SHOWMARKER"] execVM "scripts\UPSMON.sqf";//TODO need delete UPSMON link
-	sleep 30*_quantity;
+	sleep 120;
 	if ((alive _truckX) and ({alive _x} count units _groupX > 0)) then
 		{
 		{deleteVehicle _x; _unitLoadout = getUnitLoadout _x; _allLoadouts pushBack _unitLoadout; teamPlayerStoodDown = teamPlayerStoodDown + 1 ;publicVariable "teamPlayerStoodDown"} forEach units _groupX;
@@ -247,8 +251,10 @@ if ((_truckX distance _positionMines < 50) and ({alive _x} count units _groupX >
 				_mineX = createMine [_mineType,_positionMines,[],100];
 			};
 			teamPlayer revealMine _mineX;
+			civilian revealMine _mineX;
 		};
 		[_taskId, "Mines", "SUCCEEDED"] call A3A_fnc_taskSetState;
+		deleteMarker _mrk;
 		sleep 15;
 		[_taskId, "Mines", 0] spawn A3A_fnc_taskDelete;
 		[2,_costs,USExp] remoteExec ["A3A_fnc_resourcesFIA",2];

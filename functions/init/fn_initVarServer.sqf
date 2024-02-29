@@ -130,9 +130,6 @@ DECLARE_SERVER_VAR(A3A_coldWarMode, false);
 DECLARE_SERVER_VAR(introFinished, false);
 introAttackStarted = false;
 
-//ArtyGroups
-DECLARE_SERVER_VAR(artyGroups, []);
-
 //Currently destroyed buildings.
 //DECLARE_SERVER_VAR(destroyedBuildings, []);
 //Initial HR

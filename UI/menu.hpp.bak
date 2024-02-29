@@ -1369,7 +1369,7 @@ class squadActions: SimpleMenuBigger
 			action = "closeDialog 0; if (player == theBoss) then {[] spawn A3A_fnc_artySupport} else {[""Artillery Support"", ""Only Player Commander has access to this function""] call A3A_fnc_customHint;};";
 		};
 		
-		class stopButton: SimpleButton
+		class unknownButton: SimpleButton
 		{
 			idc = -1;
 			text = Disable / Enable Movement;
@@ -1379,7 +1379,7 @@ class squadActions: SimpleMenuBigger
 			action = "[""path""] spawn A3A_fnc_squadActions";
 		};
 		
-		class retreatButton: SimpleButton
+		class loadVehButton: SimpleButton
 		{
 			idc = -1;
 			text = Retreat;

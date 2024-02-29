@@ -163,7 +163,7 @@ if (_typeGroup isEqualType []) then {
 			_formatX pushBack _typeUnit;
 			_costs = _costs + (server getVariable _typeUnit);
 			_costHR = _costHR + 1;
-			} forEach [USSL,USEng];
+			} forEach [USEng,USMil];
 			_costs = _costs + ([_typeGroup] call A3A_fnc_vehiclePrice)
 		};
 		case vehSDKAmmo: {

@@ -97,7 +97,7 @@ if (visibleMap) then {openMap false};
 
 //Map markers
 {
-	[_unit] spawn {
+	[_X] spawn {
 		params ["_unit"];
 		while {(alive _unit) && ((units group _unit) findIf {_x == player} != -1)} do {
 			waitUntil {sleep 0.5; visibleMap || {visibleGPS || {isMenuOpen}}};

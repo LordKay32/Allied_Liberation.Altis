@@ -1,7 +1,13 @@
 private ["_minRange","_maxRange","_groups","_artyArray","_artyRoundsArr","_hasAmmunition","_areReady","_hasArtillery","_areAlive","_soldierX","_veh","_typeAmmunition","_typeArty","_positionTel","_artyArrayDef1","_artyRoundsArr1","_piece","_isInRange","_positionTel2","_rounds","_roundsMax","_markerX","_size","_forcedX","_textX","_mrkFinal","_mrkFinal2","_timeX","_eta","_countX","_pos"];
 
-private _artyType = _this select 0;
-private _grp = _this select 1;
+private _chosen = hcSelected player;
+hcShowBar false;
+hcShowBar true;
+if (count _chosen == 0) exitWith {["Artillery Support", "Choose an artillery group in HC."] call A3A_fnc_customHint};
+if (count _chosen > 1) exitWith {["Artillery Support", "Choose only one artillery group in HC."] call A3A_fnc_customHint};
+
+private _grp = _chosen select 0;
+private _artyType = if (typeOf (vehicle (leader _grp)) == SDKArtillery) then {"artillery"} else {"mortar"};
 
 switch (_artyType) do {
     case "mortar": {
@@ -15,6 +21,24 @@ switch (_artyType) do {
     	_groups = [_grp]
     };
 };
+
+player hcSelectGroup [_grp];
+
+switch (true) do {
+	case (_artyType == "artillery"): {
+
+		if ([(getPos (leader _grp)), 300] call A3A_fnc_enemyNearCheck) exitWith {
+			["Artillery Support", "This artillery crew cannot fire while there are enemies nearby."] call A3A_fnc_customHint;
+		};
+	};
+
+	case (_artyType == "mortar"): {
+
+		if ([(getPos (leader _grp)), 300] call A3A_fnc_enemyNearCheck) exitWith {
+			["Artillery Support", "This mortar crew cannot fire while there are enemies nearby."] call A3A_fnc_customHint;
+		};
+	};
+};	
 
 _unitsX = [];
 {_groupX = _x;

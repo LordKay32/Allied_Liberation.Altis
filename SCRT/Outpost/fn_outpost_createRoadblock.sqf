@@ -67,9 +67,9 @@ closeDialog 0;
 closeDialog 0;
 [] call SCRT_fnc_ui_clearOutpost;
 
-waitUntil {sleep 1; ({alive _x} count units _groupX == 0) or ({(alive _x) and (_x distance _position < 10)} count units _groupX > 0) or (dateToNumber date > _dateLimitNum)};
+waitUntil {sleep 1; ({alive _x} count units _groupX == 0) or ({(alive _x) and (_x distance _position < 25)} count units _groupX > 0) or (dateToNumber date > _dateLimitNum)};
 
-if ({(alive _x) and (_x distance _position < 20)} count units _groupX > 0) then {
+if ({(alive _x) and (_x distance _position < 25)} count units _groupX > 0) then {
 	if (isPlayer leader _groupX) then {
 		_owner = (leader _groupX) getVariable ["owner",leader _groupX];
 		(leader _groupX) remoteExec ["removeAllActions",leader _groupX];

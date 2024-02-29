@@ -198,7 +198,7 @@ closeDialog 0;
 
 _groupX = createGroup teamPlayer;
 
-_unit = [_groupX, USExp, getMarkerPos respawnTeamPlayer, [], 0, "NONE"] call A3A_fnc_createUnit;
+_unit = [_groupX, USExp, (getMarkerPos _nearX), [], 0, "NONE"] call A3A_fnc_createUnit;
 [_unit] spawn A3A_fnc_FIAinit;
 teamPlayerDeployed = teamPlayerDeployed + 1;
 publicVariable "teamPlayerDeployed";

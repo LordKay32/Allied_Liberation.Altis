@@ -1,7 +1,7 @@
 private ["_roads","_pos","_positionX","_groupX"];
 
 private _checkX = false;
-private _distanceX = 100;
+private _distanceX = 250;
 
 private _markersX = markersX + [respawnTeamPlayer];
 
@@ -18,7 +18,7 @@ if (!isNil "A3A_FFPun_Jailed" && {(getPlayerUID player) in A3A_FFPun_Jailed}) ex
 if (player != player getVariable ["owner",player]) exitWith {
 	["Fast Travel", "You cannot Fast Travel while you are controlling AI"] call SCRT_fnc_misc_showDeniedActionHint;
 };
-private _friendlyBases = _markersX select {_x in (["Synd_HQ"] + airportsX + milbases + supportpostsFIA); sidesX getVariable [_x,sideUnknown] == teamPlayer};
+private _friendlyBases = _markersX select {(_x in (["Synd_HQ"] + airportsX + milbases + supportpostsFIA)) && (sidesX getVariable [_x,sideUnknown] == teamPlayer)};
 private _origin = [_friendlyBases, position player] call BIS_Fnc_nearestPosition; 
 if (player distance getMarkerPos _origin > _distanceX) exitWith {["Fast Travel", "You can only fast travel from HQ, Airports, Military Bases and Support Posts."] call SCRT_fnc_misc_showDeniedActionHint;};
 

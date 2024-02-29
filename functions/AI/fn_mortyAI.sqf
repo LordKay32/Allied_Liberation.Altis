@@ -66,7 +66,6 @@ while {(alive _morty2) and (alive _morty3)} do
 		_morty3 assignAsCargo _mortarX;
 		[_morty3] orderGetIn true;
 		[_morty3] allowGetIn true;
-		artySupport synchronizeObjectsAdd [_mortarX];
 	} else {[_morty3] orderGetIn false;};
 	[_mortarX, side _groupX] call A3A_fnc_AIVEHinit;
 

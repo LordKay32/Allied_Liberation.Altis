@@ -81,7 +81,7 @@
 ["baggedMortars", [["not_supported"]]] call _fnc_saveToTemplate;
 
 ["mineAT", ["LIB_US_M1A1_ATMINE_mag"]] call _fnc_saveToTemplate;
-["mineAPERS", ["LIB_US_M3_MINE_mag"]] call _fnc_saveToTemplate;
+["mineAPERS", ["LIB_M3_MINE_mag"]] call _fnc_saveToTemplate;
 
 ["breachingExplosivesAPC", [["DemoCharge_Remote_Mag", 1]]] call _fnc_saveToTemplate;
 ["breachingExplosivesTank", [["SatchelCharge_Remote_Mag", 1], ["DemoCharge_Remote_Mag", 2]]] call _fnc_saveToTemplate;

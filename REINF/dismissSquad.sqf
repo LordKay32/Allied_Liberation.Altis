@@ -8,18 +8,19 @@ _leave = false;
 
 {
 	if ((groupID _x) in ["MineF", "Watch"]
+		|| (groupId _x select [3,3] == "Art")
 		|| { isPlayer (leader _x)
 		|| { (units _x) findIf { _x == petros } != -1 }})
 	exitWith { _leave = true; };
 } forEach _groups;
 
-if (_leave) exitWith {["Dismiss Squad", "You cannot dismiss player led, Watchpost, Roadblocks or Minefield building squads."] call A3A_fnc_customHint;};
+if (_leave) exitWith {["Dismiss Squad", "You cannot dismiss player led, artillery post or minefield building squads."] call A3A_fnc_customHint;};
 
 {
 if (_x getVariable ["esNATO",false]) then {_leave = true};
 } forEach _groups;
 
-if (_leave) exitWith {["Dismiss Squad", "You cannot dismiss NATO groups."] call A3A_fnc_customHint;};
+if (_leave) exitWith {["Dismiss Squad", "You cannot dismiss enemy groups."] call A3A_fnc_customHint;};
 
 
 

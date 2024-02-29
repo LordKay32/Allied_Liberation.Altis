@@ -276,6 +276,8 @@ if (_isControl) then {
 			for "_i" from 1 to 11 do { 
 				_position =[[[_mineMarker]], [], { {_this distance _x > 20} forEach (allMines select {_x inArea _mineMarker})}] call BIS_fnc_randomPos;
 				_mineX = createMine [ _mineType ,_position,[],0];
+				Occupants revealMine _mineX;
+				Civilian revealMine _mineX;
 				_mines pushBack _mineX;
 			}; 
 			
