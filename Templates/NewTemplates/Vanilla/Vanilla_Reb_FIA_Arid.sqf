@@ -44,8 +44,8 @@
 ["vehiclePayloadPlaneUS", "sab_sw_b17"] call _fnc_saveToTemplate;
 ["vehiclePayloadPlaneUK", "sab_sw_halifax"] call _fnc_saveToTemplate;
 
-["vehiclePlaneUK1", "sab_fl_hurricane"] call _fnc_saveToTemplate;
-["vehiclePlaneUK2", "sab_fl_hurricane_2"] call _fnc_saveToTemplate;
+["vehiclePlaneUK1", "sab_fl_hurricane_2"] call _fnc_saveToTemplate;
+["vehiclePlaneUK2", "sab_fl_spitfire_mkxiv"] call _fnc_saveToTemplate;
 ["vehiclePlaneUK3", "sab_fl_dh98"] call _fnc_saveToTemplate;
 ["vehicleTransportPlaneUK", "LIB_C47_RAF"] call _fnc_saveToTemplate;
 
