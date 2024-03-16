@@ -155,6 +155,7 @@ private _uav = objNull;
 
 while {(_waves > 0)} do
 {
+	_posOrigin = getMarkerPos _mrkOrigin;
 	_soldiers = [];
 	private _playerScale = if (_isSDK) then { call A3A_fnc_getPlayerScale } else { 1 };			// occ vs inv attacks shouldn't depend on player count
 	_nVeh = round ((0.4 * aggressionLevelOccupants) + random 1 + (3 * _playerScale));
@@ -212,7 +213,7 @@ while {(_waves > 0)} do
 				if (count _pos == 0) then {_pos = getMarkerPos _spawnPoint};
 				_vehicle=[_pos, _dir,_typeVehX, _sideX] call A3A_fnc_spawnVehicle;
 */
-				private _posOrigin = navGrid select ([_mrkOrigin] call A3A_fnc_getMarkerNavPoint) select 0;
+				_posOrigin = navGrid select ([_mrkOrigin] call A3A_fnc_getMarkerNavPoint) select 0;
 
 				private _route = [(getMarkerPos _mrkOrigin), (getMarkerPos _mrkDestination)] call A3A_fnc_findPath;
 
@@ -519,8 +520,8 @@ while {(_waves > 0)} do
 
 	private _nVehAir = _nVeh;
 	if !(_posOriginLand isEqualTo []) then {
-		sleep ((_posOrigin distance _posDestination)/7.5);			// give land vehicles a head start
-		_nVehAir = if (_posOrigin distance _posDestination < distanceForLandAttack) then {if ((_mrkDestination in (airportsX + milbases)) && (aggressionLevelOccupants > 3)) then {(round (_nVeh / 2)) + 1} else {round (_nVeh / 2)}} else {_nVeh};				// fill out with air vehicles
+		sleep ((_posOrigin distance _posDestination)/7);			// give land vehicles a head start
+		_nVehAir = if (_posOrigin distance _posDestination < distanceForLandAttack) then {if ((_mrkDestination in (airportsX + milbases)) && (aggressionLevelOccupants > 3)) then {(round (_nVeh / 2)) + 1} else {round (_nVeh / 2)}} else {_nVeh - 1};				// fill out with air vehicles
 	};
 	_posGround = [_posOrigin select 0,_posOrigin select 1,0];
 	_posOrigin set [2,300];
@@ -755,7 +756,7 @@ while {(_waves > 0)} do
 			};
 		};
 
-	_timeX = time + 900;		// wave timeout, 15 mins after the wave has finished spawning
+	_timeX = time + 600;		// wave timeout, 10 mins after the wave has finished spawning
 
 	if (!_SDKShown) then
 		{

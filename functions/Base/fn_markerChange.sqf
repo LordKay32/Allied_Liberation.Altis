@@ -401,12 +401,12 @@ if (_winner == teamPlayer) then
 		if (_markerX in seaports) then {[_flagX,"seaport"] remoteExec ["A3A_fnc_flagaction",[teamPlayer,civilian],_flagX]};
 		if (_markerX in (airportsX - ["airport_3"])) then {[_flagX,"airbase"] remoteExec ["A3A_fnc_flagaction",[teamPlayer,civilian],_flagX]};
 		if (_markerX == "airport_3") then {[_flagX,"airbase3"] remoteExec ["A3A_fnc_flagaction",[teamPlayer,civilian],_flagX]};
-		if (_markerX in outposts) then {[_flagX,"outpost"] remoteExec ["A3A_fnc_flagaction",[teamPlayer,civilian],_flagX]};
+		if (_markerX in (outposts + resourcesX + factories)) then {[_flagX,"outpost"] remoteExec ["A3A_fnc_flagaction",[teamPlayer,civilian],_flagX]};
 		
 		private _UKFlag = createVehicle [SDKFlag2, _positionX, [],1, "NONE"];
 		_UKFlag allowDamage false;
 		if (_markerX in airportsX + milbases) then {[_UKFlag,"SDKFlag2"] remoteExec ["A3A_fnc_flagaction",0,_UKFlag]};
-		if (_markerX in seaports + outposts) then {[_UKFlag,"SDKFlag2OP"] remoteExec ["A3A_fnc_flagaction",0,_UKFlag]};
+		if (_markerX in seaports + outposts + resourcesX + factories) then {[_UKFlag,"SDKFlag2OP"] remoteExec ["A3A_fnc_flagaction",0,_UKFlag]};
 		[_UKFlag, _markerX] spawn {
 			params ["_UKFlag", "_markerX"];
 			waitUntil {sleep 1; spawner getVariable _markerX == 2};
