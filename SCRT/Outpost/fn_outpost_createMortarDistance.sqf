@@ -77,9 +77,13 @@ if (SDKArtillery in _statics) then {
 	    _crewMan moveInAny _veh;
 		[_crewMan] joinSilent _groupE;
 	};
-	_groupE setGroupOwner (groupOwner group theBoss);
-	_groupE setGroupIdGlobal ["US-Art-" + str ({side (leader _x) == teamPlayer} count allGroups)];
-	theBoss hcSetGroup [_groupE];
+	[_groupE] spawn {
+		params ["_groupE"];
+		waitUntil {sleep 1; !(isNil "theBoss")};
+		_groupE setGroupOwner (groupOwner group theBoss);
+		_groupE setGroupIdGlobal ["US-Art-" + str ({side (leader _x) == teamPlayer} count allGroups)];
+		theBoss hcSetGroup [_groupE];
+	};
 };
 
 _groupX setBehaviour "SAFE";
