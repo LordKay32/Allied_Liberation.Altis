@@ -71,7 +71,8 @@ while {(alive _morty2) and (alive _morty3)} do
 
 	waitUntil {sleep 1; unitReady _morty0};
 	waitUntil {sleep 1; ({!(alive _x)} count units _groupX != 0) or !(unitReady _morty0)};
-
+	
+	if ({!(alive _x)} count units _groupX != 0 && _typeX == SDKMortar) then {deleteMarker _marker};
 	if (({(alive _x)} count units _groupX == count units _groupX) and !(unitReady _morty0)) then
 		{
 		unassignVehicle _morty2;

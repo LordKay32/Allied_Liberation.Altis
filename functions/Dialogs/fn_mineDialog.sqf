@@ -2,7 +2,7 @@ params ["_typeX", "_position"];
 private ["_moneyCost","_hrCost","_quantity","_mine"];
 
 if (_typeX == "delete") exitWith {
-		[[],"A3A_fnc_mineSweep"] remoteExec ["A3A_fnc_scheduler",2];
+		[] spawn A3A_fnc_mineSweep;
 };
 
 _moneyCost = minefieldCost select 0;
@@ -21,4 +21,4 @@ if (_quantity > _quantityMax) then {
 	_quantity = _quantityMax;
 };
 
-[[_typeX,_position,_quantity,_mine],"A3A_fnc_buildMinefield"] remoteExec ["A3A_fnc_scheduler",2];
+[_typeX,_position,_quantity,_mine] spawn A3A_fnc_buildMinefield;

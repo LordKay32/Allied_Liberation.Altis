@@ -41,7 +41,7 @@
 ["vehicleTankUSM4", "LIB_M4A3_75"] call _fnc_saveToTemplate;
 
 ["vehiclePlane", "I_C_Plane_Civil_01_F"] call _fnc_saveToTemplate;
-["vehiclePayloadPlaneUS", "sab_sw_b17"] call _fnc_saveToTemplate;
+["vehiclePayloadPlaneUS", "sab_sw_b17f"] call _fnc_saveToTemplate;
 ["vehiclePayloadPlaneUK", "sab_sw_halifax"] call _fnc_saveToTemplate;
 
 ["vehiclePlaneUK1", "sab_fl_hurricane_2"] call _fnc_saveToTemplate;

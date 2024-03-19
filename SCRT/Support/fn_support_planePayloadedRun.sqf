@@ -3,8 +3,8 @@ private _positionDestination = getMarkerPos supportMarkerDestination;
 private _angle = [_positionOrigin, _positionDestination] call BIS_fnc_dirTo;
 private _angleOrigin = _angle - 180;
 
-private _originPosition = [_positionOrigin, 5000, _angleOrigin] call BIS_fnc_relPos;
-private _finPosition = [_positionDestination, 5000, _angle] call BIS_fnc_relPos;
+private _originPosition = [_positionOrigin, 8000, _angleOrigin] call BIS_fnc_relPos;
+private _finPosition = [_positionDestination, 8000, _angle] call BIS_fnc_relPos;
 private _groundHeight = getTerrainHeightASL _positionOrigin;
 
 private _planeData = [_originPosition, _angle, selectRandom [vehUSPayloadPlane,vehUKPayloadPlane], teamPlayer] call A3A_fnc_spawnVehicle;

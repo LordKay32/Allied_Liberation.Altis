@@ -1,5 +1,3 @@
-if (!isServer and hasInterface) exitWith {};
-
 private ["_groupX","_unit","_radiusX","_roads","_road","_pos","_truckX","_textX","_mrk","_ATminesAdd","_APminesAdd","_tsk","_magazines","_typeMagazines","_cantMagazines","_newCantMagazines","_mineX","_typeX","_truckX"];
 
 private _typeX = _this select 0;
@@ -17,13 +15,12 @@ private _costs = (2*(server getVariable USExp)) + ([vehSDKTruck] call A3A_fnc_ve
 _index = _mine call jn_fnc_arsenal_itemType;
 [_index,_mine,_quantity] call jn_fnc_arsenal_removeItem;
 
-_mrk = createMarker [format ["Minefield%1", random 1000], _positionMines];
-_mrk setMarkerShape "ELLIPSE";
-_mrk setMarkerSize [100,100];
-_mrk setMarkerType "hd_warning";
-_mrk setMarkerColor "ColorRed";
-_mrk setMarkerBrush "DiagGrid";
-[_mrk,0] remoteExec ["setMarkerAlpha",[Occupants,Invaders]];
+_mrk = createMarkerLocal [format ["Minefield%1", random 1000], _positionMines];
+_mrk setMarkerShapeLocal "ELLIPSE";
+_mrk setMarkerSizeLocal [100,100];
+_mrk setMarkerTypeLocal "hd_warning";
+_mrk setMarkerColorLocal "ColorRed";
+_mrk setMarkerBrushLocal "DiagGrid";
 
 //
 ["minefieldMap", "onMapSingleClick"] call BIS_fnc_removeStackedEventHandler;
@@ -254,7 +251,7 @@ if ((_truckX distance _positionMines < 25) and ({alive _x} count units _groupX >
 			civilian revealMine _mineX;
 		};
 		[_taskId, "Mines", "SUCCEEDED"] call A3A_fnc_taskSetState;
-		deleteMarker _mrk;
+		deleteMarkerLocal _mrk;
 		sleep 15;
 		[_taskId, "Mines", 0] spawn A3A_fnc_taskDelete;
 		[2,_costs,USExp] remoteExec ["A3A_fnc_resourcesFIA",2];
@@ -271,7 +268,7 @@ if ((_truckX distance _positionMines < 25) and ({alive _x} count units _groupX >
 		{deleteVehicle _x} forEach units _groupX;
 		deleteGroup _groupX;
 		deleteVehicle _truckX;
-		deleteMarker _mrk;
+		deleteMarkerLocal _mrk;
 		};
 	}
 else
@@ -283,5 +280,5 @@ else
 	{deleteVehicle _x} forEach units _groupX;
 	deleteGroup _groupX;
 	deleteVehicle _truckX;
-	deleteMarker _mrk;
+	deleteMarkerLocal _mrk;
 	};
