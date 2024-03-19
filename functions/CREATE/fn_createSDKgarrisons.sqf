@@ -40,7 +40,7 @@ if (_markerX != "Synd_HQ") then
 		{
 			[_veh,"airbase3"] remoteExec ["A3A_fnc_flagaction",[teamPlayer,civilian],_veh];
 		};
-		if (_markerX in outposts) then
+		if (_markerX in (outposts + resourcesX + factories)) then
 		{
 			[_veh,"outpost"] remoteExec ["A3A_fnc_flagaction",[teamPlayer,civilian],_veh];
 		};
@@ -48,7 +48,7 @@ if (_markerX != "Synd_HQ") then
 		_veh allowDamage false;
 		_vehiclesX pushBack _veh;
 		if (_markerX in airportsX + milbases) then {[_veh,"SDKFlag2"] remoteExec ["A3A_fnc_flagaction",0,_veh]};
-		if (_markerX in seaports + outposts) then {[_veh,"SDKFlag2OP"] remoteExec ["A3A_fnc_flagaction",0,_veh]};
+		if (_markerX in seaports + outposts + resourcesX + factories) then {[_veh,"SDKFlag2OP"] remoteExec ["A3A_fnc_flagaction",0,_veh]};
 	} else {
 		if (_markerX in destroyedSites) exitWith {};
 		//if (_markerX in [?cities, villages?]) then {

@@ -43,7 +43,7 @@ DECLARE_SERVER_VAR(distanceSPWN2, distanceSPWN*0.5);
 //The furthest distance the AI can attack from using helicopters or planes
 DECLARE_SERVER_VAR(distanceForAirAttack, 16000);
 //The furthest distance the AI can attack from using trucks and armour
-DECLARE_SERVER_VAR(distanceForLandAttack, 5000);
+DECLARE_SERVER_VAR(distanceForLandAttack, 6000);
 
 //Disabled DLC according to server parameters
 DECLARE_SERVER_VAR(disabledMods, call A3A_fnc_initDisabledMods);
