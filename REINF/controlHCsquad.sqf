@@ -42,10 +42,10 @@ _eh1 = player addEventHandler ["HandleDamage",
 	["Control Squad", "Returned to original Unit as it received damage."] call A3A_fnc_customHint;
 	nil;
 	}];
-_eh2 = _unit addEventHandler ["HandleDamage",
+_eh2 = _unit addEventHandler ["Killed",
 	{
 	_unit = _this select 0;
-	_unit removeEventHandler ["HandleDamage",_thisEventHandler];
+	_unit removeEventHandler ["Killed",_thisEventHandler];
 	removeAllActions _unit;
 	selectPlayer (_unit getVariable "owner");
 	(units group player) joinsilent group player;
@@ -84,7 +84,7 @@ waitUntil {sleep 1;["Control Squad", format ["Time to return control to AI: %1."
 removeAllActions _unit;
 if (!isPlayer (_unit getVariable ["owner",_unit])) then {selectPlayer (_unit getVariable ["owner",_unit])};
 //_unit setVariable ["owner",nil,true];
-_unit removeEventHandler ["HandleDamage",_eh2];
+_unit removeEventHandler ["Killed",_eh2];
 player removeEventHandler ["HandleDamage",_eh1];
 (units group theBoss) joinsilent group theBoss;
 group theBoss selectLeader theBoss;

@@ -74,7 +74,86 @@ if (_this select 0 == "transport") exitWith {
 	if (count hcSelected player < 1) exitWith {["Vehicle Info", "Select only one group on the HC bar."] call A3A_fnc_customHint;};
 	_veh = cursorObject;
 	_groupX = hcSelected player select 0;
-	if (vehicle (leader _groupX) == (leader _groupX)) then {
+	if ((units _groupX) findIf {vehicle _x != _x} == -1) then {
+		
+		hcShowBar false;
+		hcShowBar true;
+
+		_units = units _groupX;
+	
+		_groupLeader = leader _groupX;
+	
+		_noOfUnits = count _units;
+	
+		_nearestVehs = nearestObjects [getPos _groupLeader,[],400];
+		_nearestBoardableVehs = _nearestVehs select {count (fullCrew [_x, "cargo", true]) >= 2 && side _x == teamPlayer};
+		private _vehMarkers = [];
+		{
+		_vehPos = getPos _x;
+		_marker = createMarkerLocal [format ["transport%1", random 1000], _vehPos];
+	
+		switch (true) do {
+			case (typeOf _x in (vehTrucks + vehSupplyTrucks + vehAmmoTrucks)) : {
+				_marker setMarkerTypeLocal "plp_icon_truck";
+			};
+			case (typeOf _x in vehAPCs) : {
+				_marker setMarkerTypeLocal "plp_icon_motinfantry";
+			};
+			case (typeOf _x in vehTanks) : {
+				_marker setMarkerTypeLocal "plp_icon_tank";
+			};
+			case (_x isKindOf "plane") : {
+				_marker setMarkerTypeLocal  "plp_icon_planeCargo";
+			};
+			case (_x isKindOf "ship") : {
+				_marker setMarkerTypeLocal "plp_icon_boat";
+			};
+			default {
+				_marker setMarkerTypeLocal "plp_icon_vehicle";
+			};
+		};
+
+		_cargoSpaces = if (typeOf _x in [vehSDKTransPlaneUK, vehSDKTransPlaneUS]) then {(_x emptyPositions "Cargo") + (_x emptyPositions "Turret")} else {_x emptyPositions "Cargo"};
+		private _name = getText (configFile >> "CfgVehicles" >> typeOf _x >> "displayName");
+
+		if (_noOfUnits <= _cargoSpaces) then {
+			_marker setMarkerColorLocal colorTeamPlayer;
+		} else {
+			_marker setMarkerColorLocal "ColorUNKNOWN";
+		};
+
+		_marker setMarkerTextLocal format ["%1: %2 cargo spaces", _name,_cargoSpaces];
+		_vehMarkers pushBack _marker;
+		} forEach _nearestBoardableVehs;
+
+		if (!visibleMap) then {openMap true};
+
+		positionTel = [];
+
+		onMapSingleClick "positionTel = _pos";
+
+		["Group Transport", "Select transport vehicle."] call A3A_fnc_customHint;
+
+		waitUntil {sleep 0.5; (count positionTel > 0) or (not visiblemap)};
+		onMapSingleClick "";
+
+		if (!visibleMap) exitWith {{deleteMarkerLocal _x} forEach _vehMarkers};
+
+		_positionTel = positionTel;
+
+		_vehDistances = [];
+		{
+		_distance = getPos _x distance _positionTel;
+		_vehDistances pushBack [_distance,_x];
+		} forEach _nearestBoardableVehs;
+	
+		_vehDistances sort true;
+	
+		_veh = (_vehDistances select 0) select 1;
+		
+		_cargoSpacesVeh = _veh emptyPositions "Cargo";
+		if (_noOfUnits > _cargoSpacesVeh) exitWith {["Group Transport", "The selected vehicle does not have enough cargo space for this group."] call A3A_fnc_customHint; {deleteMarkerLocal _x} forEach _vehMarkers};
+
 		if (typeOf _veh in [vehSDKTransPlaneUK, vehSDKTransPlaneUS, vehSDKBoat, vehInfSDKBoat]) then {
 			[_groupX, _veh] spawn {
 			params ["_groupX", "_veh"];
@@ -91,6 +170,9 @@ if (_this select 0 == "transport") exitWith {
 			[_x] allowGetIn true; _x assignAsCargo _veh; [_x] orderGetIn true; 
 			} forEach units _groupX;
 		};
+		private _nameVeh = getText (configFile >> "CfgVehicles" >> typeOf _veh >> "displayName");
+		["Group Transport", format ["%1 boarding %2.", _groupX, _nameVeh]] call A3A_fnc_customHint;
+		{deleteMarkerLocal _x} forEach _vehMarkers;
 	} else {
 		{
 		unassignVehicle	_x;

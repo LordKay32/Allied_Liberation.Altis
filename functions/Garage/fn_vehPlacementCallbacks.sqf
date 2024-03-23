@@ -287,13 +287,7 @@ switch (_callbackTarget) do {
 
 				_factionMoney = server getVariable "resourcesFIA";
 
-				if (player == theBoss && {vehiclePurchase_cost <= _factionMoney}) then {
-					[0,(-1 * vehiclePurchase_cost),0] remoteExec ["A3A_fnc_resourcesFIA",2];
-				}
-				else {
-					[-1 * vehiclePurchase_cost] call A3A_fnc_resourcesPlayer;
-					_purchasedVeh setVariable ["ownerX",getPlayerUID player,true];
-				};
+				[0,(-1 * vehiclePurchase_cost),0] remoteExec ["A3A_fnc_resourcesFIA",2];
 
 				isRallyPointPlaced = true;
     			publicVariable "isRallyPointPlaced";

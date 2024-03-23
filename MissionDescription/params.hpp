@@ -339,7 +339,7 @@ class Params
         title = "AI Control Time Limit";
         values[] = {9999,60,120,300,900,1800};
         texts[] = {"Load From Save (Default - 60 seconds)","1 minute","2 minutes","5 minutes","15 minutes", "30 minutes"};
-        default = 300;
+        default = 1800;
      };
      class deathPenalty
      {

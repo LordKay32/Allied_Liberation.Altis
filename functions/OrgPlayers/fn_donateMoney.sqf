@@ -1,14 +1,24 @@
 private ["_resourcesPlayer","_pointsXJ","_target","_selectedPlayer"];
 _resourcesPlayer = player getVariable "moneyX";
-if (_resourcesPlayer < 500) exitWith {["Donate CP", format ["You have less than 500%1 to donate.", currencySymbol]] call A3A_fnc_customHint;};
 
 if (count _this == 0) exitWith {
+	if (_resourcesPlayer < 500) exitWith {["Donate CP", format ["You have less than 500%1 to donate.", currencySymbol]] call A3A_fnc_customHint;};
 	[0,500,0] remoteExec ["A3A_fnc_resourcesFIA",2];
 	_pointsXJ = (player getVariable "score") + 1;
 	player setVariable ["score",_pointsXJ,true];
 	[-500] call A3A_fnc_resourcesPlayer;
-	["Donate CP", format ["You have donated 100%1 to the command points pool.", currencySymbol]] call A3A_fnc_customHint;
+	["Donate CP", format ["You have donated 500%1 to the command points pool.", currencySymbol]] call A3A_fnc_customHint;
 };
+
+if (_this select 0) exitWith {
+	_resourcesFIA = server getVariable "resourcesFIA";
+	if (_resourcesFIA < 5500) exitWith {["Take CP", format ["You cannot take CP from the faction pool if it will drop under 5000 CP.", currencySymbol]] call A3A_fnc_customHint;};
+	[0,-500,0] remoteExec ["A3A_fnc_resourcesFIA",2];
+	[500] call A3A_fnc_resourcesPlayer;
+	["Take CP", format ["You have taken 500%1 from the command points pool.", currencySymbol]] call A3A_fnc_customHint;
+};
+
+if (_resourcesPlayer < 500) exitWith {["Donate CP", format ["You have less than 500%1 to donate.", currencySymbol]] call A3A_fnc_customHint;};
 
 showCommandingMenu "";
 
