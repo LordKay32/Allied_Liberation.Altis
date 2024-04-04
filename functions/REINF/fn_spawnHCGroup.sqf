@@ -131,7 +131,17 @@ private _initVeh = {
     _vehicle setVariable ["owner",_group,true];
     if (typeOf _vehicle in [vehSDKTankUSM4,vehSDKTankUSM5,vehSDKTankUKM4,vehSDKTankChur]) then {leader _group assignAsCommander _vehicle} else {leader _group assignAsDriver _vehicle};
     driver _vehicle action ["engineOn", _vehicle];
-    if (_vehicle isKindOf "Ship") then {{_x moveInAny _vehicle} forEach units _group} else {{[_x] orderGetIn true; [_x] allowGetIn true} forEach units _group};
+    if (_vehicle isKindOf "Ship") then {
+    	{_x moveInAny _vehicle} forEach units _group;
+    } else {
+    	if (typeOf _vehicle == vehSDKAA) then {
+    		_AA = (attachedObjects _vehicle) select 0;
+    		(units _group) select 2 assignAsGunner _AA;
+    		{[_x] orderGetIn true; [_x] allowGetIn true} forEach units _group;
+    	} else {
+    		{[_x] orderGetIn true; [_x] allowGetIn true} forEach units _group;
+    	};
+    };
     
     if (_markerX in supportpostsFIA) exitWith {
     	[_markerX, _vehicle] spawn {
@@ -181,7 +191,6 @@ switch _special do {
         private _staticType = switch _idFormat do {
             case "US-Mort-": {SDKMortar};
             case "UK-MG-": {UKMGStatic};
-            case "US-MG-": {USMGStatic};
             default {""};
         };
 

@@ -15,7 +15,7 @@
 ["vehicleHeavyArmed", "LIB_Scout_M3"] call _fnc_saveToTemplate;
 
 ["vehicleAT", "LIB_M8_Greyhound"] call _fnc_saveToTemplate;
-["vehicleAA", "not_supported"] call _fnc_saveToTemplate;
+["vehicleAA", "UNI_Stud_Open_Cargo_OD"] call _fnc_saveToTemplate;
 
 ["vehicleBoat", "LIB_LCM3_Armed"] call _fnc_saveToTemplate;
 ["vehicleInfBoat", "LIB_LCVP"] call _fnc_saveToTemplate;
@@ -64,6 +64,7 @@
 
 ["staticMGUK", "fow_w_vickers_uk"] call _fnc_saveToTemplate;
 ["staticMGUS", "fow_w_m1919_tripod_usa_m41"] call _fnc_saveToTemplate;
+["staticMGM2", "I_G_HMG_02_high_F"] call _fnc_saveToTemplate;
 ["staticAT", "fow_w_6Pounder_uk"] call _fnc_saveToTemplate;
 ["staticAA", "LIB_61k"] call _fnc_saveToTemplate;
 ["staticMortar", "LIB_M2_60"] call _fnc_saveToTemplate;

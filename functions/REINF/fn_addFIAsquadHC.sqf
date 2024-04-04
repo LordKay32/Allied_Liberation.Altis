@@ -36,7 +36,7 @@ switch (true) do {
 	_hr = server getVariable "SAShr";
 	};
 
-	case (_typeGroup in [groupsUSSquad,groupsUSAT,vehSDKLightArmed,SDKMortar,USMGStatic,vehSDKTankUSM4,vehSDKTankUSM5,vehSDKRepair,vehSDKFuel,vehSDKAmmo,vehSDKMedical,vehInfSDKBoat,vehSDKBoat,vehSDKTransPlaneUS]) : {
+	case (_typeGroup in [groupsUSSquad,groupsUSAT,vehSDKLightArmed,SDKMortar,vehSDKAA,vehSDKTankUSM4,vehSDKTankUSM5,vehSDKRepair,vehSDKFuel,vehSDKAmmo,vehSDKMedical,vehInfSDKBoat,vehSDKBoat,vehSDKTransPlaneUS]) : {
 	_hr = server getVariable "UShr";
 	};
 	
@@ -60,7 +60,6 @@ if (_typeGroup isEqualType []) then {
 	} forEach _typeGroup;
 
 	if (_withBackpck == "UKMG") then {_costs = _costs + ([UKMGStatic] call A3A_fnc_vehiclePrice)};
-	if (_withBackpck == "USMG") then {_costs = _costs + ([USMGStatic] call A3A_fnc_vehiclePrice)};
 	if (_withBackpck == "Mortar") then {_costs = _costs + ([SDKMortar] call A3A_fnc_vehiclePrice)};
 	_isInfantry = true;
 
@@ -85,13 +84,13 @@ if (_typeGroup isEqualType []) then {
 			} forEach groupUKMGCrew;
 			_costs = _costs + ([_typeGroup] call A3A_fnc_vehiclePrice)
 		};
-		case USMGStatic: {
+		case vehSDKAA: {
     		{
 			private _typeUnit = _x;
 			_formatX pushBack _typeUnit;
 			_costs = _costs + (server getVariable _typeUnit);
 			_costHR = _costHR + 1;
-			} forEach groupUSMGCrew;
+			} forEach groupUSAACrew;
 			_costs = _costs + ([_typeGroup] call A3A_fnc_vehiclePrice)
 		};
 		case vehSDKLightArmed: {
@@ -226,7 +225,7 @@ if (_typeGroup isEqualType []) then {
 	} else {
 		if (server getVariable (_typeGroup + "_count") < 1) then {_exit = true; ["Deploy Squad", "You do not have any of the chosen vehicle type to deploy this squad."] call A3A_fnc_customHint;};
 	};
-	if ((_typeGroup == SDKMortar) or (_typeGroup == USMGStatic) or (_typeGroup == UKMGStatic)) exitWith { _isInfantry = true };
+	if ((_typeGroup == SDKMortar) or (_typeGroup == UKMGStatic)) exitWith { _isInfantry = true };
 };
 
 if (_hr < _costHR) then {_exit = true; ["Deploy Squad", format ["You do not have enough HR for this request (%1 required).",_costHR]] call A3A_fnc_customHint;};
@@ -275,8 +274,7 @@ if (count _emptyList > 0) exitWith {
 private _mounts = [];
 private _vehType = switch true do {
     case (!_isInfantry && _typeGroup isEqualTo staticAAteamPlayer): {
-        if (vehSDKAA isEqualTo "not_supported") exitWith {_mounts pushBack [staticAAteamPlayer,-1,[[1],[],[]]]; vehSDKTruck};
-        vehSDKAA
+        if (vehSDKAA isEqualTo "not_supported") exitWith {_mounts pushBack ["LIB_FlaK_38",-1,[[1],[],[]]]; "UNI_Stud_Open_Cargo_OD"};
     };
     case (!_isInfantry): {_typeGroup};
     case (count _formatX isEqualTo 2): {vehSDKBike};
@@ -292,7 +290,7 @@ private _idFormat = switch _typeGroup do {
     case groupSASSniper: {"SAS-Snpr-"};
     case SDKMortar: {"US-Mort-"};
     case UKMGStatic: {"UK-MG-"};
-    case USMGStatic: {"US-MG-"};
+    case vehSDKAA: {"US-AA-"};
     case vehSDKLightArmed: {"M.MG-"};
     case staticAAteamPlayer: {"M.AA-"};
     case groupsUKSquad: {"UK-Sqd-"};
@@ -314,7 +312,6 @@ private _idFormat = switch _typeGroup do {
     case vehSDKTransPlaneUS: {"USAAF.Tran-"};
     default {
         switch _withBackpck do {
-            case "USMG": {"US-SqMG-"};
             case "UKMG": {"UK-SqMG-"};
             case "Mortar": {"Mortar"};
             default {"Squad-"};
@@ -409,7 +406,7 @@ switch (true) do {
 	
 		potMarkers = [];
 
-		if (_typeGroup in [groupsSASRecon, groupsUSAT, groupSASSniper, SDKMortar, UKMGStatic, USMGStatic, vehSDKLightArmed, staticAAteamPlayer, groupsUKSquad, groupsUSSquad, groupsSASSquad, groupsparaSquad, vehSDKTankUSM4, vehSDKTankUSM5, vehSDKTankUKM4, vehSDKTankChur]) then {
+		if (_typeGroup in [groupsSASRecon, groupsUSAT, groupSASSniper, SDKMortar, UKMGStatic, vehSDKAA, vehSDKLightArmed, staticAAteamPlayer, groupsUKSquad, groupsUSSquad, groupsSASSquad, groupsparaSquad, vehSDKTankUSM4, vehSDKTankUSM5, vehSDKTankUKM4, vehSDKTankChur]) then {
 			{
 			if (sidesX getVariable [_x,sideUnknown] == teamPlayer) then {potMarkers pushBack _x};
 			} forEach (["Synd_HQ"] + airportsX + milbases);
@@ -467,7 +464,7 @@ switch (true) do {
 		sqdMrkFlsh = false;
 		private _positionTel = positionTel;
 
-		if (_typeGroup in [groupsSASRecon, groupsUSAT, groupSASSniper, SDKMortar, UKMGStatic, USMGStatic, vehSDKLightArmed, staticAAteamPlayer, groupsUKSquad, groupsUSSquad, groupsSASSquad, groupsparaSquad, vehSDKTankUSM4, vehSDKTankUSM5, vehSDKTankUKM4, vehSDKTankChur]) then {
+		if (_typeGroup in [groupsSASRecon, groupsUSAT, groupSASSniper, SDKMortar, UKMGStatic, vehSDKAA, vehSDKLightArmed, staticAAteamPlayer, groupsUKSquad, groupsUSSquad, groupsSASSquad, groupsparaSquad, vehSDKTankUSM4, vehSDKTankUSM5, vehSDKTankUKM4, vehSDKTankChur]) then {
 			_nearX = [(["Synd_HQ"] + airportsX + milbases),_positionTel] call BIS_fnc_nearestPosition;
 		};
 
@@ -601,12 +598,13 @@ private _vehiclePlacementMethod =
 		publicVariable "teamPlayerVehDeployed";
 	};
 	
-	if (_mounts isNotEqualTo []) then {
-    	private _static = staticAAteamPlayer createVehicle _spawnPos;
-        private _nodes = [_vehicle, _static] call A3A_fnc_logistics_canLoad;
-        if (_nodes isEqualType 0) exitWith {};
-        (_nodes + [true]) call A3A_fnc_logistics_load;
-        _static call HR_GRG_fnc_vehInit;
+	if (_vehType == vehSDKAA) then {
+		_vehicle animateSource ['stoiki_hide', 1];
+		_aaMount = createVehicle ["LIB_FlaK_38", [0,0,1100], [], 0, "NONE"];
+		_aaMount animateSource ['Hide_Shield', 1];
+		_aaMount animateSource ['Hide_Shield_Sight', 1];
+		_aaMount animateSource ['Hide_Shield_Small', 1];
+		_aaMount attachTo [_vehicle, [0,-2,0.175]];
 	};
 	[_formatX, _idFormat, _special, _vehicle] spawn A3A_fnc_spawnHCGroup;
 };

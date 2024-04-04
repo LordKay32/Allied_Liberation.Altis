@@ -34,15 +34,8 @@ if (str (_display) != "no display") then
 	_ChildControl = _display displayCtrl 108;
 	_costs = 0;
 	_costHR = 0;
-	{_costs = _costs + (server getVariable _x); _costHR = _costHR +1} forEach groupUSMGCrew;
-	_costs = _costs + ([USMGStatic] call A3A_fnc_vehiclePrice);
-	_ChildControl  ctrlSetTooltip format ["Cost: %1%3. HR: %2",_costs,_costHR, currencySymbol];
-
-	_ChildControl = _display displayCtrl 109;
-	_costs = 0;
-	_costHR = 0;
-	{_costs = _costs + (server getVariable _x); _costHR = _costHR +1} forEach groupUSMGCrew;
-	_costs = _costs + ([USMGStatic] call A3A_fnc_vehiclePrice);
+	{_costs = _costs + (server getVariable _x); _costHR = _costHR +1} forEach groupUSAACrew;
+	_costs = _costs + ([vehSDKAA] call A3A_fnc_vehiclePrice);
 	_ChildControl  ctrlSetTooltip format ["Cost: %1%3. HR: %2",_costs,_costHR, currencySymbol];
 
 	_ChildControl = _display displayCtrl 110;

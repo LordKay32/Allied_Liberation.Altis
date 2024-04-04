@@ -123,7 +123,7 @@ class commanderMenu
 				class commanderDescriptionText: TextBaseMT
 				{
 					idc = 1701;			
-					text = "Select support type, click on desired position on the map and press Launch. Some call-ins require at least 1 captured airport. Support points will gain automatically starting War Level 2.";
+					text = "Select support type, click on desired position on the map and press Launch.";
 					x = "1 * pixelGridNoUIScale * pixelW";
 					y = "2 * pixelGridNoUIScale * pixelH";	
 					w = "22 * pixelGridNoUIScale * pixelW";	
@@ -164,7 +164,7 @@ class commanderMenu
 				class airstrikePointsText: TextBase
 				{
 					idc = 1703;
-					text = "Available Airstrikes: ";
+					text = "Available Air Supports: ";
 					x = "1 * pixelGridNoUIScale * pixelW";
 					y = "safezoneH - (30 * pixelGridNoUIScale * pixelH)";	
 					w = "22 * pixelGridNoUIScale * pixelW";	

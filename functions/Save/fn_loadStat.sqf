@@ -451,6 +451,30 @@ if (_varName in _specialVarLoads) then {
 				sleep 2;
 				_veh allowDamage true;
 			};
+			
+			if (_typeVehX == "LIB_leFH18") then {
+				_veh setObjectTextureGlobal [0, "ww2\assets_t\vehicles\staticweapons_t\i44_lefh18\lefh18_2tone_co.paa"];
+			};
+			
+			if (_veh isKindOf "Air") then {
+				for "_i" from 1 to 25 do { 
+				_veh setPylonLoadout [_i, ""]; 
+				};
+			};
+			
+			if (_typeVehX == vehSDKAA) then {
+				_veh animateSource ['stoiki_hide', 1];
+				_aaMount = createVehicle ["LIB_FlaK_38", [0,0,1100], [], 0, "NONE"];
+				_aaMount animateSource ['Hide_Shield', 1];
+				_aaMount animateSource ['Hide_Shield_Sight', 1];
+				_aaMount animateSource ['Hide_Shield_Small', 1];
+				_aaMount attachTo [_veh, [0,-2,0.175]];
+			};
+
+			if (_typeVehX == M2MGStatic) then {
+				_veh animateSource ['Hide_Shield', 1];
+			};
+			
 			// This is only here to handle old save states. Could be removed after a few version itterations. -Hazey
 			if (_xVectorUp isEqualType 0) then { // We have to check number because old save state might still be using getDir. -Hazey
 				_veh setDir _xVectorUp; //is direction due to old save
@@ -580,11 +604,6 @@ if (_varName in _specialVarLoads) then {
     	if (introFinished) then {
 			"US_AssaultMrk" setMarkerAlpha 0; 
 			"UK_AssaultMrk" setMarkerAlpha 0;
-			[] spawn {
-				if ((sidesX getVariable ["Molos", sideUnknown] == teamPlayer) || !(rebelCity == "NONE")) exitWith {};
-				waitUntil {sleep 600; ((sidesX getVariable ["airport_2", sideUnknown] == teamPlayer) && (sidesX getVariable ["seaport_4", sideUnknown] == teamPlayer) && !(bigAttackInProgress))};
-				["Molos"] spawn A3A_fnc_cityRebel;
-			};
 		};
 		
 		if !(rebelCity == "NONE") then {

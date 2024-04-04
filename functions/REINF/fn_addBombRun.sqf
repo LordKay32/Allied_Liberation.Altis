@@ -20,7 +20,7 @@ if ({isPlayer _x} count crew _veh > 0) exitWith {
 };
 
 if (bombRuns > 4) exitWith {
-	["Airstrike", "There can be no more than 5 available airstrikes."] call SCRT_fnc_misc_showDeniedActionHint;
+	["Airstrike", "There can be no more than 5 available air supports."] call SCRT_fnc_misc_showDeniedActionHint;
 };
 
 _owner = _veh getVariable "ownerX";

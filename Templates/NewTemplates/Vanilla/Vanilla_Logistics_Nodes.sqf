@@ -186,6 +186,7 @@ A3A_logistics_attachmentOffset = [
     ["B_Mortar_01_F" call A3A_fnc_classNameToModel,                             [-0.1,-0.5,0.74],           [0, 1, 0],                  2,      2000],              //Mortar
     ["B_HMG_02_high_F" call A3A_fnc_classNameToModel,                           [0.2, -0.5, 1.69],          [0, 1, 0],                  4,      100],               //M2 High
     ["B_HMG_02_F" call A3A_fnc_classNameToModel,                                [-0.2, 0, 1.24],            [0, -1, 0],                 4,      100],               //M2
+    ["LIB_FlaK_38" call A3A_fnc_classNameToModel,                               [-0.2, 0, 1.24],            [0, -1, 0],                 4,      100],               //M2
 	//WW2 Weaps
     ["LIB_M2_60" call A3A_fnc_classNameToModel,                                 [0, 0.2, 1],            [0, -1, 0],                 2,      100],               //M2
     ["fow_w_vickers_uk" call A3A_fnc_classNameToModel,                          [0, 0.2, 0.05],            [0, -1, 0],                 2,      100],               //M2

@@ -31,7 +31,7 @@ if(!(_thingX isKindOf "StaticWeapon")) exitWith {
 
 _thingX setVariable ["objectBeingMoved", true];
 
-private _spacing = if (typeOf _thingX in [UKMGStatic,USMGStatic]) then {1.2} else {2 max (1 - (boundingBoxReal _thingX select 0 select 1))};
+private _spacing = if (typeOf _thingX in [UKMGStatic,USMGStatic,M2MGStatic]) then {1.2} else {2 max (1 - (boundingBoxReal _thingX select 0 select 1))};
 private _height = 0.1 - (boundingBoxReal _thingX select 0 select 2);
 _thingX attachTo [_playerX, [0, _spacing, _height]];
 

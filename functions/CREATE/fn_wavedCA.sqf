@@ -11,6 +11,11 @@ publicVariable "bigAttackInProgress";
 //_originalSide is optional, side that should have their attack counter incremented
 params ["_mrkDestination", "_mrkOrigin", "_waves", "_originalSide"];
 
+_outposts = outposts select {(sidesX getVariable [_x,sideUnknown] == _originalSide) and ((getMarkerPos _x) distance (getMarkerPos _mrkDestination) < distanceForLandAttack) and ([_x, _mrkDestination] call A3A_fnc_arePositionsConnected)};
+_outpost = if (count _outposts > 0) then {_outposts select 0} else {""};
+
+_mrkOrigin = if (((getMarkerPos _mrkOrigin) distance (getMarkerPos _mrkDestination) > distanceForLandAttack) && (count _outposts > 0)) then {_outpost} else {_mrkOrigin};
+
 _firstWave = true;
 if (_waves <= 0) then {_waves = -1};
 _size = [_mrkDestination] call A3A_fnc_sizeMarker;
@@ -169,11 +174,11 @@ while {(_waves > 0)} do
 	_spawnPoint = "";
 	if !(_mrkDestination in blackListDest) then {
 		//Attempt land attack if origin is an airport in range
-		_airportIndex = (airportsX + milbases) find _mrkOrigin;
+		_airportIndex = (airportsX + milbases + outposts) find _mrkOrigin;
 		if (_airportIndex >= 0 and (_posOrigin distance _posDestination < distanceForLandAttack)
 			and ([_posOrigin, _posDestination] call A3A_fnc_arePositionsConnected)) then
 		{
-			_spawnPoint = server getVariable (format ["spawn_%1", _mrkOrigin]);
+			_spawnPoint = _mrkOrigin; //server getVariable (format ["spawn_%1", _mrkOrigin]);
 			_pos = getMarkerPos _spawnPoint;
 			_posOriginLand = _posOrigin;
 			_dir = markerDir _spawnPoint;
@@ -182,7 +187,7 @@ while {(_waves > 0)} do
 	private _nVehLand = 0;
 	if (!(_posOriginLand isEqualTo []) && (_posOrigin distance _posDestination < distanceForLandAttack)) then
 	{
-		_nVehLand = ceil _nVeh;
+		_nVehLand = if (_mrkOrigin in outposts) then {ceil (_nVeh/2)} else {ceil _nVeh};
 		_road = [_posDestination] call A3A_fnc_findNearestGoodRoad;
 		_countX = 1;
 		_landPosBlacklist = [];
@@ -521,7 +526,7 @@ while {(_waves > 0)} do
 	private _nVehAir = _nVeh;
 	if !(_posOriginLand isEqualTo []) then {
 		sleep ((_posOrigin distance _posDestination)/7);			// give land vehicles a head start
-		_nVehAir = if (_posOrigin distance _posDestination < distanceForLandAttack) then {if ((_mrkDestination in (airportsX + milbases)) && (aggressionLevelOccupants > 3)) then {(round (_nVeh / 2)) + 1} else {round (_nVeh / 2)}} else {_nVeh - 1};				// fill out with air vehicles
+		_nVehAir = if (_posOrigin distance _posDestination < distanceForLandAttack) then {if ((_mrkDestination in (airportsX + milbases)) && (aggressionLevelOccupants > 3)) then {(round (_nVeh / 3)) + 1} else {round (_nVeh / 3)}} else {_nVeh - 1};				// fill out with air vehicles
 	};
 	_posGround = [_posOrigin select 0,_posOrigin select 1,0];
 	_posOrigin set [2,300];

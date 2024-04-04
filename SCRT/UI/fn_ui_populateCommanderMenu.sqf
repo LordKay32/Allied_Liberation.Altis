@@ -70,9 +70,9 @@ lbAdd [1750, "HE Bomb Airstrike"];
 lbSetData [1750, 6, "HE"];
 lbSetTooltip [1750, 6, "Plane flies over and drops HE bombs at the specified location."];
 
-lbAdd [1750, "Fire Bomb Airstrike"];
-lbSetData [1750, 7, "CLUSTER"];
-lbSetTooltip [1750, 7, "Plane flies over and drops fire bombs at the specified location."];
+lbAdd [1750, "Air Superiority FIghters"];
+lbSetData [1750, 7, "FIGHTER"];
+lbSetTooltip [1750, 7, "Sends a flight of fighters to the chosen location."];
 
 //lbAdd [1750, "Chemical Airstrike"];
 //lbSetData [1750, 9, "CHEMICAL"];

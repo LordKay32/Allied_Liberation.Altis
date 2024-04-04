@@ -29,9 +29,9 @@ switch (supportType) do {
     };
     case ("NAPALM");
     case ("HE");
-    case ("CLUSTER");
+    case ("FIGHTER");
     case ("CHEMICAL"): {
-        _costTextBox ctrlSetText "Costs 1 Airstrike";
+        _costTextBox ctrlSetText "Costs 1 Air Support";
     };
     case ("PARADROP"): {
         _costTextBox ctrlSetText format ["Costs 1 Support and 500%1", currencySymbol];

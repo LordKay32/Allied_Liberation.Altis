@@ -25,7 +25,7 @@ private _fnc_distCheck = {
 { deleteVehicle _x } forEach (allMissionObjects "Box_Syndicate_WpsLaunch_F");
 { deleteVehicle _x } forEach (allMissionObjects "Bo_Mk82_MI08");
 
-private _rebelPlayers = (call BIS_fnc_listPlayers) select { side _x == teamPlayer || {side _x == civilian}};
+private _rebelPlayers = call BIS_fnc_listPlayers;
 private _lootCrates = (allMissionObjects lootCrate) select {
 	private _crate = _x;
 	private _isOnHq = (getMarkerPos "Synd_HQ") distance2D _crate < 50;
