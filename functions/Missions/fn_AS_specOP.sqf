@@ -14,7 +14,7 @@ _displayTime = [_dateLimit] call A3A_fnc_dateToTimeString;//Converts the time po
 
 _nameDest = [_markerX] call A3A_fnc_localizar;
 _naming = if (_sideX == Occupants) then {"NATO"} else {"CSAT"};
-private _taskString = format ["A squad of the hated Waffen SS is patrolling around %1. Ambush them and wipe them out. Be careful, they are fanatically dedicated soldiers.<br/><br/>Reward: 800CP per player.",_nameDest];
+private _taskString = format ["A squad of the hated Waffen SS is patrolling around %1. Ambush them and wipe them out. Be careful, they are fanatically dedicated soldiers.<br/><br/>Reward: 1000CP per player.",_nameDest];
 private _taskId = "AS" + str A3A_taskCount;
 
 
@@ -73,10 +73,10 @@ if (dateToNumber date > _dateLimitNum) then
 else
 	{
 	[_taskId, "AS", "SUCCEEDED"] call A3A_fnc_taskSetState;
-	[0,1600,0] remoteExec ["A3A_fnc_resourcesFIA",2];
+	[0,2000,0] remoteExec ["A3A_fnc_resourcesFIA",2];
 	[0,10,_positionX] remoteExec ["A3A_fnc_citySupportChange",2];
 	[1200, _sideX] remoteExec ["A3A_fnc_timingCA",2];
-	{ [80,_x] call A3A_fnc_playerScoreAdd } forEach (call BIS_fnc_listPlayers) select { side _x == teamPlayer || side _x == civilian};
+	{ [100,_x] call A3A_fnc_playerScoreAdd } forEach (call BIS_fnc_listPlayers) select { side _x == teamPlayer || side _x == civilian};
 	if (_sideX == Occupants) then {aggressionOccupants = aggressionOccupants - 10} else {aggressionInvaders = aggressionInvaders - 10};
 	[] call A3A_fnc_calculateAggression;
 	["TaskFailed", ["", format ["SpecOp Team decimated at a %1",_nameDest]]] remoteExec ["BIS_fnc_showNotification",_sideX];

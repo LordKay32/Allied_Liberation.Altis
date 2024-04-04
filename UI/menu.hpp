@@ -1430,7 +1430,7 @@ class infVehActions: SimpleMenuSmall
 			x = 0.257187 * safezoneW + safezoneX;
 			y = 0.34 * safezoneH + safezoneY;
 			tooltip = Mount HC troops into cargo of a transport vehicle you are looking at;
-			action = "closeDialog 0; [""transport""] call A3A_fnc_vehStats";
+			action = "closeDialog 0; [""transport""] spawn A3A_fnc_vehStats";
 		};
 		
 		class r1Button: SimpleButton
@@ -1538,7 +1538,7 @@ class commanderComm: SimpleMenuBig
 			x = 0.257187 * safezoneW + safezoneX;
 			y = 0.486 * safezoneH + safezoneY;
 			tooltip = $STR_antistasi_dialogs_share_faction_money_tooltip;
-			action = "closeDialog 0; [] call SCRT_fnc_common_shareFactionMoneyWithMembers";
+			action = "closeDialog 0; if (player == theBoss) then { [] call SCRT_fnc_common_shareFactionMoneyWithMembers; } else {[""Share faction CP"", ""Only Player Commander has access to this function""] call A3A_fnc_customHint;};";
 		};
 
 		class l4Button: SimpleButton
@@ -2013,21 +2013,21 @@ class playerMoney: SimpleMenuSmall
 		class l1Button: SimpleButton
 		{
 			idc = 104;
-			text = $STR_antistasi_dialogs_add_server_member_title;
+			text = Take 500 CP from faction;
 			x = 0.257187 * safezoneW + safezoneX;
 			y = 0.262 * safezoneH + safezoneY;
-			tooltip = $STR_antistasi_dialogs_add_server_member_tooltip;
-			action = "closeDialog 0; ['add'] call A3A_fnc_memberAdd;";
+			tooltip = Takes 500 CP from faction CP and adds to your own. You will not be able to take CP from the faction if it will fall under 5000 CP or less.;
+			action = "[true] spawn A3A_fnc_donateMoney;";
 		};
 
 		class l2Button: SimpleButton
 		{
 			idc = 105;
-			text = $STR_antistasi_dialogs_remove_server_member_title;
+			text = $STR_antistasi_dialogs_donate_faction_title;
 			x = 0.257187 * safezoneW + safezoneX;
 			y = 0.346 * safezoneH + safezoneY;
-			tooltip = $STR_antistasi_dialogs_remove_server_member_tooltip;
-			action = "closeDialog 0; ['remove'] call A3A_fnc_memberAdd;";
+			tooltip = $STR_antistasi_dialogs_donate_faction_tooltip;
+			action = "[] spawn A3A_fnc_donateMoney;";
 		};
 		
 		class r1Button: SimpleButton
@@ -2037,17 +2037,7 @@ class playerMoney: SimpleMenuSmall
 			x = 0.477 * safezoneW + safezoneX;
 			y = 0.262 * safezoneH + safezoneY;
 			tooltip = $STR_antistasi_dialogs_donate_player_title;
-			action = "closeDialog 0; [true] spawn A3A_fnc_donateMoney;";
-		};
-
-		class r2Button: SimpleButton
-		{
-			idc = 308;
-			text = $STR_antistasi_dialogs_donate_faction_title;
-			x = 0.477 * safezoneW + safezoneX;
-			y = 0.346 * safezoneH + safezoneY;
-			tooltip = $STR_antistasi_dialogs_donate_faction_tooltip;
-			action = "[] spawn A3A_fnc_donateMoney;";
+			action = "closeDialog 0; [false] spawn A3A_fnc_donateMoney;";
 		};
 	};
 };

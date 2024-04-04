@@ -15,7 +15,7 @@
 params ["_group", "_reconPos", "_dirPos", "_markerX"];
 private["_vector", "_positionX", "_timer", "_exit", "_entities", "_statics", "_num", "_markerList", "_pos", "_marker"];
 
-if ((combatMode _group != "GREEN") && (west knowsAbout (leader _group) < 4)) then {_group setCombatMode "GREEN"};
+if ((combatMode _group != "GREEN") && (Occupants knowsAbout (leader _group) < 4)) then {_group setCombatMode "GREEN"};
 
 _vector = _reconPos getDir _dirPos;
 _positionX = _reconPos getPos [300, _vector];
@@ -81,7 +81,7 @@ if (_exit == true) exitWith {
 			};
 		};
 		} forEach units _group;
-		waitUntil {sleep 1; west knowsAbout (leader _group) < 4}; 
+		waitUntil {sleep 1; Occupants knowsAbout (leader _group) < 4}; 
 		_group setCombatMode "GREEN";
 	};
 	sleep 300;
@@ -90,7 +90,7 @@ if (_exit == true) exitWith {
 	} forEach _markerList;
 };
 while {true} do {
-	_entities = allGroups select {(side _x isEqualTo west) && ((leader _x) distance _positionX < 500)};
+	_entities = allGroups select {(side _x isEqualTo Occupants) && ((leader _x) distance _positionX < 500)};
 	
 	_num = 0;
 	_markerList = [];
@@ -99,14 +99,14 @@ while {true} do {
 	_num = _num + 1;
 	_marker = createMarker [format["Entity_%1", _num], _pos];
 	
-	if (vehicle (leader _x) == (leader _x)) then {_marker setMarkerType "b_inf"};
-	if (typeOf (vehicle (leader _x)) in vehNormal) then {_marker setMarkerType "b_motor_inf"};
-	if (typeOf (vehicle (leader _x)) in (vehAmmoTrucks + vehSupplyTrucks)) then {_marker setMarkerType "b_support"};
-	if (typeOf (vehicle (leader _x)) in vehAPCs) then {_marker setMarkerType "b_mech_inf"};
-	if (typeOf (vehicle (leader _x)) in vehTanks) then {_marker setMarkerType "b_armor"};
-	if (typeOf (vehicle (leader _x)) in vehAA) then {_marker setMarkerType "b_antiair"};
-	if (typeOf (vehicle (leader _x)) in vehFixedWing) then {_marker setMarkerType "b_plane"};
-	if (typeOf (vehicle (leader _x)) in vehBoats) then {_marker setMarkerType "b_naval"};
+	if (vehicle (leader _x) == (leader _x)) then {_marker setMarkerType "mil_dot"; _marker setMarkerColor colorOccupants};
+	if (typeOf (vehicle (leader _x)) in vehNATOLight) then {_marker setMarkerType "plp_icon_vehicle"; _marker setMarkerColor colorOccupants};
+	if (typeOf (vehicle (leader _x)) in (vehTrucks + vehAmmoTrucks + vehSupplyTrucks)) then {_marker setMarkerType "plp_icon_truck"; _marker setMarkerColor colorOccupants};
+	if (typeOf (vehicle (leader _x)) in vehAPCs) then {_marker setMarkerType "plp_icon_motinfantry"; _marker setMarkerColor colorOccupants};
+	if (typeOf (vehicle (leader _x)) in vehTanks) then {_marker setMarkerType "plp_icon_tank"; _marker setMarkerColor colorOccupants};
+	if (typeOf (vehicle (leader _x)) in vehAA) then {_marker setMarkerType "plp_icon_artymobile"; _marker setMarkerColor colorOccupants};
+	if (typeOf (vehicle (leader _x)) in vehFixedWing) then {_marker setMarkerType "plp_icon_planeLight"; _marker setMarkerColor colorOccupants};
+	if (typeOf (vehicle (leader _x)) in vehBoats) then {_marker setMarkerType "plp_icon_boat"; _marker setMarkerColor colorOccupants};
 	{
 		if (vehicle _x == _x) then {
 		_infMarker = createMarker [format["Inf_%1", (random 1000)], getPos _x];
@@ -118,18 +118,18 @@ while {true} do {
 	_markerList pushBack _marker;
 	} forEach _entities;
 
-	_statics = (nearestObjects [_positionX, ["StaticWeapon"], 600]) select {side _x isEqualTo west};
+	_statics = (nearestObjects [_positionX, ["StaticWeapon"], 600]) select {side _x isEqualTo Occupants};
 	{
 	_pos = getPos _x;
 	_num = _num + 1;
 	_marker = createMarker [format["Entity_%1", _num], _pos];
 	
-	if (typeOf (vehicle _x) in NATOMG) then {_marker setMarkerType "b_Ordnance"; _marker setMarkerText "MG"};
+	if (typeOf (vehicle _x) in NATOMG) then {_marker setMarkerType "plp_icon_machinegun"; _marker setMarkerColor colorOccupants};
 	if (typeOf (vehicle _x) in ["fow_w_mg42_deployed_high_ger_heer", "fow_w_mg42_deployed_middle_ger_heer"]) then {_marker setMarkerType "mil_dot"; _marker setMarkerColor colorOccupants};
-	if (typeOf (vehicle _x) in [staticATOccupants]) then {_marker setMarkerType "b_Ordnance"; _marker setMarkerText "AT"};
-	if (typeOf (vehicle _x) in staticAAOccupants) then {_marker setMarkerType "b_antiair"};
-	if (typeOf (vehicle _x) in NATOMortar) then {_marker setMarkerType "b_mortar"};
-	if (typeOf (vehicle _x) in NATOHowitzer) then {_marker setMarkerType "b_art"};
+	if (typeOf (vehicle _x) in [staticATOccupants]) then {_marker setMarkerType "plp_icon_artycannon"; _marker setMarkerColor colorOccupants};
+	if (typeOf (vehicle _x) in staticAAOccupants) then {_marker setMarkerType "plp_icon_aacannon"; _marker setMarkerColor colorOccupants};
+	if (typeOf (vehicle _x) in NATOMortar) then {_marker setMarkerType "plp_icon_mortar"; _marker setMarkerColor colorOccupants};
+	if (typeOf (vehicle _x) in NATOHowitzer) then {_marker setMarkerType "plp_icon_artycannon"; _marker setMarkerColor colorOccupants};
 
 	_markerList pushBack _marker;
 	} forEach _statics;

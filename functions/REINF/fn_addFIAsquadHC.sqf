@@ -399,7 +399,7 @@ switch (true) do {
 		
 		if (_nearX in supportpostsFIA) then {
 			_nearVeh = (getMarkerPos _nearX) nearObjects [_typeGroup, 20];
-			if (count _nearVeh == 0) exitWith {_exit = true; ["Deploy Squad", "This vehicle type is not present at that support post."] call A3A_fnc_customHint;};
+			if ({alive _x} count _nearVeh == 0) exitWith {_exit = true; ["Deploy Squad", "This vehicle type is not present at that support post."] call A3A_fnc_customHint;};
 		};
 	};
 

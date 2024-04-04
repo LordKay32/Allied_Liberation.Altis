@@ -37,15 +37,15 @@ _eh1 = player addEventHandler ["HandleDamage",
 	["Control Unit", "Returned to original Unit as it received damage."] call A3A_fnc_customHint;
 	nil;
 	}];
-_eh2 = _unit addEventHandler ["HandleDamage",
+_eh2 = _unit addEventHandler ["Killed",
 	{
 	_unit = _this select 0;
-	_unit removeEventHandler ["HandleDamage",_thisEventHandler];
+	_unit removeEventHandler ["Killed",_thisEventHandler];
 	removeAllActions _unit;
 	selectPlayer (_unit getVariable "owner");
 	(units group player) joinsilent group player;
 	group player selectLeader player;
-	["Control Unit", "Returned to original Unit as controlled AI received damage."] call A3A_fnc_customHint;
+	["Control Unit", "Returned to original Unit as controlled AI was killed."] call A3A_fnc_customHint;
 	nil;
 	}];
 selectPlayer _unit;
@@ -63,7 +63,7 @@ selectPlayer (_unit getVariable ["owner",_unit]);
 //_unit setVariable ["owner",nil,true];
 (units group player) joinsilent group player;
 group player selectLeader player;
-_unit removeEventHandler ["HandleDamage",_eh2];
+_unit removeEventHandler ["Killed",_eh2];
 player removeEventHandler ["HandleDamage",_eh1];
 ["Control Unit", ""] call A3A_fnc_customHint;
 

@@ -52,9 +52,9 @@ if (!isNil "isRallyPointPlaced" && {isRallyPointPlaced}) then {
         ["Rally Point", "You cannot establish rally point when enemies are surrounding you."] call SCRT_fnc_misc_showDeniedActionHint;
     };
 
-    if (player != theBoss) exitWith {
+    /*if (player != theBoss) exitWith {
         ["Rally Point", "Only commander can establish rally points."] call SCRT_fnc_misc_showDeniedActionHint;
-    };
+    };*/
 
     vehiclePurchase_cost = _finalCost;
 

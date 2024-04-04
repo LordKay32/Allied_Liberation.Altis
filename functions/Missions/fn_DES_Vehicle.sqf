@@ -24,7 +24,7 @@ switch (true) do {
 	
 		private _units = [];
 		private _vehicles = [];
-		private _timeVar = round (random [5,10,15]);
+		private _timeVar = round (random [15,25,35]);
 		private _departingTimeLimit = _timeVar * settingsTimeMultiplier;
 		private _departingDateLimit = [date select 0, date select 1, date select 2, date select 3, (date select 4) + _departingTimeLimit];
 		private _departingDateLimitNum = dateToNumber _departingDateLimit;

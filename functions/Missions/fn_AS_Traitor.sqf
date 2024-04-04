@@ -78,7 +78,7 @@ _groupTraitor selectLeader _traitor;
 
 _posTsk = (position _houseX) getPos [random 100, random 360];
 
-_reward = if (_difficultX) then {1500} else {1000};
+_reward = if (_difficultX) then {1000} else {800};
 
 private _taskId = "AS" + str A3A_taskCount;
 [[teamPlayer,civilian],_taskID,[format ["A partizan traitor has scheduled a meeting with the %3 in %1. Kill him before he provides intel on our defenses and partizan activity.<br/><br/>Reward: %4CP per player",_nameDest,_displayTime,_sideName,_reward],"Kill the Traitor",_markerX],_posTsk,false,0,true,"Kill",true] call BIS_fnc_taskCreate;
@@ -211,9 +211,9 @@ if (not alive _traitor || traitorIntel) then
         "aggroEvent",
         true
     ] call A3A_fnc_log;
-	[0,1000 * _factor,0] remoteExec ["A3A_fnc_resourcesFIA",2];
+	[0,_reward*2,0] remoteExec ["A3A_fnc_resourcesFIA",2];
 	{
-		[100 * _factor,_x] call A3A_fnc_playerScoreAdd;
+		[_reward/10,_x] call A3A_fnc_playerScoreAdd;
 	} forEach (call BIS_fnc_listPlayers) select {side _x == teamPlayer || side _x == civilian};
 	[50,theBoss] call A3A_fnc_playerScoreAdd;
 }

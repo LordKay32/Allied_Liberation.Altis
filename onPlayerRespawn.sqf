@@ -36,11 +36,11 @@ if (side group player == teamPlayer) then
 	_score = _oldUnit getVariable ["score",0];
 	_punish = _oldUnit getVariable ["punish",0];
 	_moneyX = _oldUnit getVariable ["moneyX",0];
-	_moneyX = round (_moneyX - (20 * tierWar));
+	_moneyX = round (_moneyX - 50);
 	_eligible = _oldUnit getVariable ["eligible",true];
 	_rankX = _oldUnit getVariable ["rankX","LIEUTENANT"];
 	
-	if (_moneyX < 0) then {[0, _moneyX,0] remoteExec ["A3A_fnc_resourcesFIA",2]; _moneyX = 0};
+	if (_moneyX < 0) then {_moneyX = 0};
 
 	_newUnit setVariable ["score",_score -1,true];
 	_newUnit setVariable ["owner",_newUnit,true];

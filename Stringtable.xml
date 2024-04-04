@@ -422,8 +422,8 @@
         <Chinesesimp>翻正你面前的载具。成功翻正载具需要3个人, 翻正重型载具需要附近有维修卡车。</Chinesesimp>
       </Key>
       <Key ID="STR_antistasi_dialogs_players_money_title">
-        <Original>Players and Money</Original>
-        <English>Players and Money</English>
+        <Original>Money</Original>
+        <English>Money</English>
         <French>Joueurs et argent</French>
         <Russian>Игроки и Деньги</Russian>
         <German>Spieler und Geld</German>

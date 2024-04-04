@@ -172,7 +172,7 @@ while {true} do
 
 	_hrSDKAdd = ceil _hrSDKAdd;
 	_resAdd = ceil _resAdd;
-	if (citiesX findIf {sidesX getVariable [_x, sideUnknown] == teamPlayer} == -1) then {_hrSDKAdd = 0};
+	if ((citiesX - destroyedSites) findIf {sidesX getVariable [_x, sideUnknown] == teamPlayer} == -1) then {_hrSDKAdd = 0};
 	server setVariable ["SDKhr", _hrSDKAdd + (server getVariable "SDKhr"), true];
 	server setVariable ["resourcesFIA", _resAdd + (server getVariable "resourcesFIA"), true];
 	

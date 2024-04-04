@@ -58,21 +58,21 @@ lbAdd [1750, "HMG Airdrop"];
 lbSetData [1750, 3, "STATIC_MG_AIRDROP"];
 lbSetTooltip [1750, 3, "Plane flies over and drops crate with a Vickers machine gun to the specified position."];
 
-//lbAdd [1750, "Recon Plane Run"];
-//lbSetData [1750, 4, "RECON"];
-//lbSetTooltip [1750, 4, "Reconnaissance plane flies over and marks enemy positions at the specified location."];
+lbAdd [1750, "Recon Plane Run"];
+lbSetData [1750, 4, "RECON"];
+lbSetTooltip [1750, 4, "Reconnaissance plane flies over and marks enemy positions at the specified location."];
 
 lbAdd [1750, "Supply Crate Airdrop"];
-lbSetData [1750, 4, "SUPPLY"];
-lbSetTooltip [1750, 4, "Plane flies over and drops crate with ammunition and medical supplies to the specified position."];
+lbSetData [1750, 5, "SUPPLY"];
+lbSetTooltip [1750, 5, "Plane flies over and drops crate with ammunition and medical supplies to the specified position."];
 
 lbAdd [1750, "HE Bomb Airstrike"];
-lbSetData [1750, 5, "HE"];
-lbSetTooltip [1750, 5, "Plane flies over and drops HE bombs at the specified location."];
+lbSetData [1750, 6, "HE"];
+lbSetTooltip [1750, 6, "Plane flies over and drops HE bombs at the specified location."];
 
 lbAdd [1750, "Fire Bomb Airstrike"];
-lbSetData [1750, 6, "CLUSTER"];
-lbSetTooltip [1750, 6, "Plane flies over and drops fire bombs at the specified location."];
+lbSetData [1750, 7, "CLUSTER"];
+lbSetTooltip [1750, 7, "Plane flies over and drops fire bombs at the specified location."];
 
 //lbAdd [1750, "Chemical Airstrike"];
 //lbSetData [1750, 9, "CHEMICAL"];

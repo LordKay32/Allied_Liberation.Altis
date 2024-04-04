@@ -21,6 +21,8 @@ params ["_group"];
 {
 	_x setUnitTrait ["camouflageCoef",0.1];
 	_x setUnitTrait ["audibleCoef",0.1];
+	_x setSkill ["spotDistance", 1];
+	_x setSkill ["spotTime", 1];
 	[_x] spawn {
 		_unit = _this select 0;
 		while {alive _unit} do {	
@@ -36,12 +38,12 @@ while {true} do {
 	private _leader = (leader _group);
 	private _positionX = (getPos _leader);
 
-	private _entities = (_positionX nearEntities 300) select {side _x isEqualTo Occupants};
+	private _knownEntities = (units Occupants) select {_leader knowsAbout _x >= 1.5};
 
 	private _num = 0;
 	private _markerList = [];
 	{
-	private _pos = getPos (leader _x);
+	private _pos = getPos _x;
 	_num = _num + 1;
 	private _wpNum = (round (random 1000));
 	private _marker = createMarker [format["%2_Entity_%1", _num, _wpNum], _pos];
@@ -49,7 +51,7 @@ while {true} do {
 	_marker setMarkerColor colorOccupants;
 	_marker setMarkerSize [0.6, 0.6];
 	_markerList pushBack _marker;
-	} forEach _entities;
+	} forEach _knownEntities;
 	
 	if ({alive _x} count units _group == 0) exitWith {
 		{
@@ -63,23 +65,8 @@ while {true} do {
 	
 	sleep 10;
 		
-	if (!(unitReady (leader _group)) OR (combatMode _group != "GREEN")) then {
-		[_markerList] spawn {
-			private _markerList = _this select 0;
-			{
-			_x setMarkerAlpha 0.5;
-			} forEach _markerList;
-			sleep 120;
-			{
-			deleteMarker _x;
-			} forEach _markerList;
-		};
-		waitUntil {sleep 1; ({unitReady _x} count units _group == count units _group) && (combatMode _group == "GREEN")};
-		sleep 60;
-	} else {
-		{
-		deleteMarker _x;
-		} forEach _markerList;
-	};
+	{
+	deleteMarker _x;
+	} forEach _markerList;
 };
 

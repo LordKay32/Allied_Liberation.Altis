@@ -482,7 +482,7 @@ while {(_waves > 0)} do
 							_Vwp setWaypointSpeed "FULL";
 							_Vwp1 = _groupVeh addWaypoint [_posDestination, 1];
 							_Vwp1 setWaypointType "SAD";
-							_Vwp1 setWaypointStatements ["true","if !(local this) exitWith {}; {if (side _x != side this) then {this reveal [_x,4]}} forEach allUnits"];
+							_Vwp1 setWaypointStatements ["true","if !(local this) exitWith {}; {if (side _x != side this) then {this reveal [_x,4]}} forEach (allUnits select {!(_x getVariable 'unittype' in SASTroops)})"];
 							_Vwp1 setWaypointBehaviour "COMBAT";
 							_Vwp2 = _grupo addWaypoint [_landPos, 0];
 							_Vwp2 setWaypointType "GETOUT";
