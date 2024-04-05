@@ -94,6 +94,8 @@ if (_typeX in vehFIA) then {
 if (_veh in staticsToSave) then {staticsToSave = staticsToSave - [_veh]; publicVariable "staticsToSave"};
 if (_veh in reportedVehs) then {reportedVehs = reportedVehs - [_veh]; publicVariable "reportedVehs"};
 
+if (typeOf _veh == vehSDKAA) then {deleteVehicle (attachedObjects _veh select 0)};
+
 [_veh,true] call A3A_fnc_empty;
 
 if (_veh isKindOf "StaticWeapon") then {deleteVehicle _veh};

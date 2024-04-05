@@ -1711,7 +1711,7 @@ class squadRecruit: SimpleMenuBigger
 		class l4Button: SimpleButton
 		{
 			idc = 108;
-			text = US AA Truck Squad;
+			text = US AA Truck;
 			x = 0.257187 * safezoneW + safezoneX;
 			y = 0.584 * safezoneH + safezoneY;
 			action = "closeDialog 0;[vehSDKAA] spawn A3A_fnc_addFIAsquadHC";
