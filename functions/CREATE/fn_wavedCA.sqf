@@ -504,11 +504,16 @@ while {(_waves > 0)} do
 							(units _grupo) joinSilent _groupVeh;
 							deleteGroup _grupo;
 							_groupVeh selectLeader (units _groupVeh select 1);
+							[_groupVeh,_veh] spawn {
+								params ["_group","_veh"];
+								waitUntil {sleep 1; isTouchingGround _veh};
+								{unassignVehicle _x} forEach (units _group); [units _group] allowGetIn false;
+							};	
 							_Vwp = _groupVeh addWaypoint [_landPos, 0];
 							_Vwp setWaypointBehaviour "SAFE";
 							_Vwp setWaypointSpeed "FULL";
 							_Vwp setWaypointType "GETOUT";
-							_Vwp setWaypointStatements ["true", "if !(local this) exitWith {}; (group this) spawn A3A_fnc_attackDrillAI"];
+							_Vwp setWaypointStatements ["true", "if !(local this) exitWith {}; {unassignVehicle _x} forEach (units group this); [units group this] allowGetIn false; (group this) spawn A3A_fnc_attackDrillAI"];
 							_Vwp1 = _groupVeh addWaypoint [_posDestination, 1];
 							_Vwp1 setWaypointType "SAD";
 							_Vwp1 setWaypointBehaviour "COMBAT";

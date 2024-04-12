@@ -1,5 +1,6 @@
 private ["_resourcesPlayer","_pointsXJ","_target","_selectedPlayer"];
 _resourcesPlayer = player getVariable "moneyX";
+_distances = [];
 
 if (count _this == 0) exitWith {
 	if (_resourcesPlayer < 500) exitWith {["Donate CP", format ["You have less than 500%1 to donate.", currencySymbol]] call A3A_fnc_customHint;};

@@ -7,6 +7,7 @@ while {true} do
 {
 	//nextTick = time + 300;
 	nextTick = dateToNumber ([date select 0, date select 1, date select 2, date select 3, (date select 4) + 30]);
+	publicVariable "nextTick";
 	waitUntil {sleep 15; dateToNumber date >= nextTick};
 	
 	if (isMultiplayer) then {waitUntil {sleep 10; isPlayer theBoss}};
@@ -15,7 +16,7 @@ while {true} do
 	aggressionOccupants = aggressionOccupants + 5 + (_NATOPoints);
 	//aggressionInvaders = aggressionInvaders + 10;
 
-	private _resAdd = 2000;//0
+	private _resAdd = 1600;//0
 	private _hrSDKAdd = 0;//0
 	private _hrAllAdd = 4;
 	private _planes = 0;
@@ -112,7 +113,7 @@ while {true} do
 	{
 		if (sidesX getVariable [_x,sideUnknown] == teamPlayer) then
 		{
-			_resAdd = _resAdd + 4000;
+			_resAdd = _resAdd + 3200;
 			_hrAllAdd = _hrAllAdd + 8;
 			_planes = _planes + 1;
 			_weapons = _weapons + 50;
@@ -124,7 +125,7 @@ while {true} do
 	{
 		if (sidesX getVariable [_x,sideUnknown] == teamPlayer) then
 		{
-			_resAdd = _resAdd + 4000;
+			_resAdd = _resAdd + 3200;
 			_hrAllAdd = _hrAllAdd + 8;
 			_vehicles = _vehicles + 4;
 			_weapons = _weapons + 50;
@@ -136,7 +137,7 @@ while {true} do
 	{
 		if (sidesX getVariable [_x,sideUnknown] == teamPlayer) then
 		{
-			_resAdd = _resAdd + 2000;
+			_resAdd = _resAdd + 1600;
 			_hrAllAdd = _hrAllAdd + 4;
 			_vehicles = _vehicles + 2;
 			_weapons = _weapons + 25;
@@ -406,7 +407,7 @@ while {true} do
 	//city rebellion mission
 	_potCities = townsX select {(sidesX getVariable [_x,sideUnknown] != teamPlayer) && ([_x] call A3A_fnc_isFrontline) && (spawner getVariable _x == 2)};
 
-	if ((sidesX getVariable ["airport_2", sideUnknown] == teamPlayer) && (sidesX getVariable ["seaport_4", sideUnknown] == teamPlayer) && count _potCities > 0 && (random 100 < 25) && rebelCity == "NONE") then {_rebelCity = selectRandom _potCities; [_rebelCity] spawn A3A_fnc_cityRebel};
+	if ((sidesX getVariable ["airport_2", sideUnknown] == teamPlayer) && (sidesX getVariable ["seaport_4", sideUnknown] == teamPlayer) && count _potCities > 0 && (random 100 < 25) && rebelCity == "NONE" && !(bigAttackInProgress)) then {_rebelCity = selectRandom _potCities; [_rebelCity] spawn A3A_fnc_cityRebel};
 
 	if (isDedicated) then
 		{

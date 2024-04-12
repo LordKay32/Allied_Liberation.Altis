@@ -26,6 +26,12 @@ private _fnc_placeObject = {
 
 	// Without this, non-unit objects often hang in mid-air
 	[_target, surfaceNormal position _target] remoteExec ["setVectorUp", _target];
+	
+	private _pos = getPosASL _target;
+	private _intersects = lineIntersectsSurfaces [_pos, _pos vectorAdd [0,0,-100], _target];
+	if (count _intersects > 0) then {
+		_target setPosASL (_intersects select 0 select 0);
+	};
 
 	_target setVariable ["objectBeingMoved", false];
 

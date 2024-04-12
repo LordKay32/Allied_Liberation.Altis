@@ -695,8 +695,6 @@ SA_TOW_RULES = [
 	["Ship","CAN_TOW","Ship"],
 	["Tank","CAN_TOW","fow_w_6Pounder_uk"],
 	["Car","CAN_TOW","fow_w_6Pounder_uk"],
-	["Tank","CAN_TOW","LIB_61k"],
-	["Car","CAN_TOW","LIB_61k"],
 	["Tank","CAN_TOW","LIB_leFH18"],
 	["Car","CAN_TOW","LIB_leFH18"],
 	["Tank","CAN_TOW","LIB_ger_Pak40_Feldgrau"],

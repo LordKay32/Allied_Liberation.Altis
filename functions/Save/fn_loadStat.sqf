@@ -45,7 +45,7 @@ if (_varName in _specialVarLoads) then {
 	if (_varName == 'attackCountdownInvaders') then {attackCountdownInvaders = _varValue; publicVariable "attackCountdownInvaders"};
 	if (_varName == 'bombRuns') then {bombRuns = _varValue; publicVariable "bombRuns"};
 	if (_varName == 'supportPoints') then {supportPoints = _varValue; publicVariable "supportPoints"};
-	if (_varName == 'nextTick') then {nextTick = time + _varValue};
+	if (_varName == 'nextTick') then {nextTick = time + _varValue}; publicVariable "nextTick";
 	if (_varName == 'membersX') then {membersX = +_varValue; publicVariable "membersX"};
 	if (_varName == 'smallCAmrk') then {};		// Ignore. These are not persistent.
 	if (_varName == 'mrkNATO') then {{sidesX setVariable [[_x] call _translateMarker,Occupants,true]} forEach _varValue;};
@@ -136,7 +136,12 @@ if (_varName in _specialVarLoads) then {
 		for "_i" from 0 to (count _varvalue) - 1 do {
 			(_varvalue select _i) params ["_typeMine", "_posMine", "_detected", "_dirMine"];
 			private _mineX = createVehicle [_typeMine, _posMine, [], 0, "CAN_COLLIDE"];
-			if !(isNil "_dirMine") then { _mineX setDir _dirMine };
+			if !(isNil "_dirMine") then { _mineX setDir _dirMine };			
+			private _pos = getPosASL _mineX;
+			private _intersects = lineIntersectsSurfaces [_pos, _pos vectorAdd [0,0,-100], _mineX];
+			if (count _intersects > 0) then {
+				_mineX setPosASL (_intersects select 0 select 0);
+			};
 			{_x revealMine _mineX} forEach _detected;
 		};
 	};

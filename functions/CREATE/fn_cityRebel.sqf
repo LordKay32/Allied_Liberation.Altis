@@ -34,7 +34,7 @@ _size = [_markerX] call A3A_fnc_sizeMarker;
 _sideX = sidesX getVariable [_markerX,sideUnknown];
 private _nameDestination = [_markerX] call A3A_fnc_localizar;
 
-_timeLimit = 45 * settingsTimeMultiplier;	
+_timeLimit = 60 * settingsTimeMultiplier;	
 _dateLimit = [date select 0, date select 1, date select 2, date select 3, (date select 4) + _timeLimit];
 _dateLimitNum = dateToNumber _dateLimit;
 

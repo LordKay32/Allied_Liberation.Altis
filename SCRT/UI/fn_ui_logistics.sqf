@@ -19,7 +19,7 @@
 params ["_PARAM1", "_PARAM2"];
 private ["_VAR1", "_VAR2"];
 
-	private _resAdd = 2000;//0
+	private _resAdd = 1600;//0
 	private _hrSDKAdd = 0;//0
 	private _hrAllAdd = 4;
 	private _planes = 0;
@@ -75,7 +75,7 @@ private ["_VAR1", "_VAR2"];
 	{
 		if (sidesX getVariable [_x,sideUnknown] == teamPlayer) then
 		{
-			_resAdd = _resAdd + 4000;
+			_resAdd = _resAdd + 3200;
 			_hrAllAdd = _hrAllAdd + 8;
 			_planes = _planes + 1;
 			_weapons = _weapons + 50;
@@ -87,7 +87,7 @@ private ["_VAR1", "_VAR2"];
 	{
 		if (sidesX getVariable [_x,sideUnknown] == teamPlayer) then
 		{
-			_resAdd = _resAdd + 4000;
+			_resAdd = _resAdd + 3200;
 			_hrAllAdd = _hrAllAdd + 8;
 			_vehicles = _vehicles + 4;
 			_weapons = _weapons + 50;
@@ -99,7 +99,7 @@ private ["_VAR1", "_VAR2"];
 	{
 		if (sidesX getVariable [_x,sideUnknown] == teamPlayer) then
 		{
-			_resAdd = _resAdd + 2000;
+			_resAdd = _resAdd + 1600;
 			_hrAllAdd = _hrAllAdd + 4;
 			_vehicles = _vehicles + 2;
 			_weapons = _weapons + 25;

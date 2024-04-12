@@ -344,9 +344,9 @@ else
 		if ({if (_x inArea _markerX) exitWith {1}} count allMines == 0) then
 			{
 			    diag_log format ["%1: [Antistasi]: Server | Creating a Minefield at %1", _markerX];
-				private _mines = ([A3A_faction_inv,A3A_faction_occ] select (_sideX == Occupants)) getVariable "minefieldAPERS";
-				private _revealTo = [Invaders,Occupants] select (_sideX == Occupants);
-				for "_i" from 1 to 45 do {
+				private _mines = Occupants getVariable "minefieldAPERS";
+				private _revealTo = Occupants;
+				for "_i" from 1 to 12 do {
 					_mineX = createMine [ selectRandom _mines ,_positionX,[],_size];
 					_revealTo revealMine _mineX;
 				};
