@@ -1244,7 +1244,7 @@ class moneyTransferQuery: SimpleMenuSmall
 		class title: SimpleTitle
 		{
 			idc = -1;
-			text = Donate CP to nameSelectedPlayer;
+			text = Donate CP to selected player?;
 		};
 
 		class yesButton: SimpleButton

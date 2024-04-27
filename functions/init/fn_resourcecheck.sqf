@@ -16,14 +16,14 @@ while {true} do
 	aggressionOccupants = aggressionOccupants + 5 + (_NATOPoints);
 	//aggressionInvaders = aggressionInvaders + 10;
 
-	private _resAdd = 1600;//0
+	private _resAdd = 1200;//0
 	private _hrSDKAdd = 0;//0
 	private _hrAllAdd = 4;
 	private _planes = 0;
 	private _vehicles = 2;
 	private _civVehicles = 0;
-	private _weapons = 25;
-	private _magazines = 1000;
+	private _weapons = 10;
+	private _magazines = 500;
 	private _items = 25;
 	private _popReb = 0;
 	private _popGov = 0;
@@ -113,11 +113,11 @@ while {true} do
 	{
 		if (sidesX getVariable [_x,sideUnknown] == teamPlayer) then
 		{
-			_resAdd = _resAdd + 3200;
+			_resAdd = _resAdd + 2400;
 			_hrAllAdd = _hrAllAdd + 8;
 			_planes = _planes + 1;
-			_weapons = _weapons + 50;
-			_magazines = _magazines + 2500;
+			_weapons = _weapons + 20;
+			_magazines = _magazines + 1000;
 			_items = _items + 50;
 		};
 	} forEach airportsX;
@@ -125,11 +125,11 @@ while {true} do
 	{
 		if (sidesX getVariable [_x,sideUnknown] == teamPlayer) then
 		{
-			_resAdd = _resAdd + 3200;
+			_resAdd = _resAdd + 2400;
 			_hrAllAdd = _hrAllAdd + 8;
 			_vehicles = _vehicles + 4;
-			_weapons = _weapons + 50;
-			_magazines = _magazines + 2500;
+			_weapons = _weapons + 20;
+			_magazines = _magazines + 1000;
 			_items = _items + 50;
 		};
 	} forEach (seaports - ["seaport_3","seaport_4","seaport_6","seaport_7","seaport_8"]);
@@ -137,11 +137,11 @@ while {true} do
 	{
 		if (sidesX getVariable [_x,sideUnknown] == teamPlayer) then
 		{
-			_resAdd = _resAdd + 1600;
+			_resAdd = _resAdd + 1200;
 			_hrAllAdd = _hrAllAdd + 4;
 			_vehicles = _vehicles + 2;
-			_weapons = _weapons + 25;
-			_magazines = _magazines + 1000;
+			_weapons = _weapons + 10;
+			_magazines = _magazines + 500;
 			_items = _items + 25;
 		};
 	} forEach ["seaport_3","seaport_4","seaport_6","seaport_7","seaport_8"];
@@ -409,6 +409,18 @@ while {true} do
 
 	if ((sidesX getVariable ["airport_2", sideUnknown] == teamPlayer) && (sidesX getVariable ["seaport_4", sideUnknown] == teamPlayer) && count _potCities > 0 && (random 100 < 25) && rebelCity == "NONE" && !(bigAttackInProgress)) then {_rebelCity = selectRandom _potCities; [_rebelCity] spawn A3A_fnc_cityRebel};
 
+	if ((count A3A_activeTasks == 0) && (random 100 < 10)) then {
+		[] spawn {
+			sleep ((random 40) + 20);
+			[] spawn A3A_fnc_missionRequest;
+		};
+	};
+	if ((count A3A_activeTasks == 1) && (random 100 < 5)) then {
+		[] spawn {
+			sleep ((random 40) + 20);
+			[] spawn A3A_fnc_missionRequest;
+		};
+	};	
 	if (isDedicated) then
 		{
 		{
