@@ -1,5 +1,6 @@
 private ["_resourcesPlayer","_pointsXJ","_target","_selectedPlayer"];
 _resourcesPlayer = player getVariable "moneyX";
+_distances = [];
 
 if (count _this == 0) exitWith {
 	if (_resourcesPlayer < 500) exitWith {["Donate CP", format ["You have less than 500%1 to donate.", currencySymbol]] call A3A_fnc_customHint;};
@@ -59,7 +60,6 @@ if (visibleMap) then {openMap false};
 _name = name _selectedPlayer;
 if (lifeState _selectedPlayer == "INCAPACITATED") exitWith {[format ["Donate CP", "%1 is incapacitated.", _name]] call A3A_fnc_customHint;};
 
-nameSelectedPlayer = _name;
 createDialog "moneyTransferQuery";
 sleep 1;
 disableSerialization;
@@ -74,11 +74,11 @@ if (str (_display) != "no display") then {
 
 while {true} do {
 	_resourcesPlayer = player getVariable "moneyX";
-	if (_resourcesPlayer < 500) exitWith {["Donate CP", format ["You have less than 500%1 to donate.", currencySymbol]] call A3A_fnc_customHint; nameSelectedPlayer = nil; closeDialog 0};
+	if (_resourcesPlayer < 500) exitWith {["Donate CP", format ["You have less than 500%1 to donate.", currencySymbol]] call A3A_fnc_customHint; closeDialog 0};
 
 	waitUntil {(!dialog) or (!isNil "moneyTransferQuery")};
 	if (!dialog) then {moneyTransferQuery = false};
-	if !(moneyTransferQuery) exitWith {["Donate CP", "Transfer finished."] call A3A_fnc_customHint; moneyTransferQuery = nil; nameSelectedPlayer = nil};
+	if !(moneyTransferQuery) exitWith {["Donate CP", "Transfer finished."] call A3A_fnc_customHint; moneyTransferQuery = nil};
 
 	moneyTransferQuery = nil;
 

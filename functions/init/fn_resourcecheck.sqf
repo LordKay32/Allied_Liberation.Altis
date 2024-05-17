@@ -7,6 +7,7 @@ while {true} do
 {
 	//nextTick = time + 300;
 	nextTick = dateToNumber ([date select 0, date select 1, date select 2, date select 3, (date select 4) + 30]);
+	publicVariable "nextTick";
 	waitUntil {sleep 15; dateToNumber date >= nextTick};
 	
 	if (isMultiplayer) then {waitUntil {sleep 10; isPlayer theBoss}};
@@ -21,9 +22,9 @@ while {true} do
 	private _planes = 0;
 	private _vehicles = 2;
 	private _civVehicles = 0;
-	private _weapons = 25;
-	private _magazines = 2500;
-	private _items = 50;
+	private _weapons = 10;
+	private _magazines = 500;
+	private _items = 25;
 	private _popReb = 0;
 	private _popGov = 0;
 	private _popKilled = 0;
@@ -115,9 +116,9 @@ while {true} do
 			_resAdd = _resAdd + 2400;
 			_hrAllAdd = _hrAllAdd + 8;
 			_planes = _planes + 1;
-			_weapons = _weapons + 50;
-			_magazines = _magazines + 5000;
-			_items = _items + 100;
+			_weapons = _weapons + 20;
+			_magazines = _magazines + 1000;
+			_items = _items + 50;
 		};
 	} forEach airportsX;
 
@@ -127,9 +128,9 @@ while {true} do
 			_resAdd = _resAdd + 2400;
 			_hrAllAdd = _hrAllAdd + 8;
 			_vehicles = _vehicles + 4;
-			_weapons = _weapons + 50;
-			_magazines = _magazines + 5000;
-			_items = _items + 100;
+			_weapons = _weapons + 20;
+			_magazines = _magazines + 1000;
+			_items = _items + 50;
 		};
 	} forEach (seaports - ["seaport_3","seaport_4","seaport_6","seaport_7","seaport_8"]);
 	
@@ -139,9 +140,9 @@ while {true} do
 			_resAdd = _resAdd + 1200;
 			_hrAllAdd = _hrAllAdd + 4;
 			_vehicles = _vehicles + 2;
-			_weapons = _weapons + 25;
-			_magazines = _magazines + 2500;
-			_items = _items + 50;
+			_weapons = _weapons + 10;
+			_magazines = _magazines + 500;
+			_items = _items + 25;
 		};
 	} forEach ["seaport_3","seaport_4","seaport_6","seaport_7","seaport_8"];
 
@@ -213,7 +214,7 @@ while {true} do
 	
 	//Vehicle calc
 
-	private _vehList = [vehSDKLightUnarmed, vehSDKLightArmed, vehSDKTruck, vehSDKTruckClosed, vehSDKRepair, vehSDKFuel, vehSDKAmmo, vehSDKMedical, vehSDKHeavyArmed, vehSDKAPCUK1, vehSDKAPCUS, vehSDKAPCUK2, vehSDKAT, vehSDKTankChur, vehSDKTankCroc, vehSDKTankHow, vehSDKTankUKM4, vehSDKTankUSM5, vehSDKTankUSM4, UKMGStatic, USMGStatic, staticATteamPlayer, staticAAteamPlayer, SDKMortar, SDKArtillery, vehInfSDKBoat, vehSDKBoat, vehSDKAttackBoat];
+	private _vehList = [vehSDKLightUnarmed, vehSDKLightArmed, vehSDKTruck, vehSDKTruckClosed, vehSDKRepair, vehSDKFuel, vehSDKAmmo, vehSDKMedical, vehSDKHeavyArmed, vehSDKAPCUK1, vehSDKAPCUS, vehSDKAPCUK2, vehSDKAT, vehSDKAA, vehSDKTankChur, vehSDKTankCroc, vehSDKTankHow, vehSDKTankUKM4, vehSDKTankUSM5, vehSDKTankUSM4, UKMGStatic, USMGStatic, M2MGStatic, staticATteamPlayer, staticAAteamPlayer, SDKMortar, SDKArtillery, vehInfSDKBoat, vehSDKBoat, vehSDKAttackBoat];
 	private _planesList = [vehSDKPlaneUK2, vehSDKPlaneUK3, vehSDKPlaneUS1, vehSDKPlaneUS2, vehUKPayloadPlane, vehUSPayloadPlane, vehSDKTransPlaneUK, vehSDKTransPlaneUS];
 
 	private _actual = 0;
@@ -222,9 +223,9 @@ while {true} do
 	private _allWeights = [];
 	{
 	if (_x in [vehSDKAttackBoat, vehSDKBoat, vehSDKTankChur, vehSDKTankUKM4, SDKArtillery, vehSDKTankCroc, vehSDKTankHow]) then {_vehMax = 2};
-	if (_x in [vehInfSDKBoat, vehSDKHeavyArmed, vehSDKAPCUK1, vehSDKAPCUK2, vehSDKAPCUS, vehSDKTankUSM4, vehSDKTankUSM5, SDKMortar, vehSDKRepair, vehSDKFuel, vehSDKAmmo, vehSDKMedical, vehSDKAT]) then {_vehMax = 4};
+	if (_x in [vehInfSDKBoat, vehSDKHeavyArmed, vehSDKAPCUK1, vehSDKAPCUK2, vehSDKAPCUS, vehSDKTankUSM4, vehSDKTankUSM5, SDKMortar, vehSDKRepair, vehSDKFuel, vehSDKAmmo, vehSDKMedical, vehSDKAT, vehSDKAA]) then {_vehMax = 4};
 	if (_x in [staticATteamPlayer, staticAAteamPlayer]) then {_vehMax = 6};
-	if (_x in [vehSDKLightArmed, vehSDKTruck, vehSDKTruckClosed]) then {_vehMax = 8};
+	if (_x in [vehSDKLightArmed, vehSDKTruck, vehSDKTruckClosed, M2MGStatic]) then {_vehMax = 8};
 	if (_x in [UKMGStatic, USMGStatic]) then {_vehMax = 12};
 	if (_x == vehSDKLightUnarmed) then {_vehMax = 16};
 
@@ -241,9 +242,9 @@ while {true} do
 	_selectedVeh = _vehList selectRandomWeighted _allWeights;
 	
 	if (_selectedVeh in [vehSDKAttackBoat, vehSDKBoat, vehSDKTankChur, vehSDKTankUKM4, SDKArtillery, vehSDKTankCroc, vehSDKTankHow]) then {_vehMax = 2};
-	if (_selectedVeh in [vehInfSDKBoat, vehSDKHeavyArmed, vehSDKAPCUK1, vehSDKAPCUK2, vehSDKAPCUS, vehSDKTankUSM4, vehSDKTankUSM5, SDKMortar, vehSDKRepair, vehSDKFuel, vehSDKAmmo, vehSDKMedical, vehSDKAT]) then {_vehMax = 4};
+	if (_selectedVeh in [vehInfSDKBoat, vehSDKHeavyArmed, vehSDKAPCUK1, vehSDKAPCUK2, vehSDKAPCUS, vehSDKTankUSM4, vehSDKTankUSM5, SDKMortar, vehSDKRepair, vehSDKFuel, vehSDKAmmo, vehSDKMedical, vehSDKAT, vehSDKAA]) then {_vehMax = 4};
 	if (_selectedVeh in [staticATteamPlayer, staticAAteamPlayer]) then {_vehMax = 6};
-	if (_selectedVeh in [vehSDKLightArmed, vehSDKTruck, vehSDKTruckClosed]) then {_vehMax = 8};
+	if (_selectedVeh in [vehSDKLightArmed, vehSDKTruck, vehSDKTruckClosed, M2MGStatic]) then {_vehMax = 8};
 	if (_selectedVeh in [UKMGStatic, USMGStatic]) then {_vehMax = 12};
 	if (_selectedVeh == vehSDKLightUnarmed) then {_vehMax = 16};
 	
@@ -285,35 +286,35 @@ while {true} do
 	//
 	//Weapons, mags and items calc
 	private _resupplyGear = {
-		params ["_gearType", "_gearNumber", "_divider"];	
+		params ["_gearType", "_gearNumber"];	
+			
+		_total = 0;
 		_endList = [];
 		{
-		_max = (_x select 1) * 5;
+		_max = (_x select 1) * 5.5;
 		_number = [jna_dataList select (_x select 0 call jn_fnc_arsenal_itemType), _x select 0] call jn_fnc_arsenal_itemCount; 
-		_ratio = _number/_max;
+		_ratio = 1 - (_number/_max);
 		_difference = _max - _number;
-		_endList append [[_ratio, _difference, (_x select 0)]];
+		_weight = _difference * _ratio;
+		_total = _total + _weight;
+		_endList pushBack [_weight, _x select 0, _x select 1];
 		} forEach _gearType;
 	
-		_endList sort true;
-		private _maxAllocation = _gearNumber/_divider;
-	
-		while {_gearNumber > 1} do {	
-			{
-				_difference = _x select 1;
-				_obj = _x select 2;
-				_allocation = round (_difference/(_divider*2));
-				if (_allocation > _maxAllocation) then {_allocation = _maxAllocation};
-				_gearNumber = _gearNumber - _allocation;
-				if (_gearNumber < 1) exitWith {_allocation = _allocation + _gearNumber; [_obj call jn_fnc_arsenal_itemType, _obj, _allocation] call jn_fnc_arsenal_addItem};
-				[_obj call jn_fnc_arsenal_itemType, _obj, _allocation] call jn_fnc_arsenal_addItem;
-			} forEach _endList;
-		};
+		{
+		_num = _x select 0;
+		_obj = _x select 1;
+		_max = (_x select 2) * 5;
+		_percentage = _num/_total;
+		_allocation = round (_gearNumber * _percentage);
+		_number = [jna_dataList select (_obj call jn_fnc_arsenal_itemType), _obj] call jn_fnc_arsenal_itemCount;
+		if ((_allocation + _number) >= _max) then {_allocation = (_max - _number)};
+		[_obj call jn_fnc_arsenal_itemType, _obj, _allocation] call jn_fnc_arsenal_addItem;
+		} forEach _endList;
 	};
 	
-	[WW2Weapons, _weapons, 5] call _resupplyGear;
-	[WW2Magazines, _magazines, 10] call _resupplyGear;
-	[WW2Items, _items, 5] call _resupplyGear;
+	[WW2Weapons, _weapons] call _resupplyGear;
+	[WW2Magazines, _magazines] call _resupplyGear;
+	[WW2Items, _items] call _resupplyGear;
 	//
 	bombRuns = bombRuns + 0.25;
 
@@ -406,8 +407,20 @@ while {true} do
 	//city rebellion mission
 	_potCities = townsX select {(sidesX getVariable [_x,sideUnknown] != teamPlayer) && ([_x] call A3A_fnc_isFrontline) && (spawner getVariable _x == 2)};
 
-	if ((sidesX getVariable ["airport_2", sideUnknown] == teamPlayer) && (sidesX getVariable ["seaport_4", sideUnknown] == teamPlayer) && count _potCities > 0 && (random 100 < 25) && rebelCity == "NONE") then {_rebelCity = selectRandom _potCities; [_rebelCity] spawn A3A_fnc_cityRebel};
+	if ((sidesX getVariable ["airport_2", sideUnknown] == teamPlayer) && (sidesX getVariable ["seaport_4", sideUnknown] == teamPlayer) && count _potCities > 0 && (random 100 < 25) && rebelCity == "NONE" && !(bigAttackInProgress)) then {_rebelCity = selectRandom _potCities; [_rebelCity] spawn A3A_fnc_cityRebel};
 
+	if ((count A3A_activeTasks == 0) && (random 100 < 10)) then {
+		[] spawn {
+			sleep ((random 40) + 20);
+			[] spawn A3A_fnc_missionRequest;
+		};
+	};
+	if ((count A3A_activeTasks == 1) && (random 100 < 5)) then {
+		[] spawn {
+			sleep ((random 40) + 20);
+			[] spawn A3A_fnc_missionRequest;
+		};
+	};	
 	if (isDedicated) then
 		{
 		{

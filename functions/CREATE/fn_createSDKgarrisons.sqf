@@ -154,9 +154,9 @@ private _groupSDKStatics = grpNull;
 	if ((_USindex == -1) && (_UKindex == -1)) exitWith {};
 	private _unit = objNull;
 	
-	if (typeOf _x in ([USMGStatic, UKMGStatic, staticATteamPlayer, staticAAteamPlayer, staticATOccupants] + NATOMG + staticAAOccupants)) then {
+	if (typeOf _x in ([USMGStatic, M2MGStatic, UKMGStatic, staticATteamPlayer, staticAAteamPlayer, staticATOccupants] + NATOMG + staticAAOccupants)) then {
 		if (isNull _groupStatics) then { _groupStatics = createGroup teamPlayer };
-		if (typeOf _x in (NATOMG + staticAAOccupants + [USMGStatic, staticATOccupants])) then {_index = if (_USindex == -1) then {_UKindex} else {_USindex}};
+		if (typeOf _x in (NATOMG + staticAAOccupants + [USMGStatic, M2MGStatic, staticATOccupants])) then {_index = if (_USindex == -1) then {_UKindex} else {_USindex}};
 		if (typeOf _x in [UKMGStatic, staticATteamPlayer, staticAAteamPlayer]) then {_index = if (_UKindex == -1) then {_USindex} else {_UKindex}};
 		_unit = [_groupStatics, (_garrison select _index), _positionX, [], 0, "NONE"] call A3A_fnc_createUnit;
 		_unit moveInGunner _x;

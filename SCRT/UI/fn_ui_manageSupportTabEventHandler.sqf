@@ -57,6 +57,10 @@ if(_mode == "ADD") then {
                         supportMarkerOrigin setMarkerColorLocal "ColorOrange";
                         supportMarkerOrigin setMarkerTextLocal "Recon Plane Init";
                     };
+                    case ("FIGHTER"): {
+                        supportMarkerOrigin setMarkerColorLocal "ColorOrange";
+                        supportMarkerOrigin setMarkerTextLocal "Fighters Init";
+                    };
                     case ("PARADROP"): {
                         supportMarkerOrigin setMarkerColorLocal "ColorGrey";
                         supportMarkerOrigin setMarkerTextLocal "Paradrop Init";
@@ -112,6 +116,10 @@ if(_mode == "ADD") then {
                         case ("RECON"): {
                             supportMarkerDestination setMarkerColorLocal "ColorOrange";
                             supportMarkerDestination setMarkerTextLocal "Recon Plane Search Area";
+                        };
+                        case ("FIGHTER"): {
+                            supportMarkerDestination setMarkerColorLocal "ColorOrange";
+                            supportMarkerDestination setMarkerTextLocal "Fighters loiter area";
                         };
                         case ("PARADROP"): {
                             supportMarkerDestination setMarkerColorLocal "ColorGrey";

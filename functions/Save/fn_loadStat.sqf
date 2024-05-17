@@ -45,7 +45,7 @@ if (_varName in _specialVarLoads) then {
 	if (_varName == 'attackCountdownInvaders') then {attackCountdownInvaders = _varValue; publicVariable "attackCountdownInvaders"};
 	if (_varName == 'bombRuns') then {bombRuns = _varValue; publicVariable "bombRuns"};
 	if (_varName == 'supportPoints') then {supportPoints = _varValue; publicVariable "supportPoints"};
-	if (_varName == 'nextTick') then {nextTick = time + _varValue};
+	if (_varName == 'nextTick') then {nextTick = time + _varValue}; publicVariable "nextTick";
 	if (_varName == 'membersX') then {membersX = +_varValue; publicVariable "membersX"};
 	if (_varName == 'smallCAmrk') then {};		// Ignore. These are not persistent.
 	if (_varName == 'mrkNATO') then {{sidesX setVariable [[_x] call _translateMarker,Occupants,true]} forEach _varValue;};
@@ -124,6 +124,7 @@ if (_varName in _specialVarLoads) then {
 				if (_building in antennas) exitWith { diag_log "Antenna in destroyed building list, ignoring" };
 
 				private _ruin = [_building] call BIS_fnc_createRuin;
+				if (typeOf _ruin in ["Land_Radar_ruins_F","Land_Cargo_Patrol_V1_ruins_F","Land_Cargo_House_V1_ruins_F","Land_Cargo_HQ_V1_ruins_F","Land_Cargo_Tower_V1_ruins_F"]) then {_ruin hideObject true};
 				if (isNull _ruin) exitWith {
 					diag_log format ["Loading Destroyed Buildings: Unable to create ruin for %1", typeOf _building];
 				};
@@ -136,7 +137,12 @@ if (_varName in _specialVarLoads) then {
 		for "_i" from 0 to (count _varvalue) - 1 do {
 			(_varvalue select _i) params ["_typeMine", "_posMine", "_detected", "_dirMine"];
 			private _mineX = createVehicle [_typeMine, _posMine, [], 0, "CAN_COLLIDE"];
-			if !(isNil "_dirMine") then { _mineX setDir _dirMine };
+			if !(isNil "_dirMine") then { _mineX setDir _dirMine };			
+			private _pos = getPosASL _mineX;
+			private _intersects = lineIntersectsSurfaces [_pos, _pos vectorAdd [0,0,-100], _mineX];
+			if (count _intersects > 0) then {
+				_mineX setPosASL (_intersects select 0 select 0);
+			};
 			{_x revealMine _mineX} forEach _detected;
 		};
 	};
@@ -451,6 +457,30 @@ if (_varName in _specialVarLoads) then {
 				sleep 2;
 				_veh allowDamage true;
 			};
+			
+			if (_typeVehX == "LIB_leFH18") then {
+				_veh setObjectTextureGlobal [0, "ww2\assets_t\vehicles\staticweapons_t\i44_lefh18\lefh18_2tone_co.paa"];
+			};
+			
+			if (_veh isKindOf "Air") then {
+				for "_i" from 1 to 25 do { 
+				_veh setPylonLoadout [_i, ""]; 
+				};
+			};
+			
+			if (_typeVehX == vehSDKAA) then {
+				_veh animateSource ['stoiki_hide', 1];
+				_aaMount = createVehicle ["LIB_FlaK_38", [0,0,1100], [], 0, "NONE"];
+				_aaMount animateSource ['Hide_Shield', 1];
+				_aaMount animateSource ['Hide_Shield_Sight', 1];
+				_aaMount animateSource ['Hide_Shield_Small', 1];
+				_aaMount attachTo [_veh, [0,-2,0.175]];
+			};
+
+			if (_typeVehX == M2MGStatic) then {
+				_veh animateSource ['Hide_Shield', 1];
+			};
+			
 			// This is only here to handle old save states. Could be removed after a few version itterations. -Hazey
 			if (_xVectorUp isEqualType 0) then { // We have to check number because old save state might still be using getDir. -Hazey
 				_veh setDir _xVectorUp; //is direction due to old save
@@ -580,11 +610,6 @@ if (_varName in _specialVarLoads) then {
     	if (introFinished) then {
 			"US_AssaultMrk" setMarkerAlpha 0; 
 			"UK_AssaultMrk" setMarkerAlpha 0;
-			[] spawn {
-				if ((sidesX getVariable ["Molos", sideUnknown] == teamPlayer) || !(rebelCity == "NONE")) exitWith {};
-				waitUntil {sleep 600; ((sidesX getVariable ["airport_2", sideUnknown] == teamPlayer) && (sidesX getVariable ["seaport_4", sideUnknown] == teamPlayer) && !(bigAttackInProgress))};
-				["Molos"] spawn A3A_fnc_cityRebel;
-			};
 		};
 		
 		if !(rebelCity == "NONE") then {

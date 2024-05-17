@@ -24,7 +24,7 @@ if (_this select 0 == "mount") exitWith
 		if (count allTurrets [_veh, false] > 0) then {_transporte = false};
 		if (_transporte) then
 			{
-			if (leader _groupX in _veh) then
+			if ((units _groupX) findIf {vehicle _x != _x} != -1) then
 				{
 				_textX = format ["%2%1 dismounting<br/>",groupID _groupX,_textX];
 				{[_x] orderGetIn false; [_x] allowGetIn false} forEach units _groupX;

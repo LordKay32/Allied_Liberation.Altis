@@ -582,7 +582,7 @@ if (_side isEqualTo independent) then {
 	vehUKAACrew = [UKSL,UKEng,UKMedic,UKstaticCrewTeamPlayer,UKstaticCrewTeamPlayer,UKstaticCrewTeamPlayer];
 	vehUSMGCrew = [USSL,USEng,USstaticCrewTeamPlayer];
 	groupUSMortarCrew = [USSL,USMG,USstaticCrewTeamPlayer,USstaticCrewTeamPlayer];
-	groupUSMGCrew = [USSL,USMG,USstaticCrewTeamPlayer,USstaticCrewTeamPlayer];
+	groupUSAACrew = [USSL,USEng,USstaticCrewTeamPlayer];
 	groupUKMGCrew = [UKSL,UKMG,UKstaticCrewTeamPlayer,UKstaticCrewTeamPlayer];
 	
 	tankUKcrew = [UKCrew,UKCrew,UKCrew,UKCrew,UKCrew];
@@ -638,6 +638,7 @@ if (_side isEqualTo independent) then {
 
 	UKMGStatic = _faction getVariable "staticMGUK";
 	USMGStatic = _faction getVariable "staticMGUS";
+	M2MGStatic = _faction getVariable "staticMGM2";
 	staticATteamPlayer = _faction getVariable "staticAT";
 	staticAAteamPlayer = _faction getVariable "staticAA";
 	SDKMortar = _faction getVariable "staticMortar";

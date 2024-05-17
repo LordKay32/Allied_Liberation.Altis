@@ -24,9 +24,9 @@ private ["_VAR1", "_VAR2"];
 	private _hrAllAdd = 4;
 	private _planes = 0;
 	private _vehicles = 2;
-	private _weapons = 25;
-	private _magazines = 2500;
-	private _items = 50;
+	private _weapons = 10;
+	private _magazines = 500;
+	private _items = 25;
 	private _popReb = 0;
 	private _popGov = 0;
 	private _popKilled = 0;
@@ -78,9 +78,9 @@ private ["_VAR1", "_VAR2"];
 			_resAdd = _resAdd + 2400;
 			_hrAllAdd = _hrAllAdd + 8;
 			_planes = _planes + 1;
-			_weapons = _weapons + 50;
-			_magazines = _magazines + 5000;
-			_items = _items + 100;
+			_weapons = _weapons + 20;
+			_magazines = _magazines + 1000;
+			_items = _items + 50;
 		};
 	} forEach airportsX;
 
@@ -90,9 +90,9 @@ private ["_VAR1", "_VAR2"];
 			_resAdd = _resAdd + 2400;
 			_hrAllAdd = _hrAllAdd + 8;
 			_vehicles = _vehicles + 4;
-			_weapons = _weapons + 50;
-			_magazines = _magazines + 5000;
-			_items = _items + 100;
+			_weapons = _weapons + 20;
+			_magazines = _magazines + 1000;
+			_items = _items + 50;
 		};
 	} forEach (seaports - ["seaport_3","seaport_4","seaport_6","seaport_7","seaport_8"]);
 	
@@ -102,9 +102,9 @@ private ["_VAR1", "_VAR2"];
 			_resAdd = _resAdd + 1200;
 			_hrAllAdd = _hrAllAdd + 4;
 			_vehicles = _vehicles + 2;
-			_weapons = _weapons + 25;
-			_magazines = _magazines + 2500;
-			_items = _items + 50;
+			_weapons = _weapons + 10;
+			_magazines = _magazines + 500;
+			_items = _items + 25;
 		};
 	} forEach ["seaport_3","seaport_4","seaport_6","seaport_7","seaport_8"];
 
@@ -121,11 +121,14 @@ private ["_VAR1", "_VAR2"];
 
 	_hrSDKAdd = ceil _hrSDKAdd;
 	_resAdd = ceil _resAdd;
+
+	_nextTick = numberToDate [date select 0, nextTick]; //converts datenumber back to date array so that time formats correctly
+	private _displayTime = [_nextTick] call A3A_fnc_dateToTimeString; //Converts the time portion of the date array to a string for clarity in hints
 	
 	private _display = findDisplay 60000;
 	if !(str (_display) == "no display") then {
     	private _title = _display displayCtrl 3106;
-    	_title ctrlSetText "INCREASES PER TICK (30 MINS)";
+    	_title ctrlSetText format ["Next Tick: %1",_displayTime];
 	};
 	
 	private _display = findDisplay 60000;

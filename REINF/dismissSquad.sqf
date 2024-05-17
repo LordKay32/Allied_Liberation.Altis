@@ -74,6 +74,7 @@ private _allLoadouts = []; //for JB code
 	private _count = server getVariable ((typeOf _veh) + "_count");
     _count = _count + 1;
     server setVariable [((typeOf _veh) + "_count"), _count, true];
+    if (typeOf _veh == vehSDKAA) then {deleteVehicle (attachedObjects _veh select 0)};
 	{
 		if !(typeOf _x in vehFIA) then { continue };
 		_resourcesFIA = _resourcesFIA + ([typeOf _x] call A3A_fnc_vehiclePrice);

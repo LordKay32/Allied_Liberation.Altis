@@ -19,9 +19,9 @@ switch(_vehicleType) do {
     	_vehNames = _vehText;
     };
     case("HEAVY"): {
-        private _avaialbleVehs = [vehSDKHeavyArmed, vehSDKAPCUK1, vehSDKAPCUS, vehSDKAPCUK2, vehSDKAT] select {_x != "not_supported"};
+        private _avaialbleVehs = [vehSDKHeavyArmed, vehSDKAPCUK1, vehSDKAPCUS, vehSDKAPCUK2, vehSDKAT, vehSDKAA] select {_x != "not_supported"};
         _shopLookupArray = _avaialbleVehs;
-        private _vehText = ["M3 Scout Car", "Universal Carrier", "US M3 Halftrack", "UK M3 Halftrack", "M8 Greyhound"];
+        private _vehText = ["M3 Scout Car", "Universal Carrier", "US M3 Halftrack", "UK M3 Halftrack", "M8 Greyhound", "AA Truck"];
         _vehNames = _vehText;
     };
     case("TANK"): {
@@ -43,9 +43,9 @@ switch(_vehicleType) do {
         _vehNames = _vehText;
     };
     case("STATIC"): {
-        private _avaialbleVehs = [UKMGStatic, USMGStatic, staticATteamPlayer, staticAAteamPlayer, SDKMortar, SDKArtillery] select {_x != "not_supported"};
+        private _avaialbleVehs = [UKMGStatic, USMGStatic, M2MGStatic, staticATteamPlayer, staticAAteamPlayer, SDKMortar, SDKArtillery] select {_x != "not_supported"};
         _shopLookupArray = _avaialbleVehs;
-        private _vehText = ["Vickers Machine Gun", "1919A4 Machine Gun", "6 Pounder AT Gun", "Bofors AA Gun", "M2 Mortar", "M101 Howitzer"];
+        private _vehText = ["Vickers Machine Gun", "1919A4 Machine Gun", "M2 Browning Machine Gun", "6 Pounder AT Gun", "Bofors AA Gun", "M2 Mortar", "M101 Howitzer"];
         _vehNames = _vehText;
     };
     case("BOAT"): {

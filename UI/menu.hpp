@@ -1244,7 +1244,7 @@ class moneyTransferQuery: SimpleMenuSmall
 		class title: SimpleTitle
 		{
 			idc = -1;
-			text = Donate CP to nameSelectedPlayer;
+			text = Donate CP to selected player?;
 		};
 
 		class yesButton: SimpleButton
@@ -1711,10 +1711,10 @@ class squadRecruit: SimpleMenuBigger
 		class l4Button: SimpleButton
 		{
 			idc = 108;
-			text = US 1919 MG Squad;
+			text = US AA Truck;
 			x = 0.257187 * safezoneW + safezoneX;
 			y = 0.584 * safezoneH + safezoneY;
-			action = "closeDialog 0;[USMGStatic] spawn A3A_fnc_addFIAsquadHC";
+			action = "closeDialog 0;[vehSDKAA] spawn A3A_fnc_addFIAsquadHC";
 		};
 
 		class l5Button: SimpleButton

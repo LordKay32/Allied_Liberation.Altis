@@ -31,7 +31,7 @@ if(!(_thingX isKindOf "StaticWeapon")) exitWith {
 
 _thingX setVariable ["objectBeingMoved", true];
 
-private _spacing = if (typeOf _thingX in [UKMGStatic,USMGStatic]) then {1.2} else {2 max (1 - (boundingBoxReal _thingX select 0 select 1))};
+private _spacing = if (typeOf _thingX in [UKMGStatic,USMGStatic,M2MGStatic]) then {1.2} else {2 max (1 - (boundingBoxReal _thingX select 0 select 1))};
 private _height = 0.1 - (boundingBoxReal _thingX select 0 select 2);
 _thingX attachTo [_playerX, [0, _spacing, _height]];
 
@@ -55,6 +55,13 @@ private _fnc_placeObject = {
 
 	// Without this, non-unit objects often hang in mid-air
 	[_thingX, surfaceNormal position _thingX] remoteExec ["setVectorUp", _thingX];
+	
+	// Place on closest surface
+	private _pos = getPosASL _thingX;
+	private _intersects = lineIntersectsSurfaces [_pos, _pos vectorAdd [0,0,-100], _thingX];
+	if (count _intersects > 0) then {
+		_thingX setPosASL (_intersects select 0 select 0);
+	};
 
 	_thingX setVariable ["objectBeingMoved", false];
 };

@@ -43,7 +43,7 @@ if (!_inArea && {!isNil "traderX" && {_player distance2d traderX < 50}}) then {
     _inArea = true;
 };
 
-if (count (nearestObjects [player, [vehSDKAmmo], 100]) > 0 && (typeOf _vehicle in [UKMGStatic, USMGStatic, staticATteamPlayer, staticAAteamPlayer, SDKMortar, SDKArtillery])) then {_inArea = true};
+if (count (nearestObjects [player, [vehSDKAmmo], 100]) > 0 && (typeOf _vehicle in [UKMGStatic, USMGStatic, M2MGStatic, staticATteamPlayer, staticAAteamPlayer, SDKMortar, SDKArtillery])) then {_inArea = true};
 
 if !(_inArea) exitWith {["STR_HR_GRG_Feedback_addVehicle_badLocation",[nameTeamPlayer]] remoteExec ["HR_GRG_fnc_Hint", _client]; false };
 

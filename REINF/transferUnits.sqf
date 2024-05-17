@@ -4,6 +4,7 @@ _thingX = _this select 0;
 
 _groupX = grpNull;
 _unitsX = objNull;
+_distances = [];
 
 if ((_thingX select 0) isEqualType grpNull) then {
 	_groupX = _thingX select 0;

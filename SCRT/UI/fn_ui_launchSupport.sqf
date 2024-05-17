@@ -11,7 +11,7 @@ if (supportType in ["NAPALM", "HE", "CLUSTER", "CHEMICAL"] && bombRuns < 1) exit
     [
 		"FAIL",
 		"Support",  
-		parseText "You have not enough Airstrikes to make this request.", 
+		parseText "You have not enough Air Support to make this request.", 
 		30
 	] spawn SCRT_fnc_ui_showMessage;
 };
@@ -194,7 +194,7 @@ switch (supportType) do {
     };
     case ("NAPALM");
     case ("HE");
-    case ("CLUSTER");
+    case ("FIGHTER");
     case ("CHEMICAL"): {
         bombRuns = bombRuns - 1;
         publicVariable "bombRuns";
@@ -212,7 +212,10 @@ switch (true) do {
         [] spawn SCRT_fnc_support_flareBarrage;
     };
     case (supportType == "RECON"): {
-        [] spawn SCRT_fnc_support_planeReconRun;
+        ["RECON"] spawn SCRT_fnc_support_planeReconRun;
+    };
+    case (supportType == "FIGHTER"): {
+        ["FIGHTER"] spawn SCRT_fnc_support_planeReconRun;
     };
     case (supportType == "PARADROP"): {
         [] remoteExec  ["SCRT_fnc_paradrop_prepare", 2];
@@ -225,7 +228,7 @@ switch (true) do {
     case (supportType == "LOOTCRATE_AIRDROP");
     case (supportType == "STATIC_MG_AIRDROP");
     case (supportType == "SUPPLY");
-    case (supportType in ["HE", "CLUSTER", "CHEMICAL", "NAPALM"]): {
+    case (supportType in ["HE", "CHEMICAL", "NAPALM"]): {
         [] spawn SCRT_fnc_support_planePayloadedRun;
     };
 };

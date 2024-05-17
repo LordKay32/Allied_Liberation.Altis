@@ -85,9 +85,9 @@ if (_typeX == "rem") then {
 			_costs = round (_costs * 0.75);
 		};
 		case (_hmgpostFIA): {
-			_costs = [USMGStatic] call A3A_fnc_vehiclePrice; //HMG
+			_costs = [UKMGStatic] call A3A_fnc_vehiclePrice; //HMG
 			_hr = 0; //static gunner
-			_veh = USMGStatic;
+			_veh = UKMGStatic;
 			{
 				_costs = _costs + (server getVariable [_x,0]);
 				_hr = _hr +1;

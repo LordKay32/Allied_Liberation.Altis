@@ -123,6 +123,15 @@ if !(isPlayer (gunner _unit)) then {
 
 if (_typeX in vehNormal || {_typeX in (vehAttack + vehBoats + vehAA)}) then {
 
+	if (_typeX in vehSDKAA) then { 
+		_veh addEventHandler ["Killed", {
+			params ["_unit", "_killer", "_instigator", "_useEffects"];
+			_AA = (attachedObjects _unit) select 0;
+			gunner _AA setDamage 1;
+			_AA setDamage 1;
+		}];
+	};
+
 	if !(_typeX in vehAttack) then {
 		if (_veh isKindOf "Car") then {
 			_veh addEventHandler ["HandleDamage",{if (((_this select 1) find "wheel" != -1) and ((_this select 4=="") or (side (_this select 3) != teamPlayer)) and (!isPlayer driver (_this select 0))) then {0} else {(_this select 2)}}];
@@ -176,26 +185,28 @@ if (_typeX in vehNormal || {_typeX in (vehAttack + vehBoats + vehAA)}) then {
 			[_veh] spawn {
 				params ["_plane"];
 				private _markerX = "";
-				waitUntil {sleep 1; _markerX = ([(airportsX + milbases + outposts + seaports + resourcesX + factories) select {sidesX getVariable [_x,sideUnknown] != teamPlayer}, getPos _plane] call BIS_fnc_nearestPosition); _plane distance2D getMarkerPos _markerX < 2000};
-				_sideX = sidesX getVariable [_markerX,sideUnknown];
-				_typePlaneX = if (_sideX == Occupants) then {selectRandom vehNATOPlanesAA} else {selectRandom vehCSATPlanesAA};
-				_potOrigins = if (_markerX in airportsX) then {(airportsX - [_markerX]) select {sidesX getVariable [_x,sideUnknown] == _sideX}} else {airportsX select {sidesX getVariable [_x,sideUnknown] == _sideX}};
-				_origin = getMarkerPos ([_potOrigins, getPos _plane] call BIS_fnc_nearestPosition);
-				_spawnPos = _origin vectorAdd [0, 0, 250];
-				_planeInfo = [_spawnPos, 0, _typePlaneX, _sideX] call A3A_fnc_spawnVehicle;
-				_enemyPlane = _planeInfo select 0;
-				_planeCrew = _planeInfo select 1;
-				_groupPlane = _planeInfo select 2;
-				{_nul = [_x,""] call A3A_fnc_NATOinit} forEach _planeCrew;
-				[_enemyPlane, _sideX] call A3A_fnc_AIVEHinit;
-				_enemyPlane setVelocityModelSpace [0, 400, 0];
-				_attackWP = _groupPlane addWaypoint [getPos _plane, 3];
-	            _attackWP setWaypointType "DESTROY";
-    	        _attackWP waypointAttachObject _plane;
-    	        _attackWP setWaypointSpeed "FULL";
-    	        _groupPlane setCurrentWaypoint _attackWP;
-    	        _groupPlane setBehaviour "COMBAT";
-    	        _groupPlane setCombatMode "RED";
+				waitUntil {sleep 1; _markerX = ([(airportsX + milbases + outposts + seaports + resourcesX + factories) select {sidesX getVariable [_x,sideUnknown] != teamPlayer}, getPos _plane] call BIS_fnc_nearestPosition); _plane distance2D getMarkerPos _markerX < 1000};
+				if (random 100 < (75*(aggressionOccupants/100))) then {
+					_sideX = sidesX getVariable [_markerX,sideUnknown];
+					_typePlaneX = if (_sideX == Occupants) then {selectRandom vehNATOPlanesAA} else {selectRandom vehCSATPlanesAA};
+					_potOrigins = if (_markerX in airportsX) then {(airportsX - [_markerX]) select {sidesX getVariable [_x,sideUnknown] == _sideX}} else {airportsX select {sidesX getVariable [_x,sideUnknown] == _sideX}};
+					_origin = getMarkerPos ([_potOrigins, getPos _plane] call BIS_fnc_nearestPosition);
+					_spawnPos = _origin vectorAdd [0, 0, 250];
+					_planeInfo = [_spawnPos, 0, _typePlaneX, _sideX] call A3A_fnc_spawnVehicle;
+					_enemyPlane = _planeInfo select 0;
+					_planeCrew = _planeInfo select 1;
+					_groupPlane = _planeInfo select 2;
+					{_nul = [_x,""] call A3A_fnc_NATOinit} forEach _planeCrew;
+					[_enemyPlane, _sideX] call A3A_fnc_AIVEHinit;
+					_enemyPlane setVelocityModelSpace [0, 400, 0];
+					_attackWP = _groupPlane addWaypoint [getPos _plane, 3];
+		            _attackWP setWaypointType "DESTROY";
+	    	        _attackWP waypointAttachObject _plane;
+	    	        _attackWP setWaypointSpeed "FULL";
+	    	        _groupPlane setCurrentWaypoint _attackWP;
+	    	        _groupPlane setBehaviour "COMBAT";
+	    	        _groupPlane setCombatMode "RED";
+    	        };
 			};
 		};
 
@@ -204,21 +215,23 @@ if (_typeX in vehNormal || {_typeX in (vehAttack + vehBoats + vehAA)}) then {
 				params ["_plane"];
 				private _markerX = "";
 				while {alive _plane} do {
-					waitUntil {sleep 1; _markerX = ([(airportsX + milbases + outposts + seaports) select {sidesX getVariable [_x,sideUnknown] != teamPlayer}, getPos _plane] call BIS_fnc_nearestPosition); _plane distance2D getMarkerPos _markerX < 2000 && spawner getVariable _markerX == 2};
+					waitUntil {sleep 1; _markerX = ([(airportsX + milbases + outposts) select {sidesX getVariable [_x,sideUnknown] != teamPlayer}, getPos _plane] call BIS_fnc_nearestPosition); _plane distance2D getMarkerPos _markerX < 1500 && spawner getVariable _markerX == 2 && (random 100 < (75*(aggressionOccupants/100)))};
 					_sideX = sidesX getVariable [_markerX,sideUnknown];
 					_type = if (_sideX == Occupants) then {selectRandom vehNATOAA} else {selectRandom vehCSATAA};
 					_position = getMarkerPos _markerX findEmptyPosition [5,100,_type];
-					_aaVehicleData = [_position, random 360, _type, _sideX] call A3A_fnc_spawnVehicle;
-					_aaVehicle = _aaVehicleData select 0;
-            		_aaVehicleCrew = _aaVehicleData select 1;
-            		_aaVehicleGroup = _aaVehicleData select 2;
-					{[_x,_markerX] call A3A_fnc_NATOinit} forEach _aaVehicleCrew;
-            		[_aaVehicle, _sideX] call A3A_fnc_AIVEHinit;
-            		_aaVehicleGroup reveal [_plane, 4];
-					waitUntil {sleep 1; _plane distance getMarkerPos _markerX > 2000 || spawner getVariable _markerX == 0 || !alive _plane};
-					{deleteVehicle _x} forEach _aaVehicleCrew;
-					deleteGroup _aaVehicleGroup;
-					deleteVehicle _aaVehicle;
+					if (count (nearestObjects [_position, (vehNATOAA + vehCSATAA), 200]) == 0) then {				
+						_aaVehicleData = [_position, random 360, _type, _sideX] call A3A_fnc_spawnVehicle;
+						_aaVehicle = _aaVehicleData select 0;
+    	        		_aaVehicleCrew = _aaVehicleData select 1;
+    	        		_aaVehicleGroup = _aaVehicleData select 2;
+						{[_x,_markerX] call A3A_fnc_NATOinit} forEach _aaVehicleCrew;
+    	        		[_aaVehicle, _sideX] call A3A_fnc_AIVEHinit;
+    	        		_aaVehicleGroup reveal [_plane, 4];
+						waitUntil {sleep 1; _plane distance getMarkerPos _markerX > 1500 || spawner getVariable _markerX == 0 || !alive _plane};
+						{deleteVehicle _x} forEach _aaVehicleCrew;
+						deleteGroup _aaVehicleGroup;
+						deleteVehicle _aaVehicle;
+					};
 				};
 			};
 		};
@@ -277,6 +290,7 @@ if (_typeX in vehNormal || {_typeX in (vehAttack + vehBoats + vehAA)}) then {
 		if (_veh isKindOf "StaticWeapon") then
 		{
 			_veh setCenterOfMass [(getCenterOfMass _veh) vectorAdd [0, 0, -1], 0];
+			_veh enableWeaponDisassembly false;
 
 			if !(_typeX isKindOf "StaticMortar") then {
 				[_veh, "static"] remoteExec ["A3A_fnc_flagAction", [teamPlayer,civilian], _veh];
@@ -376,7 +390,7 @@ _veh addEventHandler ["GetOut", {
 	if !(_unit isEqualType objNull) exitWith {
 		[1, format ["GetOut handler weird input: %1, %2, %3", _veh, _role, _unit], "fn_AIVEHinit"] call A3A_fnc_log;
 	};
-	if (side group _unit == teamPlayer) then {
+	if ((side group _unit == teamPlayer) || (isPlayer _unit)) then {
 		_veh setVariable ["despawnBlockTime", time + 7200];			// despawner always launched locally
 	};
 }];

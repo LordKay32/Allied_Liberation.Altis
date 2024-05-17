@@ -601,7 +601,7 @@ private _templateVariables = [
 	"vehUKAACrew",
 	"vehUSMGCrew",
 	"groupUSMortarCrew",
-	"groupUSMGCrew",
+	"groupUSAACrew",
 	"groupUKMGCrew",
 	"tankUKcrew",
 	"tankUScrew",
@@ -654,6 +654,7 @@ private _templateVariables = [
 	"civBoat",
 	"UKMGStatic",
 	"USMGStatic",
+	"M2MGStatic",
 	
 	"staticATTeamPlayer",
 	"staticAATeamPlayer",
@@ -1157,7 +1158,7 @@ DECLARE_SERVER_VAR(vehFastRope, _vehFastRope);
 private _vehUnlimited = vehNATONormal + vehCSATNormal + [vehNATORBoat,vehNATOPatrolHeli,vehCSATRBoat,vehCSATPatrolHeli,vehNATOUAV,vehNATOUAVSmall,NATOMortar,NATOHowitzer,NATOAARadar,NATOAASam,vehCSATUAV,vehCSATUAVSmall, CSATMortar, CSATHowitzer, CSATAARadar, CSATAASam] + CSATMG + NATOMG;
 DECLARE_SERVER_VAR(vehUnlimited, _vehUnlimited);
 
-private _vehFIA = [civCar, civTruck, vehSDKBike, vehSDKLightUnarmed, vehSDKLightArmed, vehSDKTruck, vehSDKTruckClosed, vehSDKRepair, vehSDKFuel, vehSDKAmmo, vehSDKMedical, vehSDKHeavyArmed, vehSDKAPCUK1, vehSDKAPCUS, vehSDKAPCUK2, vehSDKAT, vehSDKTankChur, vehSDKTankCroc, vehSDKTankHow, vehSDKTankUKM4, vehSDKTankUSM5, vehSDKTankUSM4, vehSDKPlaneUK1, vehSDKPlaneUK2, vehSDKPlaneUK3, vehSDKPlaneUS1, vehSDKPlaneUS2, vehSDKPlaneUS3, vehUSPayloadPlane, vehUKPayloadPlane, vehSDKTransPlaneUK, vehSDKTransPlaneUS, UKMGStatic, USMGStatic, staticATteamPlayer, staticAAteamPlayer, SDKMortar, SDKArtillery, vehInfSDKBoat, vehSDKBoat, vehSDKAttackBoat];
+private _vehFIA = [civCar, civTruck, vehSDKBike, vehSDKLightUnarmed, vehSDKLightArmed, vehSDKTruck, vehSDKTruckClosed, vehSDKRepair, vehSDKFuel, vehSDKAmmo, vehSDKMedical, vehSDKHeavyArmed, vehSDKAPCUK1, vehSDKAPCUS, vehSDKAPCUK2, vehSDKAT, vehSDKTankChur, vehSDKTankCroc, vehSDKTankHow, vehSDKTankUKM4, vehSDKTankUSM5, vehSDKTankUSM4, vehSDKPlaneUK1, vehSDKPlaneUK2, vehSDKPlaneUK3, vehSDKPlaneUS1, vehSDKPlaneUS2, vehSDKPlaneUS3, vehUSPayloadPlane, vehUKPayloadPlane, vehSDKTransPlaneUK, vehSDKTransPlaneUS, UKMGStatic, USMGStatic, M2MGStatic, staticATteamPlayer, staticAAteamPlayer, SDKMortar, SDKArtillery, vehInfSDKBoat, vehSDKBoat, vehSDKAttackBoat, vehSDKAA];
 DECLARE_SERVER_VAR(vehFIA, _vehFIA);
 
 private _vehCargoTrucks = (vehTrucks + vehNATOCargoTrucks + vehCSATCargoTrucks) select { [_x] call A3A_fnc_logistics_getVehCapacity > 1 };
@@ -1173,7 +1174,7 @@ DECLARE_SERVER_VAR(A3A_vehClassToCrew,_vehClassToCrew);
 
 {server setVariable [_x + "_count", 0, true]} forEach [vehSDKMedical,vehSDKHeavyArmed,vehSDKAT,vehSDKTankCroc,vehSDKTankHow,vehSDKPlaneUK1,vehSDKPlaneUK3,vehSDKPlaneUS2,vehSDKPlaneUS3,vehSDKTransPlaneUK,staticATteamPlayer,SDKArtillery,vehSDKAttackBoat];
 {server setVariable [_x + "_count", 1, true]} forEach [civTruck,vehSDKRepair,vehSDKFuel,vehSDKAmmo,vehSDKAPCUK1,vehSDKAPCUK2,vehSDKTankChur,vehSDKTankUKM4,vehSDKPlaneUK2,vehSDKPlaneUS1,vehUSPayloadPlane,vehUKPayloadPlane,vehSDKTransPlaneUS,staticAAteamPlayer,SDKMortar,vehSDKBoat];
-{server setVariable [_x + "_count", 2, true]} forEach [civCar,vehSDKLightArmed,vehSDKTruck,vehSDKTruckClosed,vehSDKAPCUS,vehSDKTankUSM4,vehSDKTankUSM5,vehInfSDKBoat];
+{server setVariable [_x + "_count", 2, true]} forEach [civCar,vehSDKLightArmed,vehSDKTruck,vehSDKTruckClosed,vehSDKAPCUS,vehSDKTankUSM4,vehSDKTankUSM5,vehInfSDKBoat,vehSDKAA,M2MGStatic];
 {server setVariable [_x + "_count", 4, true]} forEach [UKMGStatic,USMGStatic];
 {server setVariable [_x + "_count", 6, true]} forEach [vehSDKBike,vehSDKLightUnarmed];
 
@@ -1256,7 +1257,7 @@ server setVariable [vehSDKAPCUK1,600,true];
 server setVariable [vehSDKAPCUS, 800,true];
 server setVariable [vehSDKAPCUK2,800,true];
 server setVariable [vehSDKAT, 1200, true];
-server setVariable [vehSDKAA,2000,true];
+server setVariable [vehSDKAA,1200,true];
 server setVariable [vehSDKTankChur,2500,true];
 server setVariable [vehSDKTankCroc, 2400, true];
 server setVariable [vehSDKTankHow, 2500, true];
@@ -1278,6 +1279,7 @@ server setVariable [vehSDKBoat, 1200, true];
 server setVariable [vehSDKAttackBoat, 1500, true];
 server setVariable [UKMGStatic,200,true];
 server setVariable [USMGStatic, 200, true];
+server setVariable [M2MGStatic, 250, true];
 server setVariable [staticATteamPlayer, 750, true];
 server setVariable [staticAAteamPlayer, 800, true];
 server setVariable [SDKMortar, 350, true];

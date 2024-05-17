@@ -10,7 +10,7 @@ if (str (_display) != "no display") then {
     };
 
     private _airstrikesControl = _display displayCtrl 1703;
-	_airstrikesControl ctrlSetText format ["Available Airstrikes: %1", (floor bombRuns)];
+	_airstrikesControl ctrlSetText format ["Available Air Supports: %1", (floor bombRuns)];
 
     if (bombRuns < 1) then {
         _airstrikesControl ctrlSetTextColor [1, 0, 0, 1];

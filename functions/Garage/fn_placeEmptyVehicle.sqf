@@ -16,6 +16,20 @@ if (_vehicleType == "IG_supplyCrate_F") then {
 	[_garageVeh] remoteExec ["A3A_fnc_truckFunctions", [teamPlayer,civilian], _garageVeh];
 };
 
+if (_vehicleType == vehSDKAA) then {
+	_garageVeh animateSource ['stoiki_hide', 1];
+	_aaMount = createVehicle ["LIB_FlaK_38", [0,0,1100], [], 0, "NONE"];
+	_aaMount animateSource ['Hide_Shield', 1];
+	_aaMount animateSource ['Hide_Shield_Sight', 1];
+	_aaMount animateSource ['Hide_Shield_Small', 1];
+	_aaMount attachTo [_garageVeh, [0,-2,0.175]];
+};
+
+if (_vehicleType == M2MGStatic) then {
+	_garageVeh animateSource ['Hide_Shield', 1];
+};
+
+
 _garageVeh setDir _dir;
 //Set position exactly
 
@@ -29,6 +43,7 @@ switch (true) do
 	case (_vehicleType in [vehSDKMedical]): {_vectorAdd = [0,0,-1.6]};
 	case (_vehicleType in [vehSDKHeavyArmed]): {_vectorAdd = [0,0,-1.1]};
 	case (_vehicleType in [vehSDKAPCUS,vehSDKAPCUK2]): {_vectorAdd = [0,0,-0.9]};
+	case (_vehicleType in [vehSDKAA]): {_vectorAdd = [0,0,-0.96]};
 	case (_vehicleType in [vehSDKAT]): {_vectorAdd = [0,0,-1.15]};
 	case (_vehicleType in [vehSDKTankUSM4,vehSDKTankUKM4]): {_vectorAdd = [0,0,-0.1]};
 	case (_vehicleType in [staticAAteamPlayer]): {_vectorAdd = [0,0,0.3]};

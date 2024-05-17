@@ -25,9 +25,17 @@ if (_vehicleType == "LIB_leFH18") then {
 };
 
 if (vehPlace_previewVeh isKindOf "Air") then {
-	for "_i" from 1 to 25 do { 
+	for "_i" from 1 to 10 do { 
 	vehPlace_previewVeh setPylonLoadout [_i, ""]; 
 	};
+};
+
+if (_vehicleType == vehSDKAA) then {
+	[vehPlace_previewVeh, false, ["stoiki_hide", 1]] call BIS_fnc_initVehicle;
+};
+
+if (_vehicleType == M2MGStatic) then {
+	[vehPlace_previewVeh, false, ["Hide_Shield", 1]] call BIS_fnc_initVehicle;
 };
 
 vehPlace_previewVeh allowDamage false;
@@ -189,6 +197,7 @@ addMissionEventHandler ["EachFrame",
 		case (_vehType in [vehSDKMedical]): {_vectorAdd = [0,0,1.6]};
 		case (_vehType in [vehSDKHeavyArmed]): {_vectorAdd = [0,0,1.1]};
 		case (_vehType in [vehSDKAPCUS,vehSDKAPCUK2]): {_vectorAdd = [0,0,0.9]};
+		case (_vehType in [vehSDKAA]): {_vectorAdd = [0,0,0.96]};
 		case (_vehType in [vehSDKAT]): {_vectorAdd = [0,0,1.15]};
 		case (_vehType in [vehSDKTankUSM4,vehSDKTankUKM4]): {_vectorAdd = [0,0,0.1]};
 		case (_vehType in [staticAAteamPlayer]): {_vectorAdd = [0,0,-0.3]};
