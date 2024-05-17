@@ -59,6 +59,7 @@ if (_markerX != "Synd_HQ") then
 				_church = nearestObjects [_positionX, ["Land_Church_04_white_red_F","Land_Church_04_white_F","Land_Church_04_yellow_F"], 400]; 
 				_dir = getDir (_church select 0);
 				_SDKpos = (_church select 0) getRelPos [10, 0];
+				TestSofia1 = true;
 			} else {
 				_church = nearestTerrainObjects [_positionX, ["CHURCH"], 400];	
 				_dir = (getDir (_church select 0)) + 270;
@@ -70,6 +71,7 @@ if (_markerX != "Synd_HQ") then
 			[_SDKLeader,"SDKRecruit"] remoteExec ["A3A_fnc_flagaction",0,_SDKLeader];
 			sleep 0.5;
 			_groupA setFormDir _dir;
+			TestSofia2 = true;
 			{
 				[_x,_markerX] call A3A_fnc_FIAinitBases;
 				_soldiers pushBack _x;
@@ -82,6 +84,7 @@ if (_markerX != "Synd_HQ") then
 				_soldiers pushBack _x;
 			} forEach units _groupB;
 			[_groupB, _positionX, 200, 3, 1, false] call A3A_fnc_cityGarrison;
+			TestSofia3 = true;
 		};
 		if ((_prestigeBLUFOR > 50) && (_markerX in majorCitiesX)) then {
 			_pos = _positionX findEmptyPosition [10,100];
@@ -92,6 +95,7 @@ if (_markerX != "Synd_HQ") then
 				_soldiers pushBack _x;
 			} forEach units _groupC;
 			[_groupC, _positionX, 200, 3, 1, false] call A3A_fnc_cityGarrison;
+			TestSofia4 = true;
 		};
 	};
 	if ((_markerX in resourcesX) or (_markerX in factories)) then

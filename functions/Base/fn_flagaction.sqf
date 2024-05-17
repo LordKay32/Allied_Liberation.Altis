@@ -183,7 +183,7 @@ switch _typeX do
     {
         removeAllActions _flag;
         _flag addaction [ 
-        	(format ["<img image='%1' size='1' color='#ffffff'/>", "\A3\ui_f\data\GUI\Rsc\RscDisplayArsenal\spaceArsenal_ca.paa"] + format["<t size='1'> %1</t>", (localize "STR_A3_Arsenal")]), 
+        	(format ["<img image='%1' size='1' color='#ffffff'/>", "\A3\ui_f\data\GUI\Rsc\RscDisplayArsenal\spaceArsenal_ca.paa"] + format["<t size='1'> %1</t>", "Deploy arsenal box (500CP)"]), 
         	JN_fnc_arsenal_handleAction, 
         	[], 
         	6, 
@@ -194,7 +194,7 @@ switch _typeX do
     	];
         _flag addAction ["Deploy US Troops", {if ([player,300] call A3A_fnc_enemyNearCheck) then {["Unit Recruitment", "You cannot recruit units while there are enemies near you."] call A3A_fnc_customHint;} else { createDialog 'USunitRecruit'; }},nil,0,false,true,"","(isPlayer _this) and (_this == _this getVariable ['owner',objNull])",4];
         _flag addAction ["Deploy Vehicle", {if ([player,300] call A3A_fnc_enemyNearCheck) then {["Deploy Vehicle", "You cannot deploy vehicles while there are enemies near you."] call A3A_fnc_customHint;} else {["MAIN"] call SCRT_fnc_ui_createBuyVehicleMenu}},nil,0,false,true,"","(isPlayer _this) and (_this == _this getVariable ['owner',objNull])",4];
-        [_flag] call HR_GRG_fnc_initGarage;
+        //[_flag] call HR_GRG_fnc_initGarage;
     };
     case "SDKFlag2":
     {

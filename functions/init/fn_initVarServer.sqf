@@ -331,7 +331,17 @@ WehrmachtUniforms = [
 	"U_LIB_GER_Unterofficer",
 	"U_LIB_GER_Soldier_camo2",
 	"U_LIB_GER_Medic",
-	"U_LIB_GER_Scharfschutze"
+	"U_LIB_GER_Scharfschutze",
+	"U_LIB_GER_rifleman_WssMnnK98",
+	"U_LIB_GER_Soldier_camo_27v00pMnn2K98",
+	"U_LIB_GER_Soldier_camo_41v00pMnn2K98",
+	"U_LIB_GER_unterofficer_WssHschaMp40",
+	"U_LIB_GER_Soldier_camo_41v41pMnnK98",
+	"U_LIB_GER_medic_WssK98",
+	"U_LIB_GER_Soldier_camo_27v00pSantwss2K98",
+	"U_LIB_GER_Soldier_camo_41v00pSantwss2K98",
+	"U_LIB_FSJ_Soldier_dak",
+	"U_LIB_FSJ_Soldier_dak_camo"	
 ];
 publicVariable "WehrmachtUniforms";
 
@@ -340,7 +350,8 @@ WehrmachtVests = [
 	"V_LIB_GER_VestUnterofficer",
 	"V_LIB_GER_VestMG",
 	"V_LIB_GER_PioneerVest",
-	"V_LIB_GER_SniperBelt"
+	"V_LIB_GER_SniperBelt",
+	"V_LIB_GER_VestG43"
 ];
 publicVariable "WehrmachtVests";
 
@@ -354,7 +365,13 @@ publicVariable "WehrMachtBackpacks";
 WehrmachtHelmets = [
 	"H_LIB_GER_Helmet",
 	"H_LIB_GER_Cap",
-	"H_LIB_GER_HelmetCamo"
+	"H_LIB_GER_HelmetCamo",
+	"H_LIB_GER_Helmet_WSS1024T1",
+	"H_LIB_GER_Cap_WSS_Bm",
+	"H_LIB_GER_HelmetCamo_41",
+	"H_LIB_GER_FSJ_M38_Helmet",
+	"H_LIB_GER_FSJ_M44_Helmet_Medic",
+	"H_LIB_GER_FSJ_M38_Helmet_Cover"
 ];
 publicVariable "WehrmachtHelmets";
 
@@ -1158,7 +1175,7 @@ DECLARE_SERVER_VAR(vehFastRope, _vehFastRope);
 private _vehUnlimited = vehNATONormal + vehCSATNormal + [vehNATORBoat,vehNATOPatrolHeli,vehCSATRBoat,vehCSATPatrolHeli,vehNATOUAV,vehNATOUAVSmall,NATOMortar,NATOHowitzer,NATOAARadar,NATOAASam,vehCSATUAV,vehCSATUAVSmall, CSATMortar, CSATHowitzer, CSATAARadar, CSATAASam] + CSATMG + NATOMG;
 DECLARE_SERVER_VAR(vehUnlimited, _vehUnlimited);
 
-private _vehFIA = [civCar, civTruck, vehSDKBike, vehSDKLightUnarmed, vehSDKLightArmed, vehSDKTruck, vehSDKTruckClosed, vehSDKRepair, vehSDKFuel, vehSDKAmmo, vehSDKMedical, vehSDKHeavyArmed, vehSDKAPCUK1, vehSDKAPCUS, vehSDKAPCUK2, vehSDKAT, vehSDKTankChur, vehSDKTankCroc, vehSDKTankHow, vehSDKTankUKM4, vehSDKTankUSM5, vehSDKTankUSM4, vehSDKPlaneUK1, vehSDKPlaneUK2, vehSDKPlaneUK3, vehSDKPlaneUS1, vehSDKPlaneUS2, vehSDKPlaneUS3, vehUSPayloadPlane, vehUKPayloadPlane, vehSDKTransPlaneUK, vehSDKTransPlaneUS, UKMGStatic, USMGStatic, M2MGStatic, staticATteamPlayer, staticAAteamPlayer, SDKMortar, SDKArtillery, vehInfSDKBoat, vehSDKBoat, vehSDKAttackBoat, vehSDKAA];
+private _vehFIA = [civCar, civTruck, vehSDKBike, vehSDKLightUnarmed, vehSDKLightArmed, vehSDKTruck, vehSDKTruckClosed, vehSDKRepair, vehSDKFuel, vehSDKAmmo, vehSDKMedical, vehSDKHeavyArmed, vehSDKAPCUK1, vehSDKAPCUS, vehSDKAPCUK2, vehSDKAT, vehSDKTankChur, vehSDKTankCroc, vehSDKTankHow, vehSDKTankUKM4, vehSDKTankUSM5, vehSDKTankUSM4, vehSDKPlaneUK1, vehSDKPlaneUK2, vehSDKPlaneUK3, vehSDKPlaneUS1, vehSDKPlaneUS2, vehSDKPlaneUS3, vehUSPayloadPlane, vehUKPayloadPlane, vehSDKTransPlaneUK, vehSDKTransPlaneUS, UKMGStatic, USMGStatic, M2MGStatic, staticATteamPlayer, staticAAteamPlayer, SDKMortar, SDKArtillery, vehInfSDKBoat, vehSDKBoat, vehSDKAttackBoat, vehSDKAA, "LIB_FlaK_38"];
 DECLARE_SERVER_VAR(vehFIA, _vehFIA);
 
 private _vehCargoTrucks = (vehTrucks + vehNATOCargoTrucks + vehCSATCargoTrucks) select { [_x] call A3A_fnc_logistics_getVehCapacity > 1 };
