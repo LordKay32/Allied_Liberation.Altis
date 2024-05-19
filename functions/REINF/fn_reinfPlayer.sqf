@@ -1,6 +1,6 @@
 params ["_typeUnit"];
 
-private ["_hr"];
+private ["_hr","_unit","_number"];
 
 if !(player call A3A_fnc_isMember) exitWith {["AI Recruitment", "Only Server Members can recruit AI units."] call A3A_fnc_customHint;};
 
@@ -44,41 +44,42 @@ if (_costs > _resourcesFIA) exitWith {["AI Recruitment", format ["You do not hav
 if ((count units group player) + (count units stragglers) > 9) exitWith {["AI Recruitment", "Your squad is full or you have too many scattered units with no radio contact."] call A3A_fnc_customHint;};
 
 // JB Code for limited gear
-private "_unit";
 
-_loadout = rebelLoadouts get _typeUnit;
+if (_typeUnit in (UKTroops + SASTroops + USTroops + paraTroops)) then {
+	_loadout = rebelLoadouts get _typeUnit;
 
-_fullUnitGear = _loadout call A3A_fnc_reorgLoadoutUnit;
-
-_emptyList = [];
-{
-private "_number";
-_number = [jna_dataList select (_x select 0 call jn_fnc_arsenal_itemType), _x select 0]call jn_fnc_arsenal_itemCount; 
-if ((_number <= (_x select 1)) && !(_number == -1)) then { _emptyList pushBack (_x select 0) }
-} forEach _fullUnitGear;
+	_fullUnitGear = _loadout call A3A_fnc_reorgLoadoutUnit;
 	
-if (count _emptyList > 0) exitWith {
-		
-	equipUnit = false;
-		
-	private _weaps = [];
-	private _mags = [];
-	private _strings = [];
-		
+	_emptyList = [];
 	{
-	_weaps = getText (configFile >> "CfgWeapons" >> _x >> "displayName");
-	_strings pushBack _weaps;
-	_mags = getText (configFile >> "CfgMagazines" >> _x >> "displayName");
-	_strings pushBack _mags;
-	} forEach _emptyList;
+	_number = [jna_dataList select (_x select 0 call jn_fnc_arsenal_itemType), _x select 0]call jn_fnc_arsenal_itemCount; 
+	if ((_number <= (_x select 1)) && !(_number == -1)) then { _emptyList pushBack (_x select 0) }
+	} forEach _fullUnitGear;
+	
+	if (count _emptyList > 0) exitWith {
 		
-	_strings = _strings - [""];
+		equipUnit = false;
+		
+		private _weaps = [];
+		private _mags = [];
+		private _strings = [];
+		
+		{
+		_weaps = getText (configFile >> "CfgWeapons" >> _x >> "displayName");
+		_strings pushBack _weaps;
+		_mags = getText (configFile >> "CfgMagazines" >> _x >> "displayName");
+		_strings pushBack _mags;
+		} forEach _emptyList;
+		
+		_strings = _strings - [""];
+	
+		titleText [format["<t color='#ff0000' size='2'>Recruit Squad<br/><t color='#ffffff' size='1.5'>The following gear has run too low for you to recruit this unit: <t color='#ffff00' size='1.5'>%1", _strings], "PLAIN DOWN", 1, true, true];
+	};
 
-	titleText [format["<t color='#ff0000' size='2'>Recruit Squad<br/><t color='#ffffff' size='1.5'>The following gear has run too low for you to recruit this unit: <t color='#ffff00' size='1.5'>%1", _strings], "PLAIN DOWN", 1, true, true];
+	{ [_x select 0 call jn_fnc_arsenal_itemType, _x select 0, _x select 1]call jn_fnc_arsenal_removeItem } forEach _fullUnitGear;
 };
 
 private _unit = [group player, _typeUnit, position player, [], 0, "NONE"] call A3A_fnc_createUnit;
-{ [_x select 0 call jn_fnc_arsenal_itemType, _x select 0, _x select 1]call jn_fnc_arsenal_removeItem } forEach _fullUnitGear;
 
 if (!isMultiPlayer) then {
 	_nul = [-1, - _costs, _typeUnit] remoteExec ["A3A_fnc_resourcesFIA",2];

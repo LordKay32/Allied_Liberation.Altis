@@ -277,6 +277,7 @@ class A3A
         class safeVehicleSpawn {};
         class singleAttack {};
         class spawnGroup {};
+        class spawnPartizans {};
         class spawnVehicle {};
         class spawnVehicleAtMarker {};
         class spawnVehiclePrecise {};

@@ -19,7 +19,7 @@ params ["_veh"];
 private _typeX = typeOf _veh;
 
 //Allied services truck functions
-if (_typeX in vehFIA) then {
+if (_typeX in (vehFIA + ["LIB_FlaK_38"])) then {
 	_veh addaction [ 
         "Repair at Repair Truck", 
         {
@@ -143,7 +143,7 @@ if (_typeX == vehSDKAmmo) then {
 	_veh addaction [ 
         "Rearm nearby Allied vehicles", 
         {params ["_target", "_caller", "_actionId", "_arguments"];
-        _list = ((getPos _target) nearEntities [vehFIA, 50]) select {count allTurrets [_x, false] > 0};
+        _list = ((getPos _target) nearEntities [(vehFIA + ["LIB_FlaK_38"]), 50]) select {count allTurrets [_x, false] > 0};
     	{
     	[_x, 1] remoteExec ["setVehicleAmmoDef"];
     	// if (isPlayer crew) then {play sound for player?};
@@ -168,7 +168,7 @@ if (_typeX == vehSDKFuel) then {
 	_veh addaction [ 
         "Refuel nearby Allied vehicles", 
         {params ["_target", "_caller", "_actionId", "_arguments"];
-        _list = ((getPos _target) nearEntities [["Car", "Tank", "Air", "Ship"], 50]) select {(((side _x == teamPlayer) || (side _x == civilian)) && (typeOf _x in vehFIA))};
+        _list = ((getPos _target) nearEntities [["Car", "Tank", "Air", "Ship"], 50]) select {(((side _x == teamPlayer) || (side _x == civilian)) && (typeOf _x in (vehFIA + ["LIB_FlaK_38"])))};
     	{
     	_fuel = fuel _x;
     	// if (isPlayer crew) then {play sound for player?};
@@ -193,7 +193,7 @@ if (_typeX == vehSDKRepair) then {
         "Repair nearby Allied vehicles", 
         {
     	params ["_target", "_caller", "_actionId", "_arguments"];
-    	_list = ((getPos _target) nearEntities [vehFIA, 50]) select {(side _x == teamPlayer) || (side _x == civilian)};
+    	_list = ((getPos _target) nearEntities [(vehFIA + ["LIB_FlaK_38"]), 50]) select {(side _x == teamPlayer) || (side _x == civilian)};
     	{
     	// if (isPlayer crew) then {play sound for player?};
     		[_x, 0] remoteExec ["setDamage"];
