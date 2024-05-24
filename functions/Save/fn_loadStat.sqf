@@ -26,7 +26,7 @@ private _specialVarLoads = [
 	"bombRuns","wurzelGarrison","aggressionOccupants", "aggressionInvaders", "attackCountdownInvaders", "testingTimerIsActive",
 	"traderDiscount", "supportPoints", "isTraderQuestCompleted", "traderPosition", "areOccupantsDefeated", "areInvadersDefeated",
 	"rebelLoadouts", "randomizeRebelLoadoutUniforms", 
-	"version", "HR_Garage", "UKhr", "SAShr", "UShr", "parahr", "SDKhr", "baseMarkersX", "mrkAntennas","rebelCity"
+	"version", "HR_Garage", "UKhr", "SAShr", "UShr", "parahr", "SDKhr", "baseMarkersX", "mrkAntennas","rebelCity","finalStatistics"
 ];
 
 private _varName = _this select 0;
