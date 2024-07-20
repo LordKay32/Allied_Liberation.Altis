@@ -29,7 +29,7 @@ if (!isServer) then {
 		[clientOwner, "destroyedBuildings"] remoteExecCall ["publicVariableClient", 2];
 	};
 };
-clientTest1 = true;
+
 // Headless clients install some support functions, register with the server and bail out
 if (!hasInterface) exitWith {
 	call A3A_fnc_initFuncs;
@@ -39,15 +39,13 @@ if (!hasInterface) exitWith {
 	[2,format ["Headless client Antistasi Plus version: %1",localize "STR_antistasi_plus_credits_generic_version_text"],_fileName] call A3A_fnc_log;
 	[clientOwner] remoteExec ["A3A_fnc_addHC",2];
 };
-clientTest2 = true;
 
 waitUntil {!isNull player};
-clientTest3 = true;
 waitUntil {player == player};
-clientTest4 = true;
+
 //Disable player saving until they're fully ready, and have chosen whether to load their save.
 player setVariable ["canSave", false, true];
-clientTest5 = true;
+
 if (!isServer) then {
 	waitUntil {!isNil "initParamsDone"};
 	call A3A_fnc_initFuncs;
@@ -84,6 +82,10 @@ private ["_colourTeamPlayer", "_colorInvaders"];
 _colourTeamPlayer = teamPlayer call BIS_fnc_sideColor;
 _colorInvaders = Invaders call BIS_fnc_sideColor;
 _positionX = if (side player isEqualTo teamPlayer) then {getPos petros} else {getMarkerPos "respawn_west"};
+
+_allBuildings = [14260.4,16159.7,0] nearObjects ["Building", 20000];
+_runiedBuildings = _allBuildings select {typeOf _x in ["Land_Radar_ruins_F","Land_Cargo_Patrol_V1_ruins_F","Land_Cargo_House_V1_ruins_F","Land_Cargo_HQ_V1_ruins_F","Land_Cargo_Tower_V1_ruins_F","Land_Research_HQ_ruins_F","Land_Research_house_V1_ruins_F"]};
+{_x hideObject true} forEach _runiedBuildings;
 
 setViewDistance 3200;
 

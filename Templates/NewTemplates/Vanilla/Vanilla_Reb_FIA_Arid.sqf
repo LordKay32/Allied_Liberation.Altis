@@ -50,7 +50,7 @@
 ["vehicleTransportPlaneUK", "LIB_C47_RAF"] call _fnc_saveToTemplate;
 
 ["vehiclePlaneUS1", "sab_fl_p51d"] call _fnc_saveToTemplate;
-["vehiclePlaneUS2", "sab_sw_p38"] call _fnc_saveToTemplate;
+["vehiclePlaneUS2", "sab_sw_b25"] call _fnc_saveToTemplate;
 ["vehiclePlaneUS3", "sab_sw_a26"] call _fnc_saveToTemplate;
 ["vehicleTransportPlaneUS", "LIB_C47_Skytrain"] call _fnc_saveToTemplate;
 

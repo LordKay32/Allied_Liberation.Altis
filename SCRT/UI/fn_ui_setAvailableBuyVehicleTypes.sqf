@@ -33,13 +33,13 @@ switch(_vehicleType) do {
     case("AIRCRAFT"): {
         private _avaialbleVehs = [vehSDKPlaneUK2, vehSDKPlaneUK3, vehSDKPlaneUS1, vehSDKPlaneUS2, vehSDKTransPlaneUK, vehSDKTransPlaneUS] select {_x != "not_supported"};
         _shopLookupArray = _avaialbleVehs;
-        private _vehText = ["RAF Supermarine Spitfire", "RAF de Havilland DH.98 Mosquito", "USAAF P-51 Mustang", "USAAF P-38 Lightning", "RAF C-47 Dakota Transport", "USAAF C-47 Skytrain Transport"];
+        private _vehText = ["RAF Supermarine Spitfire", "RAF de Havilland DH.98 Mosquito", "USAAF P-51 Mustang", "USAAF B-25 Mitchell", "RAF C-47 Dakota Transport", "USAAF C-47 Skytrain Transport"];
         _vehNames = _vehText;
     };
     case("AIRCRAFT3"): {
         private _avaialbleVehs = [vehSDKPlaneUK2, vehSDKPlaneUK3, vehUKPayloadPlane, vehSDKPlaneUS1, vehSDKPlaneUS2, vehUSPayloadPlane, vehSDKTransPlaneUK, vehSDKTransPlaneUS] select {_x != "not_supported"};
         _shopLookupArray = _avaialbleVehs;
-        private _vehText = ["RAF Supermarine Spitfire", "RAF de Havilland DH.98 Mosquito", "RAF Handley Page Halifax", "USAAF P-51 Mustang", "USAAF P-38 Lightning", "USAAF B-17 Flying Fortress", "RAF C-47 Dakota Transport", "USAAF C-47 Skytrain Transport"];
+        private _vehText = ["RAF Supermarine Spitfire", "RAF de Havilland DH.98 Mosquito", "RAF Handley Page Halifax", "USAAF P-51 Mustang", "USAAF B-25 Mitchell", "USAAF B-17 Flying Fortress", "RAF C-47 Dakota Transport", "USAAF C-47 Skytrain Transport"];
         _vehNames = _vehText;
     };
     case("STATIC"): {
