@@ -1296,7 +1296,7 @@ class squadActions: SimpleMenuBigger
 			text = Infantry Vehicle Actions;
 			x = 0.257187 * safezoneW + safezoneX;
 			y = 0.29 * safezoneH + safezoneY;
-			tooltip = Actions for mounting/dismounting vehicles for infantry squads and vehicle assignment.
+			tooltip = Actions for mounting/dismounting vehicles for infantry squads and vehicle assignment;
 			action = "closeDialog 0; createDialog 'infVehActions';";
 		};
 		class supportTaskButton: SimpleButton

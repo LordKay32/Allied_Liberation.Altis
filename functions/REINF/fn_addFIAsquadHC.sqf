@@ -1,6 +1,6 @@
 params ["_typeGroup", ["_withBackpck", ""]];
 
-private ["_nearVeh", "_nearX"];
+private ["_nearVeh","_nearX","_squadloadout","_loadout","_fullSquadGear","_number"];
 
 if (player != theBoss) exitWith {["Deploy Squad", "Only the Commander has access to this function."] call A3A_fnc_customHint;};
 if (markerAlpha respawnTeamPlayer == 0) exitWith {["Deploy Squad", "You cannot deploy a new squad while you are moving your HQ."] call A3A_fnc_customHint;};
@@ -235,40 +235,40 @@ if (_resourcesFIA < _costs) then {_exit = true; ["Deploy Squad", format ["You do
 if (_exit) exitWith {};
 
 //JB code limited arsenal
-private ["_squadloadout","_loadout","_fullSquadGear","_number"];
 
-_squadloadout = [];
-{
-_loadout = rebelLoadouts get _x;
-_squadloadout pushback _loadout;
-} forEach _formatX;
-
-_fullSquadGear = _squadloadout call A3A_fnc_reorgLoadoutSquad;
-	
-	_emptyList = [];
+if (!(SDKSL in _typeGroup)) then {
+	_squadloadout = [];
 	{
-	_number = [jna_dataList select (_x select 0 call jn_fnc_arsenal_itemType), _x select 0]call jn_fnc_arsenal_itemCount; 
-	if ((_number <= (_x select 1)) && !(_number == -1)) then { _emptyList pushBack (_x select 0) }
-	} forEach _fullSquadGear;
+	_loadout = rebelLoadouts get _x;
+	_squadloadout pushback _loadout;
+	} forEach _formatX;
 
-if (count _emptyList > 0) exitWith {
-		
-		private _weaps = [];
-		private _mags = [];
-		private _strings = [];
-		
+	_fullSquadGear = _squadloadout call A3A_fnc_reorgLoadoutSquad;
+	
+		_emptyList = [];
 		{
-			_weaps = getText (configFile >> "CfgWeapons" >> _x >> "displayName");
-			_strings pushBack _weaps;
-			_mags = getText (configFile >> "CfgMagazines" >> _x >> "displayName");
-			_strings pushBack _mags;
-		} forEach _emptyList;
-		
-		_strings = _strings - [""];
-		
-	["Recruit Squad", format ["The following gear has run too low for you to recruit this squad: <t color='#ffff00'>%1", _strings], "FAIL"] call SCRT_fnc_ui_showDynamicTextMessage;
-};
+		_number = [jna_dataList select (_x select 0 call jn_fnc_arsenal_itemType), _x select 0]call jn_fnc_arsenal_itemCount; 
+		if ((_number <= (_x select 1)) && !(_number == -1)) then { _emptyList pushBack (_x select 0) }
+		} forEach _fullSquadGear;
 
+	if (count _emptyList > 0) exitWith {
+		
+			private _weaps = [];
+			private _mags = [];
+			private _strings = [];
+		
+			{
+				_weaps = getText (configFile >> "CfgWeapons" >> _x >> "displayName");
+				_strings pushBack _weaps;
+				_mags = getText (configFile >> "CfgMagazines" >> _x >> "displayName");
+				_strings pushBack _mags;
+			} forEach _emptyList;
+		
+			_strings = _strings - [""];
+		
+		["Recruit Squad", format ["The following gear has run too low for you to recruit this squad: <t color='#ffff00'>%1", _strings], "FAIL"] call SCRT_fnc_ui_showDynamicTextMessage;
+	};
+};
 //
 
 private _mounts = [];
@@ -611,4 +611,6 @@ private _vehiclePlacementMethod =
 
 [_vehType, "HCSquadVehicle", [_formatX, _idFormat, _special], _mounts] call _vehiclePlacementMethod;
 
-{ [_x select 0 call jn_fnc_arsenal_itemType, _x select 0, _x select 1]call jn_fnc_arsenal_removeItem } forEach _fullSquadGear;
+if (!(SDKSL in _typeGroup)) then {
+	{ [_x select 0 call jn_fnc_arsenal_itemType, _x select 0, _x select 1]call jn_fnc_arsenal_removeItem } forEach _fullSquadGear;
+};

@@ -284,7 +284,7 @@ if (_spawnParameter isEqualType []) then {
 
 	if (_truckTypes isEqualTo []) then {
 		if (_sideX == Occupants) then {
-			_truckTypes = vehNATOTrucks + vehNATOCargoTrucks + vehFIATrucks + vehFIAArmedCars;
+			_truckTypes = vehNATOTrucks + vehNATOCargoTrucks + vehFIATrucks + vehFIAArmedCars + [vehNATOAmmoTruck,vehNATOFuelTruck,vehNATORepairTruck];
 		} else {
 			_truckTypes = vehCSATTrucks + vehCSATCargoTrucks + vehWAMTrucks + vehWAMArmedCars;
 		};

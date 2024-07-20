@@ -26,7 +26,7 @@ private _specialVarLoads = [
 	"bombRuns","wurzelGarrison","aggressionOccupants", "aggressionInvaders", "attackCountdownInvaders", "testingTimerIsActive",
 	"traderDiscount", "supportPoints", "isTraderQuestCompleted", "traderPosition", "areOccupantsDefeated", "areInvadersDefeated",
 	"rebelLoadouts", "randomizeRebelLoadoutUniforms", 
-	"version", "HR_Garage", "UKhr", "SAShr", "UShr", "parahr", "SDKhr", "baseMarkersX", "mrkAntennas","rebelCity"
+	"version", "HR_Garage", "UKhr", "SAShr", "UShr", "parahr", "SDKhr", "baseMarkersX", "mrkAntennas","rebelCity","finalStatistics"
 ];
 
 private _varName = _this select 0;
@@ -124,7 +124,6 @@ if (_varName in _specialVarLoads) then {
 				if (_building in antennas) exitWith { diag_log "Antenna in destroyed building list, ignoring" };
 
 				private _ruin = [_building] call BIS_fnc_createRuin;
-				if (typeOf _ruin in ["Land_Radar_ruins_F","Land_Cargo_Patrol_V1_ruins_F","Land_Cargo_House_V1_ruins_F","Land_Cargo_HQ_V1_ruins_F","Land_Cargo_Tower_V1_ruins_F"]) then {_ruin hideObject true};
 				if (isNull _ruin) exitWith {
 					diag_log format ["Loading Destroyed Buildings: Unable to create ruin for %1", typeOf _building];
 				};
