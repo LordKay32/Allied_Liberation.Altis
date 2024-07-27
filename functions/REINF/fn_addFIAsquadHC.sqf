@@ -28,7 +28,7 @@ private _formatX = [];
 
 switch (true) do {
 	
-	case (_typeGroup in [groupsUKSquad,staticAAteamPlayer,UKMGStatic,vehSDKTankUKM4,vehSDKTankChur,vehSDKTransPlaneUK]) : {
+	case (_typeGroup in [groupsUKSquad,staticAAteamPlayer,UKMGStatic,vehSDKTankUKM4,vehSDKTankChur,vehSDKTransPlaneUK,vehSDKPlaneUK3]) : {
 	_hr = server getVariable "UKhr";
 	};
 
@@ -36,7 +36,7 @@ switch (true) do {
 	_hr = server getVariable "SAShr";
 	};
 
-	case (_typeGroup in [groupsUSSquad,groupsUSAT,vehSDKLightArmed,SDKMortar,vehSDKAA,vehSDKTankUSM4,vehSDKTankUSM5,vehSDKRepair,vehSDKFuel,vehSDKAmmo,vehSDKMedical,vehInfSDKBoat,vehSDKBoat,vehSDKTransPlaneUS]) : {
+	case (_typeGroup in [groupsUSSquad,groupsUSAT,vehSDKLightArmed,SDKMortar,vehSDKAA,vehSDKTankUSM4,vehSDKTankUSM5,vehSDKRepair,vehSDKFuel,vehSDKAmmo,vehSDKMedical,vehInfSDKBoat,vehSDKBoat,vehSDKTransPlaneUS,vehSDKPlaneUS2]) : {
 	_hr = server getVariable "UShr";
 	};
 	
@@ -218,7 +218,25 @@ if (_typeGroup isEqualType []) then {
 			_costHR = _costHR + 1;
 			} forEach [USPilot,USPilot];
 			_costs = _costs + ([_typeGroup] call A3A_fnc_vehiclePrice)
-		};		
+		};
+		case vehSDKPlaneUK3: {
+    		{
+			private _typeUnit = _x;
+			_formatX pushBack _typeUnit;
+			_costs = _costs + (server getVariable _typeUnit);
+			_costHR = _costHR + 1;
+			} forEach [UKPilot,UKPilot];
+			_costs = _costs + ([_typeGroup] call A3A_fnc_vehiclePrice)
+		};
+		case vehSDKPlaneUS2: {
+    		{
+			private _typeUnit = _x;
+			_formatX pushBack _typeUnit;
+			_costs = _costs + (server getVariable _typeUnit);
+			_costHR = _costHR + 1;
+			} forEach [USPilot,USPilot,USPilot,USPilot,USPilot];
+			_costs = _costs + ([_typeGroup] call A3A_fnc_vehiclePrice)
+		};			
 	};
 	if (_typeGroup == staticAAteamPlayer) then {
 		if (server getVariable (vehSDKAA + "_count") < 1) then {_exit = true; ["Deploy Squad", "You do not have any of the chosen vehicle type to deploy this squad."] call A3A_fnc_customHint;};
@@ -310,6 +328,8 @@ private _idFormat = switch _typeGroup do {
     case vehSDKBoat: {"Nav.Veh-"};
     case vehSDKTransPlaneUK: {"RAF.Tran-"};
     case vehSDKTransPlaneUS: {"USAAF.Tran-"};
+    case vehSDKPlaneUK3: {"RAF.DH98-"};
+    case vehSDKPlaneUS2: {"USAAF.B25-"};
     default {
         switch _withBackpck do {
             case "UKMG": {"UK-SqMG-"};
@@ -418,7 +438,7 @@ switch (true) do {
 			} forEach seaports;
 		};
 		
-		if (_typeGroup in [vehSDKTransPlaneUK, vehSDKTransPlaneUS]) then {
+		if (_typeGroup in [vehSDKTransPlaneUK, vehSDKTransPlaneUS, vehSDKPlaneUK3, vehSDKPlaneUS2]) then {
 			{
 			if (sidesX getVariable [_x,sideUnknown] == teamPlayer) then {potMarkers pushBack _x};
 			} forEach airportsX;
@@ -472,7 +492,7 @@ switch (true) do {
 			_nearX = [seaports, _positionTel] call BIS_fnc_nearestPosition;
 		};
 		
-		if (_typeGroup in [vehSDKTransPlaneUK, vehSDKTransPlaneUS]) then {
+		if (_typeGroup in [vehSDKTransPlaneUK, vehSDKTransPlaneUS, vehSDKPlaneUK3, vehSDKPlaneUS2]) then {
 			_nearX = [airportsX, _positionTel] call BIS_fnc_nearestPosition;
 		};
 
@@ -607,6 +627,22 @@ private _vehiclePlacementMethod =
 		_aaMount attachTo [_vehicle, [0,-2,0.175]];
 	};
 	[_formatX, _idFormat, _special, _vehicle] spawn A3A_fnc_spawnHCGroup;
+
+	if (_vehType in [vehSDKPlaneUS2,vehSDKPlaneUK3]) then {
+		_vehicle addEventHandler ["Fired", {
+			params ["_unit", "_weapon", "_muzzle", "_mode", "_ammo", "_magazine", "_projectile", "_gunner"];
+			[_unit] spawn {
+				params ["_unit"];
+				_unit allowDamage false;
+				sleep 10;
+				_unit allowDamage true;
+			};
+		}];
+	};
+
+	if (_vehType == vehSDKPlaneUK3) then {
+		for "_i" from 1 to 2 do {_vehicle setPylonLoadout [_i, "sab_fl_bomb_raf_1rnd_500_mag"]};
+	};
 };
 
 [_vehType, "HCSquadVehicle", [_formatX, _idFormat, _special], _mounts] call _vehiclePlacementMethod;

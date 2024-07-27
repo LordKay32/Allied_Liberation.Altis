@@ -131,7 +131,7 @@ private _initVeh = {
     _vehicle setVariable ["owner",_group,true];
     if (typeOf _vehicle in [vehSDKTankUSM4,vehSDKTankUSM5,vehSDKTankUKM4,vehSDKTankChur]) then {leader _group assignAsCommander _vehicle} else {leader _group assignAsDriver _vehicle};
     driver _vehicle action ["engineOn", _vehicle];
-    if (_vehicle isKindOf "Ship") then {
+    if ((_vehicle isKindOf "Ship") || (_vehicle isKindOf "Plane")) then {
     	{_x moveInAny _vehicle} forEach units _group;
     } else {
     	if (typeOf _vehicle == vehSDKAA) then {

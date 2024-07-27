@@ -1892,7 +1892,7 @@ class tankOptions: SimpleMenuSmall
 	};
 };
 
-class supportOptions: SimpleMenuBig
+class supportOptions: SimpleMenuBigger
 {
 	idd = 100;
 
@@ -1984,6 +1984,22 @@ class supportOptions: SimpleMenuBig
 			x = 0.477 * safezoneW + safezoneX;
 			y = 0.584 * safezoneH + safezoneY;
 			action = "closeDialog 0; [vehSDKTransPlaneUK] spawn A3A_fnc_addFIAsquadHC;";
+		};
+		class B25Button: SimpleButton
+		{
+			idc = 112;
+			text = B-25 Bomber;
+			x = 0.257187 * safezoneW + safezoneX;
+			y = 0.682 * safezoneH + safezoneY;
+			action = "closeDialog 0; [vehSDKPlaneUS2] spawn A3A_fnc_addFIAsquadHC";
+		};
+		class DH98Button: SimpleButton
+		{
+			idc = 113;
+			text = DH98 Mosquito;
+			x = 0.477 * safezoneW + safezoneX;
+			y = 0.682 * safezoneH + safezoneY;
+			action = "closeDialog 0;[vehSDKPlaneUK3] spawn A3A_fnc_addFIAsquadHC";
 		};
 	};
 };
