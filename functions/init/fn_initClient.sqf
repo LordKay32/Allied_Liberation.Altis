@@ -616,7 +616,7 @@ if (_key == 15) then {
 }];
 
 //JB Arty
-player synchronizeObjectsAdd supportRequest;
+player synchronizeObjectsAdd [supportRequest];
 
 findDisplay 12 displayAddEventHandler ["KeyUp", {
 	params ["_displayOrControl", "_key", "_shift", "_ctrl", "_alt"];
