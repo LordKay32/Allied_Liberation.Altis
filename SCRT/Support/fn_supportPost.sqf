@@ -45,8 +45,7 @@ while {(_mrk in supportpostsFIA)} do {
 				sleep 30;
 				[_target, 1] remoteExec ["setFuel", 0];
 				[_target, 0] remoteExec ["setDamage", 0];
-				[_target, 1] remoteExec ["setVehicleAmmoDef", 0];
-				
+		   		[_target, 1] remoteExec ["setVehicleAmmoDef"];
 			},
 			nil,		// arguments
 			1000,		// priority

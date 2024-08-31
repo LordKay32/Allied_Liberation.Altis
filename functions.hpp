@@ -75,6 +75,7 @@ class A3A
         class garbageCleaner {};
         class garrisonInfo {};
         class getAggroLevelString {};
+        class getGroupIcon {};
         class getPlayerScale {};
         class getVehiclePoolForAttacks {};
         class getVehiclePoolForQRFs {};

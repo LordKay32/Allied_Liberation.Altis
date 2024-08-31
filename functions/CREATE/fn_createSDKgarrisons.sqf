@@ -228,13 +228,13 @@ if (_markerX in citiesX) then {
 				private _statics = _sideX countSide (_positionX nearEntities [["staticWeapon"], _size]);
 				private _APCs = _sideX countSide (_positionX nearEntities [["Car"], _size]);
 				private _tanks = _sideX countSide (_positionX nearEntities [["Tank"], _size]);
-				private _sidePower = _inf + (_statics * 2) + (_APCs * 5) + (_tanks * 10); 
+				private _sidePower = 1 + _inf + (_statics * 2) + (_APCs * 5) + (_tanks * 10); 
 				_sidePower
 				};
 
-				waitUntil {sleep 1;	(spawner getVariable _markerX == 2) or (([_positionX,_sideX,_size] call _fnc_sidePower)/(([_positionX,teamPlayer,_size] call _fnc_sidePower) + ([_positionX,_sideX,_size] call _fnc_sidePower))) < 0.2};
+				waitUntil {sleep 1;	(spawner getVariable _markerX == 2) or (([_positionX,_markerSide,_size] call _fnc_sidePower)/(([_positionX,teamPlayer,_size] call _fnc_sidePower) + ([_positionX,_markerSide,_size] call _fnc_sidePower))) < 0.2};
 
-				if ((([_positionX,_sideX,_size] call _fnc_sidePower)/(([_positionX,teamPlayer,_size] call _fnc_sidePower) + ([_positionX,_sideX,_size] call _fnc_sidePower))) < 0.2) then {
+				if ((([_positionX,_markerSide,_size] call _fnc_sidePower)/(([_positionX,teamPlayer,_size] call _fnc_sidePower) + ([_positionX,_markerSide,_size] call _fnc_sidePower))) < 0.2) then {
 					if (_markerX in destroyedSites) then {
 						["TaskSucceeded", ["", format ["%1 ruins captured",[_markerX, false] call A3A_fnc_location,nameTeamPlayer]]] remoteExec ["BIS_fnc_showNotification",teamPlayer];
 					} else {
@@ -252,7 +252,7 @@ if (_markerX in citiesX) then {
 					
 					private _remainers = _soldiers select {[_x] call A3A_fnc_canFight};
 					{
-					if (random 100 > 50) then {[_x] spawn A3A_fnc_surrenderAction} else {[_x, _sideX, false] remoteExec ["A3A_fnc_fleeToSide", _x]};
+					if (random 100 > 50) then {[_x] spawn A3A_fnc_surrenderAction} else {[_x, _markerSide, false] remoteExec ["A3A_fnc_fleeToSide", _x]};
 					} forEach _remainers;
 				
 					sectorsLiberated = sectorsLiberated + 1;
@@ -263,7 +263,7 @@ if (_markerX in citiesX) then {
 					};
 		
 					_super = if (_markerX in majorCitiesX) then {true} else {false};
-					[_markerX, _sideX, _super] spawn
+					[_markerX, _markerSide, _super] spawn
 					{
 						params ["_marker", "_loser", "_super"];
 						private _waitTime = (6 - aggressionOccupants/20) * (0.5 + random 0.5);

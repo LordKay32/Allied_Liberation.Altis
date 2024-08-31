@@ -40,13 +40,7 @@ private _wp5 = _groupX addWaypoint [_positionX getPos [100,300], 0];
 private _wp6 = _groupX addWaypoint [_positionX getPos [100,0], 0];
 _wp6 setWaypointType "CYCLE";
 
-private _wpNum = 0;
-private _wpPos =[];
-{
-_wpNum = _wpNum +1;
-_wpPos = waypointPosition [_groupX, _wpNum];
-_x setWaypointStatements ["true", format ["[group this, '%1', %2, %3] spawn SCRT_fnc_watchPostRecon", _markerX, _wpPos, _wpNum]];
-} forEach [_wp0,_wp1,_wp2,_wp3,_wp4,_wp5];
+[_positionX, _groupX] spawn SCRT_fnc_watchPostRecon;
 
 private _campfire = createVehicle ["Land_Campfire_F", _positionX];
 private _GC = createVehicle ["ClutterCutter_small_EP1", _positionX, [],0, "CAN_COLLIDE"];

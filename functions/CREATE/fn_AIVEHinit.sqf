@@ -43,6 +43,22 @@ private _typeX = typeOf _veh;
 //JB - add service vehicle functions
 [_veh] remoteExec ["A3A_fnc_truckFunctions", [teamPlayer,civilian], _veh];
 
+//JB icons
+
+if (_typeX in [vehSDKAT, vehSDKHeavyArmed,vehSDKAPCUK1,vehSDKAPCUK2,vehSDKAPCUS,vehSDKRepair,vehNATORepairTruck,vehSDKMedical,vehNATOMedical,vehSDKFuel,vehSDKAmmo,vehNATOFuelTruck,vehNATOAmmoTruck,vehSDKAA,SDKArtillery,vehNATOMRLS] + vehNATOAPC + vehNATOAA) then {
+	_veh addEventHandler ["GetIn", { 
+		params ["_vehicle", "_role", "_unit", "_turret"]; 
+		_icon = [_vehicle,_unit] call A3A_fnc_getGroupIcon;
+		(group _unit) setVariable ["MARTA_customIcon", [_icon]];
+	}];
+
+	_veh addEventHandler ["GetOut", { 
+		params ["_vehicle", "_role", "_unit", "_turret", "_isEject"]; 
+		if ((units (group _unit)) findIf {vehicle _x != _x} == -1) then {(group _unit) setVariable ["MARTA_customIcon", nil]};
+	}];
+};
+
+
 if (_side != teamPlayer) then {
 	//JB - unflip enemy Ai Vehs
 	_veh addEventHandler ["GetOut", {
@@ -266,6 +282,22 @@ if (_typeX in vehNormal || {_typeX in (vehAttack + vehBoats + vehAA)}) then {
 			{
 				_unit setVariable ["spawner",nil,true];
 			};
+			if (isPlayer _unit) then {
+				setGroupIconsVisible [false,false];
+				findDisplay 12 displayRemoveEventHandler ["keyDown",mapMarkerKeyId];
+				mapMarkerKeyId = findDisplay 12 displayAddEventHandler ["KeyDown", {
+				params ["_displayOrControl", "_key", "_shift", "_ctrl", "_alt"];
+				if (_key == 15) then {
+					if (groupIconsVisible isEqualTo [false,false]) then {setGroupIconsVisible [true, true]} else {setGroupIconsVisible [false, false]}
+				};
+				}];
+				screenMarkerKeyId = findDisplay 46 displayAddEventHandler ["KeyDown", {
+				params ["_displayOrControl", "_key", "_shift", "_ctrl", "_alt"];
+				if (_key == 15) then {
+					if (groupIconsVisible isEqualTo [false,false]) then {setGroupIconsVisible [true, true]} else {setGroupIconsVisible [false, false]}
+				};
+				}];
+			};
 		}];
 		
 		_veh addEventHandler ["GetOut",
@@ -274,6 +306,17 @@ if (_typeX in vehNormal || {_typeX in (vehAttack + vehBoats + vehAA)}) then {
 			if (side group _unit == teamPlayer) then
 			{
 				_unit setVariable ["spawner",true,true];
+			};
+			if (isPlayer _unit) then {
+				findDisplay 12 displayRemoveEventHandler ["keyDown",mapMarkerKeyId];
+				findDisplay 46 displayRemoveEventHandler ["keyDown",screenMarkerKeyId];
+				mapMarkerKeyId = findDisplay 12 displayAddEventHandler ["KeyDown", {
+				params ["_displayOrControl", "_key", "_shift", "_ctrl", "_alt"];
+				if (_key == 15) then {
+				if (groupIconsVisible isEqualTo [false,false]) then {setGroupIconsVisible [true, false]} else {setGroupIconsVisible [false, false]}
+				};
+				}];
+				setGroupIconsVisible [false,false];		
 			};
 		}];
 		

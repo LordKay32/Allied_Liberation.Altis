@@ -28,7 +28,7 @@ switch (typeOf _veh) do {
     case vehSDKAmmo: {
     	_list = ((getPos _veh) nearEntities [vehFIA, 50]) select {count allTurrets [_x, false] > 0};
     	{
-    	[_x, 1] remoteExec ["setVehicleAmmoDef"];
+   		[_x, 1] remoteExec ["setVehicleAmmoDef"];
     	sleep 1;
     	} forEach _list;
     	["Support Task", "The engineering team has finished rearming nearby vehicles."] call A3A_fnc_customHint;

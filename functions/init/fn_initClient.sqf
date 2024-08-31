@@ -606,6 +606,56 @@ if (isNil "placementDone") then {
 
 player setPos (getMarkerPos respawnTeamPlayer);
 
+//JB icons
+setGroupIconsVisible [false,false];
+mapMarkerKeyId = findDisplay 12 displayAddEventHandler ["KeyDown", {
+params ["_displayOrControl", "_key", "_shift", "_ctrl", "_alt"];
+if (_key == 15) then {
+	if (groupIconsVisible isEqualTo [false,false]) then {setGroupIconsVisible [true, false]} else {setGroupIconsVisible [false, false]}
+};
+}];
+
+//JB Arty
+player synchronizeObjectsAdd supportRequest;
+
+findDisplay 12 displayAddEventHandler ["KeyUp", {
+	params ["_displayOrControl", "_key", "_shift", "_ctrl", "_alt"];
+	if ((_key == 2) && (player getVariable "BIS_SUPP_request") select 0 != "") then {
+
+		_artillery = [];
+		{
+		[_x] spawn {
+			params ["_artySite"];
+			private _artyPos = getMarkerPos _artySite;
+			private _artyPiece = nearestObject [_artyPos, SDKArtillery];
+			private _artyCrew = groupId (group gunner _artyPiece);
+			private _mrkMin = createMarkerLocal [format ["mrkMin%1", random 100], _artyPos];  
+			_mrkMin setMarkerShapeLocal "ELLIPSE";  
+			_mrkMin setMarkerTypeLocal "hd_destroy";  
+			_mrkMin setMarkerColorLocal "ColorRed";   
+			_mrkMin setMarkerSizeLocal [800, 800]; 
+			_mrkMin setMarkerAlphaLocal 0.5;
+		
+			private _mrkMax = createMarkerLocal [format ["mrkMax%1", random 100], _artyPos];  
+			_mrkMax setMarkerShapeLocal "ELLIPSE";  
+			_mrkMax setMarkerTypeLocal "hd_destroy";  
+			_mrkMax setMarkerColorLocal "ColorGreen";   
+			_mrkMax setMarkerSizeLocal [9500, 9500]; 
+			_mrkMax setMarkerAlphaLocal 0.5;
+			
+			private _oldText = markerText _artySite;
+			_artySite setMarkerTextLocal _artyCrew;
+			
+			waitUntil {((player getVariable "BIS_SUPP_selectedProvider") getVariable ["BIS_SUPP_supporting", false]) || (player getVariable "BIS_SUPP_request") select 0 == ""};
+			deleteMarker _mrkMin;
+			deleteMarker _mrkMax;
+			_artySite setMarkerTextLocal _oldText;
+			
+		};
+		} forEach mortarpostsFIA;
+	};
+}];
+
 
 //Disables rabbits and snakes, because they cause the log to be filled with "20:06:39 Ref to nonnetwork object Agent 0xf3b4a0c0"
 //Can re-enable them if we find the source of the bug.

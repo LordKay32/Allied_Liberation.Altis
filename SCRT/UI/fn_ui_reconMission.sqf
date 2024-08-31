@@ -137,13 +137,7 @@ if ((getMarkerPos _nearX) distance _positionTel < 25) exitWith {
 	private _wp6 = _groupX addWaypoint [(getMarkerPos _nearX) getPos [100,0], 0];
 	_wp6 setWaypointType "CYCLE";
 
-	private _wpNum = 0;
-	private _wpPos =[];
-	{
-	_wpNum = _wpNum +1;
-	_wpPos = waypointPosition [_groupX, _wpNum];
-	_x setWaypointStatements ["true", format ["[group this, '%1', %2, %3] spawn SCRT_fnc_watchPostRecon", _markerX, _wpPos, _wpNum]];
-	} forEach [_wp0,_wp1,_wp2,_wp3,_wp4,_wp5];
+	[_positionX, _groupX] spawn SCRT_fnc_watchPostRecon;
 };
 
 private _originMrk = createMarkerLocal ["BRStart", _positionTel];
