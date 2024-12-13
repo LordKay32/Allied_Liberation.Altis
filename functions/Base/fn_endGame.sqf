@@ -113,7 +113,7 @@ waitUntil { scriptDone _video2};
 
 private _video2 = ["Music\EndVid.ogv"] spawn BIS_fnc_playVideo;
 
-titleText [format["<t color='#ffffff' size='2.4'>Allied vehicles deployed: %1<br /><br /><br />Wehrmacht vehicles captured: %2<br /><br /><br />Vehicles destroyed: %3",teamPlayerVehDeployed,vehiclesCaptured,teamPlayerVehKilled], "PLAIN", 1, true, true]; 
+titleText [format["<t color='#ffffff' size='2.4'>Allied vehicles deployed: %1<br /><br /><br />Wehrmacht vehicles captured: %2<br /><br /><br />Allied vehicles destroyed: %3",teamPlayerVehDeployed,vehiclesCaptured,teamPlayerVehKilled], "PLAIN", 1, true, true]; 
 
 sleep 7.5;
 

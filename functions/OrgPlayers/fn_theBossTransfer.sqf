@@ -36,10 +36,17 @@ if (!isNil "bossHCGroupsTransfer") then
 	[3, "Found previous HC groups, transferring.", _filename] call A3A_fnc_log;
 
 	{ theBoss hcSetGroup [_x] } forEach bossHCGroupsTransfer;
-	{
-	_x setGroupOwner (groupOwner group theBoss);
-	} forEach bossHCGroupsTransfer;
 	bossHCGroupsTransfer = nil;
+}
+else {
+	// Boss got lost somewhere, try to find HC groups by scanning
+	[3, "No previous HC groups found, scanning all groups.",_filename] call A3A_fnc_log;
+	{
+		if ((leader _x getVariable ["spawner",false]) and (!isPlayer leader _x) and (side _x == teamPlayer)) then
+		{
+			theBoss hcSetGroup [_x];
+		};
+	} forEach allGroups;
 };
 
 [3, format ["New boss %1 set.", theBoss], _filename] call A3A_fnc_log;

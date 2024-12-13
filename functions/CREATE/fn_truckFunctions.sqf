@@ -59,6 +59,7 @@ if (_typeX in (vehFIA + ["LIB_FlaK_38"])) then {
         "Rearm at Ammo Truck", 
         {
     	params ["_target", "_caller", "_actionId", "_arguments"];
+    	if (!(isNull (commander _target)) && (isTurnedOut (commander _targer))) exitWith {["Rearm Vehicle", "Turn in before rearming your vehicle."] call A3A_fnc_customHint;}
    		[_target, 1] remoteExec ["setVehicleAmmoDef"];
     	// if (isPlayer crew) then {play sound for player?};
 		}, 
@@ -145,7 +146,7 @@ if (_typeX == vehSDKAmmo) then {
         {params ["_target", "_caller", "_actionId", "_arguments"];
         _list = ((getPos _target) nearEntities [(vehFIA + ["LIB_FlaK_38"]), 50]) select {count allTurrets [_x, false] > 0};
     	{
-    	[_x, 1] remoteExec ["setVehicleAmmoDef"];
+   		[_x, 1] remoteExec ["setVehicleAmmoDef"];
     	// if (isPlayer crew) then {play sound for player?};
     	} forEach _list;}, 
         [], 
@@ -215,9 +216,9 @@ if (_typeX == vehNATOAmmoTruck) then {
         {params ["_target", "_caller", "_actionId", "_arguments"];
         _list = ((getPos _target) nearEntities [(vehNATONormal + vehNATOAir + vehNATOAttack + vehNATOAA + NATOMG + staticAAOccupants + [NATOMortar,NATOHowitzer,staticATOccupants,"LIB_FlaK_36","LIB_FlaK_36_AA"]), 50]) select {count allTurrets [_x, false] > 0 && (side _x == teamPlayer) || (side _x == civilian)};
     	{
-    	[_x, 1] remoteExec ["setVehicleAmmoDef"];
-    	// if (isPlayer crew) then {play sound for player?};
-    	} forEach _list;}, 
+   		[_x, 1] remoteExec ["setVehicleAmmoDef"];
+    	} forEach _list;
+    	}, 
         [], 
         6, 
         true, 

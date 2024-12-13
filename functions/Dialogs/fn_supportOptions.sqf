@@ -64,4 +64,18 @@ if (str (_display) != "no display") then
 	{_costs = _costs + (server getVariable _x); _costHR = _costHR +1} forEach [UKPilot, UKPilot];
 	_costs = _costs + ([vehSDKTransPlaneUK] call A3A_fnc_vehiclePrice);
 	_ChildControl  ctrlSetTooltip format ["Cost: %1%3. HR: %2", _costs, _costHR, currencySymbol];
+
+	_ChildControl = _display displayCtrl 112;
+	_costs = 0;
+	_costHR = 0;
+	{_costs = _costs + (server getVariable _x); _costHR = _costHR +1} forEach [USPilot, USPilot, USPilot, USPilot, USPilot];
+	_costs = _costs + ([vehSDKPlaneUS2] call A3A_fnc_vehiclePrice);
+	_ChildControl  ctrlSetTooltip format ["Cost: %1%3. HR: %2", _costs, _costHR, currencySymbol];
+
+	_ChildControl = _display displayCtrl 113;
+	_costs = 0;
+	_costHR = 0;
+	{_costs = _costs + (server getVariable _x); _costHR = _costHR +1} forEach [UKPilot, UKPilot];
+	_costs = _costs + ([vehSDKPlaneUK3] call A3A_fnc_vehiclePrice);
+	_ChildControl  ctrlSetTooltip format ["Cost: %1%3. HR: %2", _costs, _costHR, currencySymbol];
 };

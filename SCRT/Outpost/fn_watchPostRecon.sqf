@@ -12,58 +12,51 @@
  * _PARAM2 (TYPE): - DESCRIPTION.
  */
 
-params ["_group", "_markerX", "_wpPos", "_wpNum"];
-private["_index", "_vector", "_entities", "_num", "_markerList", "_pos", "_marker"];
+params ["_WPPos","_WPGroup"];
 
-if ((combatMode _group != "GREEN") && (west knowsAbout (leader _group) < 4)) then {_group setCombatMode "GREEN"};
+sleep ((random 300) + 300);
 
-_vector = (getMarkerPos _markerX) getDir _wpPos;
 
-_positionX = (getMarkerPos _markerX) getPos [300, _vector];
+private _makeGroupSpotted = {
+	params ["_enemyGroup"];
+	private _revealed = player getVariable ["MARTA_reveal",[]];
+	_revealed pushBack _enemyGroup;
+	player setVariable ["MARTA_reveal", _revealed, true];
+	sleep 300;
+	_revealed = player getVariable ["MARTA_reveal",[]];
+	_revealed = _revealed - [_enemyGroup];
+	player setVariable ["MARTA_reveal", _revealed, true];
+};
+
+private _odds = 25;
 
 while {true} do {
-	_entities = allGroups select {(side _x isEqualTo west) && ((leader _x) distance _positionX < 300)};
+	private _groups = allGroups select {(getPos (leader _x) distance _WPPos < 600) && side _x == Occupants && (count getGroupIcons _x == 0)};
+	{
+	if (random 100 < _odds) then {[_x] spawn _makeGroupSpotted};
+	} forEach _groups;
+	
+	_odds = _odds + 5;
+	if (_odds > 90) then {_odds = 90};
+	
+	if ((units _WPGroup) findIf {damage _x > 0} != -1) exitWith {
+		
+		{
+		private _unitPos = getPos _x;
+		"LIB_US_M18" createVehicle (_unitPos getRelPos [1,0]);
+		} forEach ((units _WPGroup) select {alive _x});
+		[
+	    "Recon Mission",
+	    parseText "Recon team under fire, recon mission aborted."
+		] call A3A_fnc_customHint;
+	
+		for "_i" from count waypoints _WPGroup - 1 to 0 step -1 do
+		{
+		deleteWaypoint [_WPGroup, _i];
+		};
 
-	_num = 0;
-	_markerList = [];
-	{
-	_pos = getPos (leader _x);
-	_num = _num + 1;
-	_marker = createMarker [format["%2_Entity_%1", _num, _wpNum], _pos];
-	_marker setMarkerType "mil_unknown_noShadow";
-	_marker setMarkerColor colorOccupants;
-	_marker setMarkerSize [0.6, 0.6];
-	_markerList pushBack _marker;
-	} forEach _entities;
-	sleep 10;
-	if ({alive _x} count units _group == 0) exitWith {
-		{
-		_x setMarkerAlpha 0.5;
-		} forEach _markerList;
-		sleep 120;
-		{
-		deleteMarker _x;
-		} forEach _markerList;
+		private _wp1 = _WPGroup addWaypoint [_WPPos, 0];
+		_wp1 setWaypointSpeed "FULL";
 	};
-	if (combatMode _group != "GREEN") exitWith {
-		{
-		_x setMarkerAlpha 0.5;
-		} forEach _markerList;
-		sleep 120;
-		{
-		deleteMarker _x;
-		} forEach _markerList;
-	};
-	if !(currentWaypoint _group == (_wpNum + 1)) exitWith {
-		{
-		_x setMarkerAlpha 0.5;
-		} forEach _markerList;
-		sleep 120;
-		{
-		deleteMarker _x;
-		} forEach _markerList;
-	};
-	{
-	deleteMarker _x;
-	} forEach _markerList;
+	sleep 15;
 };

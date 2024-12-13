@@ -89,7 +89,7 @@
 ["vehiclesFuelTrucks", ["LIB_OpelBlitz_Fuel"]] call _fnc_saveToTemplate;
 ["vehiclesMedical", ["LIB_OpelBlitz_Ambulance"]] call _fnc_saveToTemplate;
 ["vehiclesAPCs", ["fow_v_sdkfz_222_camo_ger_heer", "fow_v_sdkfz_251_camo_ger_heer", "fow_v_sdkfz_250_9_camo_ger_heer", "LIB_SdKfz251_FFV"]] call _fnc_saveToTemplate;
-["vehiclesTanks", ["LIB_GER_PzKpfwIV_H_Feldgrau","LIB_DAK_PzKpfwIV_H", "LIB_PzKpfwIV_H_tarn51c", "LIB_PzKpfwIV_H_tarn51d", "LIB_PzKpfwIV_H", "LIB_PzKpfwVI_E_tarn51d"]] call _fnc_saveToTemplate;
+["vehiclesTanks", ["LIB_GER_PzKpfwIV_H_Feldgrau","LIB_DAK_PzKpfwIV_H", "LIB_PzKpfwIV_H_tarn51c", "LIB_PzKpfwIV_H_tarn51d", "LIB_PzKpfwIV_H", "LIB_PzKpfwVI_E_tarn51d", "LIB_GER_PzKpfwIV_H_Feldgrau","LIB_DAK_PzKpfwIV_H", "LIB_PzKpfwIV_H_tarn51c", "LIB_PzKpfwIV_H_tarn51d", "LIB_PzKpfwIV_H"]] call _fnc_saveToTemplate;
 ["vehiclesAA", ["LIB_SdKfz_7_AA", "LIB_FlakPanzerIV_Wirbelwind"]] call _fnc_saveToTemplate;
 ["vehiclesLightAPCs", ["fow_v_sdkfz_251_camo_ger_heer"]] call _fnc_saveToTemplate;
 ["vehiclesIFVs", []] call _fnc_saveToTemplate;

@@ -51,6 +51,7 @@ if (SDKArtillery in _statics) then {
 		garrison setVariable [(_markerX + "_statics"),_statics,true];
 	}];
 	_veh lock 3;
+	artySupport synchronizeObjectsAdd [_veh];
 	
 	sleep 1;
 
@@ -77,14 +78,21 @@ if (SDKArtillery in _statics) then {
 	    _crewMan moveInAny _veh;
 		[_crewMan] joinSilent _groupE;
 	};
-	[_groupE] spawn {
-		params ["_groupE"];
-		waitUntil {sleep 1; !(isNil "theBoss")};
-		_groupE setGroupOwner (groupOwner group theBoss);
-		_groupE setGroupIdGlobal ["US-Art-" + str ({side (leader _x) == teamPlayer} count allGroups)];
-		theBoss hcSetGroup [_groupE];
-	};
 };
+
+private _groupId = groupId _groupE;
+private _numberOfArtys = count mortarpostsFIA;
+private _id = call {
+		if (_numberOfArtys == 1) exitWith {"Able"};
+   		if (_numberOfArtys == 2) exitWith {"Baker"};
+   		if (_numberOfArtys == 3) exitWith {"Charlie"};
+		if (_numberOfArtys == 4) exitWith {"Dog"};		
+   		if (_numberOfArtys == 5) exitWith {"Easy"};
+   		if (_numberOfArtys == 6) exitWith {"Fox"};
+		_groupId;
+};
+
+_groupE setGroupIdGlobal [_id];
 
 _groupX setBehaviour "SAFE";
 _groupX setCombatMode "YELLOW"; 

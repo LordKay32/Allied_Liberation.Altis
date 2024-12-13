@@ -29,7 +29,7 @@ if (!isServer) then {
 		[clientOwner, "destroyedBuildings"] remoteExecCall ["publicVariableClient", 2];
 	};
 };
-clientTest1 = true;
+
 // Headless clients install some support functions, register with the server and bail out
 if (!hasInterface) exitWith {
 	call A3A_fnc_initFuncs;
@@ -39,15 +39,13 @@ if (!hasInterface) exitWith {
 	[2,format ["Headless client Antistasi Plus version: %1",localize "STR_antistasi_plus_credits_generic_version_text"],_fileName] call A3A_fnc_log;
 	[clientOwner] remoteExec ["A3A_fnc_addHC",2];
 };
-clientTest2 = true;
 
 waitUntil {!isNull player};
-clientTest3 = true;
 waitUntil {player == player};
-clientTest4 = true;
+
 //Disable player saving until they're fully ready, and have chosen whether to load their save.
 player setVariable ["canSave", false, true];
-clientTest5 = true;
+
 if (!isServer) then {
 	waitUntil {!isNil "initParamsDone"};
 	call A3A_fnc_initFuncs;
@@ -84,6 +82,10 @@ private ["_colourTeamPlayer", "_colorInvaders"];
 _colourTeamPlayer = teamPlayer call BIS_fnc_sideColor;
 _colorInvaders = Invaders call BIS_fnc_sideColor;
 _positionX = if (side player isEqualTo teamPlayer) then {getPos petros} else {getMarkerPos "respawn_west"};
+
+_allBuildings = [14260.4,16159.7,0] nearObjects ["Building", 20000];
+_runiedBuildings = _allBuildings select {typeOf _x in ["Land_Radar_ruins_F","Land_Cargo_Patrol_V1_ruins_F","Land_Cargo_House_V1_ruins_F","Land_Cargo_HQ_V1_ruins_F","Land_Cargo_Tower_V1_ruins_F","Land_Research_HQ_ruins_F","Land_Research_house_V1_ruins_F"]};
+{_x hideObject true} forEach _runiedBuildings;
 
 setViewDistance 3200;
 
@@ -603,6 +605,56 @@ if (isNil "placementDone") then {
 //Move the player to HQ now they're initialised.
 
 player setPos (getMarkerPos respawnTeamPlayer);
+
+//JB icons
+setGroupIconsVisible [false,false];
+mapMarkerKeyId = findDisplay 12 displayAddEventHandler ["KeyDown", {
+params ["_displayOrControl", "_key", "_shift", "_ctrl", "_alt"];
+if (_key == 15) then {
+	if (groupIconsVisible isEqualTo [false,false]) then {setGroupIconsVisible [true, false]} else {setGroupIconsVisible [false, false]}
+};
+}];
+
+//JB Arty
+player synchronizeObjectsAdd [supportRequest];
+
+findDisplay 12 displayAddEventHandler ["KeyUp", {
+	params ["_displayOrControl", "_key", "_shift", "_ctrl", "_alt"];
+	if ((_key == 2) && (player getVariable "BIS_SUPP_request") select 0 != "") then {
+
+		_artillery = [];
+		{
+		[_x] spawn {
+			params ["_artySite"];
+			private _artyPos = getMarkerPos _artySite;
+			private _artyPiece = nearestObject [_artyPos, SDKArtillery];
+			private _artyCrew = groupId (group gunner _artyPiece);
+			private _mrkMin = createMarkerLocal [format ["mrkMin%1", random 100], _artyPos];  
+			_mrkMin setMarkerShapeLocal "ELLIPSE";  
+			_mrkMin setMarkerTypeLocal "hd_destroy";  
+			_mrkMin setMarkerColorLocal "ColorRed";   
+			_mrkMin setMarkerSizeLocal [800, 800]; 
+			_mrkMin setMarkerAlphaLocal 0.5;
+		
+			private _mrkMax = createMarkerLocal [format ["mrkMax%1", random 100], _artyPos];  
+			_mrkMax setMarkerShapeLocal "ELLIPSE";  
+			_mrkMax setMarkerTypeLocal "hd_destroy";  
+			_mrkMax setMarkerColorLocal "ColorGreen";   
+			_mrkMax setMarkerSizeLocal [9500, 9500]; 
+			_mrkMax setMarkerAlphaLocal 0.5;
+			
+			private _oldText = markerText _artySite;
+			_artySite setMarkerTextLocal _artyCrew;
+			
+			waitUntil {((player getVariable "BIS_SUPP_selectedProvider") getVariable ["BIS_SUPP_supporting", false]) || (player getVariable "BIS_SUPP_request") select 0 == ""};
+			deleteMarker _mrkMin;
+			deleteMarker _mrkMax;
+			_artySite setMarkerTextLocal _oldText;
+			
+		};
+		} forEach mortarpostsFIA;
+	};
+}];
 
 
 //Disables rabbits and snakes, because they cause the log to be filled with "20:06:39 Ref to nonnetwork object Agent 0xf3b4a0c0"

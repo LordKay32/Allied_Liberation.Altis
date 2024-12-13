@@ -183,7 +183,7 @@ addMissionEventHandler ["PlayerDisconnected",{_this call A3A_fnc_onHeadlessClien
 
 addMissionEventHandler ["BuildingChanged", { 
 	params ["_from", "_to", "_isRuin"]; 
-	if (typeOf _to in ["Land_Radar_ruins_F","Land_Cargo_Patrol_V1_ruins_F","Land_Cargo_House_V1_ruins_F","Land_Cargo_HQ_V1_ruins_F","Land_Cargo_Tower_V1_ruins_F"]) then {_to hideObject true};
+	if (typeOf _to in ["Land_Radar_ruins_F","Land_Cargo_Patrol_V1_ruins_F","Land_Cargo_House_V1_ruins_F","Land_Cargo_HQ_V1_ruins_F","Land_Cargo_Tower_V1_ruins_F","Land_Research_HQ_ruins_F","Land_Research_house_V1_ruins_F"]) then {_to hideObject true};
 	}];
 
 addMissionEventHandler ["BuildingChanged", {
@@ -263,11 +263,6 @@ savingServer = false;
 [] spawn A3A_fnc_artillerySpawn;
 [] spawn A3A_fnc_flak;
 [] spawn A3A_fnc_spawnDebuggingLoop;
-[] spawn {
-	_allBuildings = [0,0,0] nearObjects ["Building", 50000];
-	_runiedBuildings = _allBuildings select {typeOf _x in ["Land_Radar_ruins_F","Land_Cargo_Patrol_V1_ruins_F","Land_Cargo_House_V1_ruins_F","Land_Cargo_HQ_V1_ruins_F","Land_Cargo_Tower_V1_ruins_F"]};
-	{_x hideObject true} forEach _runiedBuildings;
-};
 
 //Enable performance logging
 [] spawn {

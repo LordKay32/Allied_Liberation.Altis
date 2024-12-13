@@ -210,6 +210,82 @@ for "_i" from 0 to (count _groups) - 1 do
 		[_groupX, _positionX, _size, 3, 1, false] call A3A_fnc_cityGarrison;
 	};
 };
+
+
+
+if (_markerX in citiesX) then {
+	while {(spawner getVariable _markerX != 2)} do {
+
+		private _markerSide = sidesX getVariable [_markerX, sideUnknown];
+		switch (true) do
+		{
+		    case (_markerSide != teamPlayer):
+		    {
+				private _fnc_sidePower = {
+			    params ["_positionX", "_sideX", "_size"];
+				private _infArray = (_positionX nearEntities [["Man"], _size]) select {[_x] call A3A_fnc_canFight};
+				private _inf = _sideX countSide _infArray;
+				private _statics = _sideX countSide (_positionX nearEntities [["staticWeapon"], _size]);
+				private _APCs = _sideX countSide (_positionX nearEntities [["Car"], _size]);
+				private _tanks = _sideX countSide (_positionX nearEntities [["Tank"], _size]);
+				private _sidePower = 1 + _inf + (_statics * 2) + (_APCs * 5) + (_tanks * 10); 
+				_sidePower
+				};
+
+				waitUntil {sleep 1;	(spawner getVariable _markerX == 2) or (([_positionX,_markerSide,_size] call _fnc_sidePower)/(([_positionX,teamPlayer,_size] call _fnc_sidePower) + ([_positionX,_markerSide,_size] call _fnc_sidePower))) < 0.2};
+
+				if ((([_positionX,_markerSide,_size] call _fnc_sidePower)/(([_positionX,teamPlayer,_size] call _fnc_sidePower) + ([_positionX,_markerSide,_size] call _fnc_sidePower))) < 0.2) then {
+					if (_markerX in destroyedSites) then {
+						["TaskSucceeded", ["", format ["%1 ruins captured",[_markerX, false] call A3A_fnc_location,nameTeamPlayer]]] remoteExec ["BIS_fnc_showNotification",teamPlayer];
+					} else {
+						["TaskSucceeded", ["", format ["%1 captured",[_markerX, false] call A3A_fnc_location,nameTeamPlayer]]] remoteExec ["BIS_fnc_showNotification",teamPlayer];
+						[-100,25, _markerX] remoteExec ["A3A_fnc_citySupportChange",2];
+					};
+					sidesX setVariable [_markerX,teamPlayer,true];
+					aggressionOccupants = aggressionOccupants - 5;
+					_mrkD = format ["Dum%1",_markerX];
+					_mrkD setMarkerColor colorTeamPlayer;
+					sleep 5;
+					garrison setVariable [_markerX,[],true];
+					sleep 5;
+					{_nul = [_markerX,_x] spawn A3A_fnc_deleteControls} forEach controlsX;
+					
+					private _remainers = _soldiers select {[_x] call A3A_fnc_canFight};
+					{
+					if (random 100 > 50) then {[_x] spawn A3A_fnc_surrenderAction} else {[_x, _markerSide, false] remoteExec ["A3A_fnc_fleeToSide", _x]};
+					} forEach _remainers;
+				
+					sectorsLiberated = sectorsLiberated + 1;
+					publicVariable "sectorsLiberated";
+		
+					if ((airportsX + milbases + outposts + seaports + factories + resourcesX + citiesX) findIf {sidesX getVariable [_x, sideUnknown] != teamPlayer} == -1) exitWith {
+					[] remoteExec ["A3A_fnc_endGame",0];
+					};
+		
+					_super = if (_markerX in majorCitiesX) then {true} else {false};
+					[_markerX, _markerSide, _super] spawn
+					{
+						params ["_marker", "_loser", "_super"];
+						private _waitTime = (6 - aggressionOccupants/20) * (0.5 + random 0.5);
+						sleep (_waitTime * 60);
+						if(sidesX getVariable [_marker, sideUnknown] == _loser) exitWith {};
+						[[_marker, _loser, _super], "A3A_fnc_singleAttack"] call A3A_fnc_scheduler;
+					};
+				};
+
+			};
+	
+		    case (_markerSide == teamPlayer):
+		    {
+				waitUntil {sleep 1; ((sidesX getVariable [_markerX, sideUnknown] != teamPlayer) || (spawner getVariable _markerX == 2))};
+			};
+		};
+		sleep 60;
+	};
+};
+
+
+
 waitUntil {sleep 1; (spawner getVariable _markerX == 2)};
 
 { if (alive _x) then { deleteVehicle _x }; } forEach _soldiers;
