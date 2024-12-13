@@ -59,6 +59,7 @@ if (_typeX in (vehFIA + ["LIB_FlaK_38"])) then {
         "Rearm at Ammo Truck", 
         {
     	params ["_target", "_caller", "_actionId", "_arguments"];
+    	if (!(isNull (commander _target)) && (isTurnedOut (commander _targer))) exitWith {["Rearm Vehicle", "Turn in before rearming your vehicle."] call A3A_fnc_customHint;}
    		[_target, 1] remoteExec ["setVehicleAmmoDef"];
     	// if (isPlayer crew) then {play sound for player?};
 		}, 
